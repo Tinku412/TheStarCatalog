@@ -862,24 +862,18 @@ async function handleReviewSubmit(e) {
         return;
     }
 
-    // Upload proof images (up to 2)
+    // Upload proof images to Cloudflare R2 (up to 2)
     const imageUrls = [];
     const fileInput = document.getElementById('reviewImages');
     if (fileInput?.files?.length) {
         const profileId = document.body.dataset.profileId;
         const files = Array.from(fileInput.files).slice(0, 2);
         for (let i = 0; i < files.length; i++) {
-            const file = files[i];
-            const ext  = file.name.split('.').pop();
-            const path = `${profileId}/${user.id}-${Date.now()}-${i}.${ext}`;
-            const { data: up, error: upErr } = await supabaseClient.storage
-                .from('review-images')
-                .upload(path, file, { upsert: true });
-            if (!upErr && up) {
-                const { data: urlData } = supabaseClient.storage
-                    .from('review-images')
-                    .getPublicUrl(path);
-                imageUrls.push(urlData.publicUrl);
+            try {
+                const url = await r2Upload(files[i], `review-images/${profileId}`);
+                imageUrls.push(url);
+            } catch (uploadErr) {
+                console.warn('Review image upload failed:', uploadErr);
             }
         }
     }

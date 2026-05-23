@@ -169,10 +169,10 @@ async function handleFormSubmit(e) {
             return;
         }
 
-        // ── Profile picture ────────────────────────────────────────────────────
+        // ── Profile picture — upload to Cloudflare R2 ─────────────────────────
         let picUrl = null;
         const picFile = formData.get('profilePic');
-        if (picFile && picFile.size > 0) picUrl = await uploadProfilePicture(picFile);
+        if (picFile && picFile.size > 0) picUrl = await r2Upload(picFile, 'profile-pictures');
 
         // ── Slug (from professional name, e.g. "La Bruja Next Door" → la-bruja-next-door)
         const baseSlug = slugFromFormData(formData);
@@ -239,20 +239,6 @@ async function handleFormSubmit(e) {
         showNotification('Error submitting: ' + err.message, 'error');
         if (submitBtn) { submitBtn.textContent = origText; submitBtn.disabled = false; }
     }
-}
-
-// ============================================
-// IMAGE UPLOAD
-// ============================================
-async function uploadProfilePicture(file) {
-    const ext  = file.name.split('.').pop();
-    const path = `profile-pictures/${Date.now()}-${Math.random().toString(36).substring(7)}.${ext}`;
-    const { error } = await supabaseClient.storage
-        .from('profile-pictures')
-        .upload(path, file, { cacheControl: '3600', upsert: false });
-    if (error) throw new Error('Image upload failed: ' + error.message);
-    const { data } = supabaseClient.storage.from('profile-pictures').getPublicUrl(path);
-    return data.publicUrl;
 }
 
 // ============================================
