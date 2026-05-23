@@ -494,6 +494,17 @@
     border-color: var(--accent);
     color: var(--accent);
 }
+.edit-profile-btn {
+    background: transparent;
+    border-color: var(--border);
+    color: var(--muted);
+    font-size: 9.5px;
+}
+.edit-profile-btn:hover {
+    background: rgba(201,185,122,0.15);
+    border-color: var(--accent);
+    color: var(--navy);
+}
 
 /* ── Profile Tabs (About / Services / Social) ── */
 .profile-tabs-block { padding-top: 0; }

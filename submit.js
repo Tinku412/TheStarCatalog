@@ -6,6 +6,10 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 
 let supabaseClient;
 
+// ─ Edit mode state ────────────────────────────────────────────────────────────
+let editProfileId   = null;   // set when ?edit=<id> is in the URL
+let editCurrentPic  = null;   // URL of the existing profile picture
+
 function buildOfferingRow() {
     const row = document.createElement('div');
     row.className = 'offering-row';
@@ -118,7 +122,160 @@ document.addEventListener('DOMContentLoaded', function () {
             removeBtn.closest('.offering-row')?.remove();
         });
     }
+
+    // ── Edit mode detection ───────────────────────────────────────────────────
+    const params = new URLSearchParams(window.location.search);
+    const editId = params.get('edit');
+    if (editId) {
+        editProfileId = editId;
+        document.getElementById('_editProfileId').value = editId;
+        // Show a saved confirmation if redirected back after saving
+        if (params.get('saved') === '1') {
+            setTimeout(() => showNotification('Profile saved successfully!', 'success'), 300);
+        }
+        loadEditMode(editId);
+    }
 });
+
+// ============================================
+// EDIT MODE — load existing profile into form
+// ============================================
+async function loadEditMode(profileId) {
+    // Verify auth — only the owner should edit
+    const { data: { user } } = await supabaseClient.auth.getUser();
+    if (!user) {
+        showNotification('You must be signed in to edit a profile.', 'error');
+        return;
+    }
+
+    // Fetch the profile row
+    const { data: profiles, error } = await supabaseClient
+        .from('sc_profiles')
+        .select('*')
+        .eq('id', profileId)
+        .limit(1);
+
+    if (error || !profiles || profiles.length === 0) {
+        showNotification('Profile not found or you do not have permission to edit it.', 'error');
+        return;
+    }
+
+    const p = profiles[0];
+
+    // Verify the logged-in user is the owner
+    if (p.owner_user_id && p.owner_user_id !== user.id) {
+        showNotification('You are not authorised to edit this profile.', 'error');
+        return;
+    }
+
+    // Show edit banner
+    const banner = document.getElementById('editModeBanner');
+    const nameEl = document.getElementById('editModeProfileName');
+    if (banner) banner.style.display = '';
+    if (nameEl) nameEl.textContent   = p.professional_name || '';
+
+    // Update page title and submit button
+    document.title = 'Edit Profile — ' + (p.professional_name || '');
+    document.querySelectorAll('.submit-btn').forEach(b => b.textContent = '✦ Save Changes');
+
+    const form = document.getElementById('submitForm');
+    if (!form) return;
+
+    // ── Helper to set a plain input / select / textarea ──────────────────────
+    function setField(name, value) {
+        if (value == null) return;
+        const el = form.elements[name];
+        if (!el) return;
+        el.value = value;
+    }
+
+    // ── Step 1 fields ─────────────────────────────────────────────────────────
+    setField('personalName',    p.personal_name);
+    setField('professionalName', p.professional_name);
+    setField('oneLiner',        p.one_liner);
+    setField('description',     p.description);
+
+    // Existing profile picture — show as preview, keep URL for reuse
+    if (p.profile_picture_url) {
+        editCurrentPic = p.profile_picture_url;
+        const preview = document.getElementById('picPreview');
+        if (preview) {
+            preview.src          = p.profile_picture_url;
+            preview.style.display = 'block';
+        }
+    }
+
+    // Specialties — wait for Tom Select to be ready, then set values
+    (function trySetSpecialties(attempts) {
+        if (window.specialtiesSelectInstance && p.specialties) {
+            const vals = p.specialties.split(',').map(s => s.trim()).filter(Boolean);
+            // Add any custom values that aren't in the predefined list
+            vals.forEach(v => {
+                if (!window.specialtiesSelectInstance.options[v]) {
+                    window.specialtiesSelectInstance.addOption({ value: v, text: v });
+                }
+            });
+            window.specialtiesSelectInstance.setValue(vals);
+        } else if (attempts > 0) {
+            setTimeout(() => trySetSpecialties(attempts - 1), 150);
+        }
+    })(20);
+
+    // ── Step 2 fields ─────────────────────────────────────────────────────────
+    // Practitioner type — handle "Other" case
+    const typeSelect = form.elements['professionalIdentity'];
+    if (typeSelect && p.professional_identity) {
+        // Try setting directly
+        typeSelect.value = p.professional_identity;
+        // If no match, use Other + text
+        if (!typeSelect.value) {
+            typeSelect.value = 'Other';
+            setField('professionalIdentityOther', p.professional_identity);
+            const wrap = document.getElementById('practitionerTypeOtherWrap');
+            if (wrap) wrap.style.display = '';
+        }
+    }
+
+    setField('serviceType',      p.service_type);
+    setField('experience',       p.experience);
+    setField('priceRange',       p.minimum_price);
+    setField('deliveryTime',     p.delivery_time);
+    setField('providesProof',    p.provides_proof ? 'Yes' : (p.provides_proof === false ? 'No' : ''));
+    setField('refund',           p.refund_policy  ? 'Yes' : (p.refund_policy  === false ? 'No' : ''));
+    setField('acceptsEmergency', p.accepts_emergency);
+    setField('location',         p.location);
+    setField('activeSince',      p.active_since);
+    setField('responseTime',     p.response_time);
+    setField('worksOnline',      p.works_online === false ? 'No' : (p.works_online ? 'Yes' : ''));
+    setField('languages',        p.languages);
+
+    // Offerings — parse from the saved `offerings` text field (Name — Price\n...)
+    if (p.offerings) {
+        const rowsWrap = document.getElementById('offeringRows');
+        if (rowsWrap) {
+            rowsWrap.innerHTML = '';
+            const lines = p.offerings.split('\n').filter(l => l.trim());
+            lines.forEach((line, i) => {
+                const dashIdx = line.indexOf(' — ');
+                const name    = dashIdx >= 0 ? line.slice(0, dashIdx).trim() : line.trim();
+                const price   = dashIdx >= 0 ? line.slice(dashIdx + 3).trim() : '';
+                const row     = buildOfferingRow();
+                row.querySelector('input[name="offeringName[]"]').value  = name;
+                row.querySelector('input[name="offeringPrice[]"]').value  = price;
+                rowsWrap.appendChild(row);
+            });
+            // If nothing parsed, keep the empty default row
+            if (!lines.length) rowsWrap.appendChild(buildOfferingRow());
+        }
+    }
+
+    // ── Step 3 (contact) fields ───────────────────────────────────────────────
+    setField('email',          p.email);
+    setField('website',        p.website);
+    setField('instagramLink',  p.instagram_link);
+    setField('redditLink',     p.reddit_link);
+    setField('storeLink',      p.store_link);
+}
 
 // ============================================
 // FORM SUBMISSION
@@ -172,11 +329,17 @@ async function handleFormSubmit(e) {
         // ── Profile picture — upload to Cloudflare R2 ─────────────────────────
         let picUrl = null;
         const picFile = formData.get('profilePic');
-        if (picFile && picFile.size > 0) picUrl = await r2Upload(picFile, 'profile-pictures');
+        if (picFile && picFile.size > 0) {
+            // New file selected — upload to R2
+            picUrl = await r2Upload(picFile, 'profile-pictures');
+        } else if (editProfileId && editCurrentPic) {
+            // Edit mode with no new file — keep existing URL
+            picUrl = editCurrentPic;
+        }
 
-        // ── Slug (from professional name, e.g. "La Bruja Next Door" → la-bruja-next-door)
+        // ── Slug (only required for new profiles — kept unchanged on edit) ──────
         const baseSlug = slugFromFormData(formData);
-        if (!baseSlug) {
+        if (!baseSlug && !editProfileId) {
             showNotification('Please enter a Professional / Practice Name so we can create a profile URL.', 'error');
             if (submitBtn) { submitBtn.textContent = origText; submitBtn.disabled = false; }
             return;
@@ -210,29 +373,48 @@ async function handleFormSubmit(e) {
             services_offered:      servicesOffered                  || null,
             offerings:             offeringsText                    || null,
             accepts_emergency:     formData.get('acceptsEmergency') || null,
-            status:                'pending',
-            is_active:             true,
         };
 
-        const inserted = await insertProfileWithUniqueSlug(profileData, baseSlug);
-        console.log('[submit] Profile created with slug:', inserted?.slug);
+        // ── Branch: UPDATE existing profile vs INSERT new ─────────────────────
+        if (editProfileId) {
+            // Edit mode — UPDATE the existing row (slug stays unchanged)
+            const { error: updateErr } = await supabaseClient
+                .from('sc_profiles')
+                .update(profileData)
+                .eq('id', editProfileId);
 
-        showNotification('Practitioner submitted successfully! It will appear once reviewed. Thank you!', 'success');
+            if (updateErr) throw updateErr;
 
-        setTimeout(() => {
-            e.target.reset();
-            // Reset Tom Select
-            if (window.specialtiesSelectInstance) window.specialtiesSelectInstance.clear();
-            // Hide "Other" text inputs
-            const otherWrap  = document.getElementById('practitionerTypeOtherWrap');
-            if (otherWrap)  otherWrap.style.display  = 'none';
-            const customWrap = document.getElementById('specialtyCustomTextWrap');
-            if (customWrap) customWrap.style.display = 'none';
-            // Hide pic preview
-            const picPreview = document.getElementById('picPreview');
-            if (picPreview) { picPreview.src = ''; picPreview.style.display = 'none'; }
-            if (submitBtn)  { submitBtn.textContent = origText; submitBtn.disabled = false; }
-        }, 2500);
+            showNotification('Profile updated successfully!', 'success');
+            if (submitBtn) { submitBtn.textContent = '✦ Save Changes'; submitBtn.disabled = false; }
+
+            // Redirect back to the profile page after a short delay
+            setTimeout(() => {
+                window.location.href = '/submit-practitioner.html?edit=' + encodeURIComponent(editProfileId) + '&saved=1';
+            }, 1800);
+
+        } else {
+            // New submission — INSERT with auto-generated unique slug
+            profileData.status    = 'pending';
+            profileData.is_active = true;
+
+            const inserted = await insertProfileWithUniqueSlug(profileData, baseSlug);
+            console.log('[submit] Profile created with slug:', inserted?.slug);
+
+            showNotification('Practitioner submitted successfully! It will appear once reviewed. Thank you!', 'success');
+
+            setTimeout(() => {
+                e.target.reset();
+                if (window.specialtiesSelectInstance) window.specialtiesSelectInstance.clear();
+                const otherWrap  = document.getElementById('practitionerTypeOtherWrap');
+                if (otherWrap)  otherWrap.style.display  = 'none';
+                const customWrap = document.getElementById('specialtyCustomTextWrap');
+                if (customWrap) customWrap.style.display = 'none';
+                const picPreview = document.getElementById('picPreview');
+                if (picPreview) { picPreview.src = ''; picPreview.style.display = 'none'; }
+                if (submitBtn)  { submitBtn.textContent = origText; submitBtn.disabled = false; }
+            }, 2500);
+        }
 
     } catch (err) {
         console.error('Submission error:', err);

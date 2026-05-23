@@ -108,6 +108,21 @@ async function loadProfile(identifier, bySlug = false) {
             } catch (_) { /* safe to ignore on local file:// */ }
         }
 
+        // Show Edit button if the logged-in user owns this profile
+        if (profile.owner_user_id) {
+            supabaseClient.auth.getUser().then(({ data: { user } }) => {
+                if (user && user.id === profile.owner_user_id) {
+                    const editBtn = document.getElementById('editProfileBtn');
+                    if (editBtn) {
+                        editBtn.style.display = 'inline-flex';
+                        editBtn.addEventListener('click', () => {
+                            window.location.href = '/submit-practitioner.html?edit=' + encodeURIComponent(profile.id);
+                        });
+                    }
+                }
+            }).catch(() => {});
+        }
+
         await incrementViews(profile.id, profile.views || 0);
 
         if (container) container.style.opacity = '1';
