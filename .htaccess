@@ -1,0 +1,31 @@
+# The Star Catalog — Apache URL rewrites
+# Requires mod_rewrite (enabled on most shared hosting / cPanel).
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # If the site lives in a subfolder (e.g. public_html/catalog/), set:
+    # RewriteBase /catalog/
+    RewriteBase /
+
+    # ── 1. Leave real files and folders alone ─────────────────────────────
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [L]
+
+    # ── 2. Pretty practitioner URLs ─────────────────────────────────────
+    # /spellcasters/la-bruja-next-door  →  profile.html?slug=la-bruja-next-door
+    # Browser address bar stays on /spellcasters/... (internal rewrite, not 302).
+    RewriteRule ^spellcasters/([a-z0-9][a-z0-9-]*)/?$ /profile.html?slug=$1 [L,QSA,NC]
+
+</IfModule>
+
+# Default directory index
+DirectoryIndex index.html index.htm
+
+# Optional: uncomment to force HTTPS
+# <IfModule mod_rewrite.c>
+#     RewriteEngine On
+#     RewriteCond %{HTTPS} !=on
+#     RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+# </IfModule>

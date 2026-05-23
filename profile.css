@@ -1,0 +1,696 @@
+/* ================================================
+   THE STAR CATALOG — PROFILE PAGE STYLES
+   ================================================ */
+
+/* ========== BREADCRUMB ========== */
+
+.breadcrumb {
+    padding: 0.7rem 2rem;
+    border-bottom: 1.5px solid var(--border);
+    background: var(--cream3);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Source Code Pro', monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    flex-wrap: wrap;
+}
+.breadcrumb a { color: var(--muted); text-decoration: none; }
+.breadcrumb a:hover { color: var(--navy); }
+.breadcrumb > span { color: var(--navy); opacity: .45; }
+.breadcrumb #profileType,
+.breadcrumb #breadcrumbName { opacity: 1; color: var(--navy); }
+
+/* ========== PROFILE CONTAINER ========== */
+
+.profile-container { transition: opacity 0.2s; }
+
+/* ========== PROFILE LAYOUT ========== */
+
+.profile-wrap {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    border-bottom: 2px solid var(--border);
+    min-height: 70vh;
+    align-items: start;
+}
+
+/* ========== LEFT SIDEBAR ========== */
+
+.profile-sidebar {
+    /* border: 1px solid var(--border); */
+    display: flex;
+    flex-direction: column;
+    position: sticky;
+    top: 62px;
+    max-height: calc(100vh - 62px);
+    /* overflow-y: auto; */
+}
+
+/* Photo */
+.sidebar-photo {
+    border-bottom: 1.5px solid var(--border);
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 1/1;
+    flex-shrink: 0;
+}
+.sidebar-photo .profile-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center; /* keep faces visible on portrait photos */
+    display: block;
+    filter: sepia(18%) contrast(1.05) brightness(0.97);
+}
+.profile-verified-stamp {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    width: 70px;
+    height: 70px;
+    z-index: 10;
+    filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.4));
+    transform: rotate(-12deg);
+    pointer-events: none;
+    object-fit: contain;
+}
+.sidebar-profession-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--navy);
+    color: var(--cream);
+    font-family: 'Source Code Pro', monospace;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 6px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+}
+.verified-label {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--green);
+    font-size: 8px;
+    letter-spacing: 0.1em;
+    flex-shrink: 0;
+}
+
+/* Info rows */
+.sidebar-info {
+    padding: 8px 14px;
+    display: flex;
+    flex-direction: column;
+}
+.info-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 6px 0;
+    border-bottom: 1px solid var(--cream3);
+    font-family: 'Source Code Pro', monospace;
+}
+.info-row:last-child { border-bottom: none; }
+.info-label {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    flex-shrink: 0;
+}
+.info-val {
+    font-size: 12.5px;
+    color: var(--navy);
+    font-weight: 500;
+    text-align: right;
+    word-break: break-word;
+    line-height: 1.4;
+}
+
+/* Tags */
+.sidebar-tags {
+    padding: 10px 14px;
+    border-top: 1.5px solid var(--border);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    min-height: 44px;
+    overflow: hidden;
+}
+
+/* ========== MAIN CONTENT ========== */
+
+.profile-main-content {
+    display: flex;
+    flex-direction: column;
+    border-left: 1px solid var(--border);
+    min-width: 0;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+/* ── Name Header ── */
+.profile-name-header {
+    padding: 1.6rem 2rem;
+    border-bottom: 1.5px solid var(--border);
+    background: var(--navy);
+    color: var(--cream);
+    position: relative;
+    overflow: hidden;
+}
+.profile-name-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Cpath d='M30 5L32 28L55 30L32 32L30 55L28 32L5 30L28 28Z' fill='none' stroke='%23c9b97a' stroke-width='0.5' opacity='0.09'/%3E%3C/svg%3E");
+    background-size: 60px;
+    pointer-events: none;
+}
+.profile-name-header-inner {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+}
+
+/* Name row — name + action buttons */
+.profile-name-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 10px;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+}
+.profile-name {
+    font-family: 'Cinzel', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    line-height: 1.15;
+    color: var(--cream);
+    flex: 1 1 0%;
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    hyphens: auto;
+}
+
+/* ── Profile Header Action Buttons (Upvote + Save) ── */
+.profile-header-actions {
+    display: flex;
+    align-items: stretch;
+    flex-shrink: 0;
+    margin-top: 4px;
+    gap: 5px;
+}
+
+.profile-action-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    border: 1.5px solid rgba(201, 185, 122, 0.3);
+    background: transparent;
+    color: var(--cream3);
+    cursor: pointer;
+    font-family: 'Source Code Pro', monospace;
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    transition: background 0.14s, border-color 0.14s, color 0.14s;
+    margin-left: -1.5px;
+    white-space: nowrap;
+}
+.profile-action-btn:first-child { margin-left: 0; }
+/* Share action button: mobile-only icon — hidden on desktop */
+.share-action-btn { display: none; }
+.profile-action-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(201, 185, 122, 0.6);
+    color: var(--cream);
+}
+.contact-action-btn {
+    border-color: rgba(201, 185, 122, 0.5);
+    color: var(--accent);
+}
+.contact-action-btn:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--navy);
+}
+.profile-action-btn.upvoted,
+#profileUpvote.upvoted {
+    color: #1b2d3e;;
+    border-color: var(--accent);
+    background: rgba(201, 185, 122, 1);
+}
+.profile-action-btn.bookmarked,
+#profileBookmark.bookmarked {
+    color: #1b2d3e;
+    background: rgb(201 185 122);
+    border-color: rgba(201, 185, 122, 0.5);
+}
+
+#profileUpvoteCount {
+    font-weight: 600;
+    font-size: 11px;
+}
+
+/* Tagline & meta */
+.profile-tagline {
+    font-style: italic;    
+    font-size: 0.8rem;
+    line-height: 1.6;
+    margin-bottom: 14px;
+}
+.profile-meta-row {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    border: 1px solid #2c3f52;
+    width: fit-content;
+    flex-wrap: wrap;
+}
+.meta-chip {
+    padding: 5px 14px;
+    border-right: 1px solid #2c3f52;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'Source Code Pro', monospace;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+}
+.meta-chip:last-child { border-right: none; }
+
+/* ── Section blocks ── */
+.profile-section-block {
+    padding: 1.4rem 2rem;
+    border: 1px solid var(--border);
+    border-left: 0px;
+}
+.profile-section-title {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 14px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--cream3);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.profile-section-title::before {
+    content: '';
+    display: block;
+    width: 8px;
+    height: 8px;
+    background: var(--accent);
+    flex-shrink: 0;
+}
+
+.about-text {
+    font-size: 0.82rem;
+    line-height: 1.85;
+    color: var(--text);
+}
+.about-text p + p { margin-top: 0.9em; }
+
+/* ── Contact buttons (below About) ── */
+.profile-contact-buttons {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.pcb-primary,
+.pcb-secondary {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    font-family: 'Source Code Pro', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    border: 1.5px solid var(--border);
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background 0.12s, color 0.12s;
+    flex: 1;
+    min-width: 110px;
+}
+.pcb-primary {
+    background: var(--navy);
+    color: var(--cream);
+}
+.pcb-primary:hover { background: var(--navy2); }
+
+.pcb-secondary {
+    background: transparent;
+    color: var(--navy);
+}
+.pcb-secondary:hover { background: var(--cream3); }
+
+/* ── Back link ── */
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    font-family: 'Source Code Pro', monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.12s;
+}
+.back-link:hover { color: var(--navy); }
+
+/* Back button — used by profile.js error state */
+.back-button {
+    display: inline-block;
+    font-family: 'Source Code Pro', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    background: var(--navy);
+    color: var(--cream);
+    border: 1.5px solid var(--border);
+    padding: 10px 20px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.12s;
+}
+.back-button:hover { background: var(--navy2); }
+
+/* ========== NOTICE STRIP ========== */
+
+.notice-strip {
+    padding: 10px 2rem;
+    border-bottom: 1.5px solid var(--border);
+    background: var(--cream3);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Source Code Pro', monospace;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--navy);
+    opacity: .7;
+}
+
+/* ── Profile Header Bottom Bar (rating + CTA buttons) ── */
+.profile-header-bottom-bar {
+    display: flex;
+    align-items: center;
+    /* justify-content: space-between; */
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 2px;
+}
+
+.header-rating {
+    align-items: center;
+    gap: 7px;
+    font-family: 'Source Code Pro', monospace;
+    /* display set by JS */
+}
+.header-rating-stars { font-size: 15px; letter-spacing: 1px; }
+.header-rating-score {
+    font-family: 'Cinzel', serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--accent);
+}
+.header-rating-count {
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    color: rgba(232,224,204,0.6);
+    text-transform: uppercase;
+}
+
+.header-cta-buttons {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+.header-cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-family: 'Source Code Pro', monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 10px 20px;
+    cursor: pointer;
+    border: 1.5px solid rgba(201,185,122,0.5);
+    background: transparent;
+    color: var(--cream);
+    transition: background 0.13s, border-color 0.13s, color 0.13s;
+    white-space: nowrap;
+}
+.review-header-btn {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--navy);
+    font-weight: 600;
+}
+.review-header-btn:hover {
+    background: #d4c884;
+    border-color: #d4c884;
+}
+.contact-header-btn {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--navy);
+    font-weight: 600;
+}
+.contact-header-btn:hover {
+    background: #d4c884;
+    border-color: #d4c884;
+}
+.share-header-btn:hover {
+    background: rgba(201,185,122,0.15);
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+/* ── Profile Tabs (About / Services / Social) ── */
+.profile-tabs-block { padding-top: 0; }
+
+.profile-tab-nav {
+    display: flex;
+    border-bottom: 1.5px solid var(--cream3);
+    margin-bottom: 1.2rem;
+}
+.profile-tab-btn {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 11px 18px;
+    background: transparent;
+    border: none;
+    border-bottom: 2.5px solid transparent;
+    color: var(--muted);
+    cursor: pointer;
+    transition: color 0.12s, border-color 0.12s;
+    margin-bottom: -1.5px;
+}
+.profile-tab-btn:hover { color: var(--navy); }
+.profile-tab-btn.active {
+    color: var(--navy);
+    border-bottom-color: var(--accent);
+    font-weight: 600;
+}
+
+.tab-panel { display: none; }
+.tab-panel.active { display: block; min-height: 300px; }
+
+.no-tab-content {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 12.5px;
+    color: var(--muted);
+    font-style: italic;
+    padding: 0.4rem 0;
+}
+
+/* Services tab listing cards */
+.services-listings-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 10px;
+}
+
+.service-listing-card {
+    border: 1.5px solid var(--cream3);
+    background: var(--cream);
+    padding: 12px;
+    transition: border-color 0.12s, transform 0.12s;
+}
+
+.service-listing-card:hover {
+    border-color: var(--border);
+    transform: translateY(-1px);
+}
+
+.service-listing-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.service-listing-badge {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+}
+
+.service-listing-price {
+    font-family: 'Cinzel', serif;
+    font-size: 14px;
+    color: #7c6300;
+    font-weight: 700;
+}
+
+.service-listing-name {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 12.5px;
+    line-height: 1.45;
+    color: var(--navy);
+    margin: 0;
+}
+
+/* Social Links Tab */
+#socialLinksContent {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.social-link-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    padding: 10px 14px;
+    border: 1.5px solid var(--cream3);
+    background: var(--cream2);
+    color: var(--navy);
+    font-family: 'Source Code Pro', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition: border-color 0.12s, background 0.12s, color 0.12s;
+}
+
+.social-link-btn:hover {
+    border-color: var(--border);
+    background: var(--cream);
+    color: var(--navy2);
+}
+
+.social-link-btn svg {
+    flex-shrink: 0;
+}
+
+/* ========== RESPONSIVE ========== */
+
+@media (max-width: 1024px) {
+    .profile-wrap { grid-template-columns: 230px 1fr; }
+}
+
+@media (max-width: 768px) {
+    .profile-wrap {
+        grid-template-columns: 1fr;
+    }
+    .profile-sidebar {
+        border-right: none;
+        border-bottom: 2px solid var(--border);
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+    }
+    .sidebar-photo {
+        aspect-ratio: 4/3;
+        max-height: 320px;
+    }
+    .breadcrumb { padding: 0.7rem 1rem; }
+    .profile-name-header { padding: 1.2rem 1.2rem; }
+    .profile-name { font-size: 1.4rem; }
+    .profile-section-block { padding: 1.2rem 1.2rem; }
+
+    /* Name row: name shrinks/wraps; icons always stay visible on the right */
+    .profile-name-row {
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 8px;
+        flex-wrap: nowrap;
+    }
+    .profile-name {
+        flex: 1 1 0%;
+        min-width: 0;
+        max-width: 100%;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+    }
+    .profile-header-actions {
+        width: auto;
+        flex: 0 0 auto;
+        flex-shrink: 0;
+        gap: 3px;
+        align-self: flex-start;
+    }
+    /* Tagline sits on its own line below the name row */
+    .profile-tagline { margin-top: 6px; margin-bottom: 10px; }
+    .profile-header-bottom-bar { flex-direction: column; align-items: flex-start; margin-top: 4px; }
+    .header-cta-buttons { width: 100%; }
+    .header-cta-btn { flex: 1; justify-content: center; }
+
+    .profile-contact-buttons { flex-direction: column; }
+    .pcb-primary, .pcb-secondary { flex: none; width: 100%; }
+    .notice-strip { padding: 10px 1rem; }
+    .profile-tab-btn { padding: 9px 12px; font-size: 9px; }
+
+    /* Desktop Share button hidden on mobile — share-action-btn in icon row covers it */
+    .share-header-btn { display: none; }
+
+    /* Icon-only action buttons on mobile: hide labels, compact padding */
+    .profile-action-btn .pab-label { display: none; }
+    .profile-action-btn { padding: 7px 9px; gap: 3px; }
+    #profileUpvoteCount { font-size: 10px; }
+    /* Show the share icon button inside the action cluster */
+    .share-action-btn { display: inline-flex; }
+}
+
+@media (max-width: 480px) {
+    .profile-name { font-size: 1.2rem; }
+    .profile-tagline { font-size: 0.85rem; }
+}

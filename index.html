@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-8RKJDCW3DF"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-8RKJDCW3DF');
+</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Star Catalog — Spell Casters Directory</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Cinzel:wght@400;600;700&family=Source+Code+Pro:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="svgviewer-png-output.png" type="image/png" />
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="site-header">
+        <a class="logo-wrap" href="index.html">
+            <div class="monogram">
+                <svg width="24" height="24" viewBox="0 0 26 26" fill="none">
+                    <polygon points="13,2 15,10 23,8 17,14 23,20 15,18 13,26 11,18 3,20 9,14 3,8 11,10" stroke="#c9b97a" stroke-width="1" fill="none"/>
+                    <circle cx="13" cy="13" r="3" fill="none" stroke="#c9b97a" stroke-width="1"/>
+                    <line x1="11.5" y1="13" x2="14.5" y2="13" stroke="#c9b97a" stroke-width="1"/>
+                    <line x1="13" y1="11.5" x2="13" y2="14.5" stroke="#c9b97a" stroke-width="1"/>
+                </svg>
+            </div>
+            <div class="logo-text">
+                <span class="logo-main">The Star Catalog</span>
+                <span class="logo-sub">Est. MMXXVII — Seeker's Guide</span>
+            </div>
+        </a>
+        <nav class="site-nav">
+            <a href="index.html" class="active">Browse</a>
+            <a href="about.html">About</a>
+            <a href="faq.html">FAQ</a>
+            <a href="saved.html">Saved</a>
+            <span id="navAuthArea" class="nav-auth-area"></span>
+        </nav>
+        <a class="nav-cta" href="submit-practitioner.html" style="text-decoration:none;">Submit Practitioner</a>
+        <button class="mobile-menu-btn" id="mobileMenuBtn">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </header>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav" id="mobileNav">
+        <a href="index.html" class="mobile-nav-item">Browse Directory</a>
+        <a href="about.html" class="mobile-nav-item">About</a>
+        <a href="faq.html" class="mobile-nav-item">FAQ</a>
+        <a href="contact.html" class="mobile-nav-item">Contact</a>
+        <a href="saved.html" class="mobile-nav-item">Saved Profiles</a>
+        <a href="submit-practitioner.html" class="mobile-nav-item">Submit Practitioner</a>
+    </div>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-inner">
+            <div class="hero-eyebrow">
+                <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
+                    <polygon points="7,1 8.5,5.5 13,5.5 9.5,8.5 11,13 7,10 3,13 4.5,8.5 1,5.5 5.5,5.5" stroke="#c9b97a" stroke-width="1" fill="none"/>
+                </svg>
+                Be the guide to your stars
+            </div>
+            <h1>Discover Legit Spell Casters</h1>
+            <!-- <p class="hero-desc">Helping our community find trustworthy spell casters.</p> -->
+            <p class="hero-desc">A community initiative to collaborate & share reviews on spell casters.</p>
+            <!-- <div class="hero-stats">
+                <div class="stat">
+                    <span class="stat-num">2,847</span>
+                    <span class="stat-label">Practitioners</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-num">14,200+</span>
+                    <span class="stat-label">Reviews</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-num">38</span>
+                    <span class="stat-label">Disciplines</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-num">96%</span>
+                    <span class="stat-label">Verified</span>
+                </div>
+            </div> -->
+        </div>
+    </section>
+
+    <!-- Filter + Sort Panel -->
+    <div class="filter-panel" id="filterPanel">
+        <!-- Search Row -->
+        <div class="fp-row fp-search-row">
+            <div class="fp-search-wrap">
+                <svg class="fp-search-icon" width="12" height="12" viewBox="0 0 14 14" fill="none">
+                    <circle cx="6" cy="6" r="4.5" stroke="currentColor" stroke-width="1.3"/>
+                    <line x1="9.5" y1="9.5" x2="13" y2="13" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+                </svg>
+                <input class="fp-search" id="fpSearch" type="text" placeholder="Search practitioners by name…" autocomplete="off" spellcheck="false">
+            </div>
+        </div>
+
+        <div class="fp-row">
+            <span class="fp-label">
+                <svg width="11" height="11" viewBox="0 0 14 14" fill="none">
+                    <line x1="2" y1="4" x2="12" y2="4" stroke="currentColor" stroke-width="1.3"/>
+                    <line x1="4" y1="7" x2="10" y2="7" stroke="currentColor" stroke-width="1.3"/>
+                    <line x1="6" y1="10" x2="8" y2="10" stroke="currentColor" stroke-width="1.3"/>
+                </svg>
+                Filter
+            </span>
+
+            <select class="fp-select" id="fpPractitionerType" title="Practitioner Type">
+                <option value="">All Types</option>
+                <optgroup label="Western Witchcraft">
+                    <option>Witch</option>
+                    <option>Wiccan</option>
+                    <option>Hedge Witch</option>
+                    <option>Kitchen Witch</option>
+                    <option>Green Witch</option>
+                    <option>Sea Witch</option>
+                    <option>Ceremonial Magician</option>
+                    <option>Chaos Magician</option>
+                </optgroup>
+                <optgroup label="Folk Magic &amp; Rootwork">
+                    <option>Hoodoo Rootworker</option>
+                    <option>Conjure Worker</option>
+                    <option>Granny Witch / Appalachian Folk Magic</option>
+                    <option>Herbalist / Plant Magic Practitioner</option>
+                </optgroup>
+                <optgroup label="African Diaspora Traditions">
+                    <option>Voodoo Priest / Mambo (Louisiana)</option>
+                    <option>Vodou Priest / Mambo (Haitian)</option>
+                    <option>Santería Practitioner / Olorisha</option>
+                    <option>Palo Mayombe Practitioner</option>
+                    <option>Candomblé Practitioner</option>
+                    <option>Quimbanda Practitioner</option>
+                </optgroup>
+                <optgroup label="Latin / Caribbean Traditions">
+                    <option>Brujo / Bruja</option>
+                    <option>Curandera / Curandero</option>
+                    <option>Espiritista</option>
+                </optgroup>
+                <optgroup label="Psychic &amp; Divination">
+                    <option>Psychic Medium</option>
+                    <option>Clairvoyant</option>
+                    <option>Tarot Reader</option>
+                    <option>Oracle Reader</option>
+                    <option>Lenormand Reader</option>
+                    <option>Rune Reader</option>
+                    <option>Astrologer (Western)</option>
+                    <option>Astrologer (Vedic / Jyotish)</option>
+                    <option>Numerologist</option>
+                    <option>Palmist</option>
+                    <option>Tea Leaf Reader</option>
+                </optgroup>
+                <optgroup label="Energy &amp; Healing Work">
+                    <option>Reiki Practitioner</option>
+                    <option>Energy Healer</option>
+                    <option>Chakra Healer</option>
+                    <option>Shaman / Shamanic Practitioner</option>
+                    <option>Sound Healer</option>
+                </optgroup>
+                <optgroup label="Occult &amp; Dark Arts">
+                    <option>Demonologist</option>
+                    <option>Goetic Magician</option>
+                    <option>Necromancer</option>
+                    <option>Left-Hand Path Practitioner</option>
+                    <option>Dark Arts Practitioner</option>
+                </optgroup>
+                <optgroup label="General / Other">
+                    <option>Spiritual Advisor / Coach</option>
+                    <option>Spell Caster (General)</option>
+                </optgroup>
+            </select>
+
+            <select class="fp-select" id="fpSpecialty" title="Specialty">
+                <option value="">All Specialties</option>
+                <optgroup label="Love &amp; Relationships">
+                    <option>Love</option>
+                    <option>Bring Back Ex / Reconciliation</option>
+                    <option>Marriage</option>
+                    <option>Commitment</option>
+                    <option>Obsession</option>
+                    <option>Binding</option>
+                    <option>Break Up</option>
+                    <option>Divorce</option>
+                    <option>Lust &amp; Desire</option>
+                    <option>LGBTQ+ Affirming Work</option>
+                </optgroup>
+                <optgroup label="Protection &amp; Removal">
+                    <option>Protection</option>
+                    <option>Curse / Hex Removal</option>
+                    <option>Evil Eye Removal</option>
+                    <option>Psychic Attack Protection</option>
+                    <option>Banishment</option>
+                    <option>Cord Cutting</option>
+                    <option>Spiritual Cleansing</option>
+                    <option>House Cleansing / Blessing</option>
+                    <option>Warding</option>
+                </optgroup>
+                <optgroup label="Money &amp; Career">
+                    <option>Money &amp; Prosperity</option>
+                    <option>Wealth Attraction</option>
+                    <option>Debt Relief</option>
+                    <option>Business Success</option>
+                    <option>Career Advancement</option>
+                    <option>Job</option>
+                    <option>Luck &amp; Fortune</option>
+                    <option>Gambling Luck</option>
+                </optgroup>
+                <optgroup label="Personal Power">
+                    <option>Confidence &amp; Glamour</option>
+                    <option>Road Opener</option>
+                    <option>Dominance &amp; Control</option>
+                    <option>Enemy Work</option>
+                    <option>Revenge Spells</option>
+                    <option>Justice Spells</option>
+                    <option>Court Case Spells</option>
+                    <option>Legal Protection</option>
+                </optgroup>
+                <optgroup label="Health &amp; Healing">
+                    <option>Healing</option>
+                    <option>Addiction Recovery</option>
+                    <option>Mental Health Support</option>
+                    <option>Fertility &amp; Pregnancy</option>
+                    <option>Beauty &amp; Glamour Magic</option>
+                    <option>Weight &amp; Body Work</option>
+                </optgroup>
+                <optgroup label="Spiritual Development">
+                    <option>Spiritual Awakening</option>
+                    <option>Ancestor Work</option>
+                    <option>Shadow Work</option>
+                    <option>Past Life Work</option>
+                    <option>Dream Work</option>
+                    <option>Spirit Communication</option>
+                    <option>Mediumship Readings</option>
+                    <option>Divination / Readings Only</option>
+                </optgroup>
+                <optgroup label="Dark &amp; Occult">
+                    <option>Dark Magic / Left Hand Path</option>
+                    <option>Demon Work / Goetia</option>
+                    <option>Necromancy</option>
+                    <option>Curse Casting</option>
+                    <option>Hexing &amp; Crossing</option>
+                    <option>Vampire Magic</option>
+                    <option>Metamorphosis</option>
+                    <option>Pact Work</option>
+                </optgroup>
+                <optgroup label="Other">
+                    <option>Pet &amp; Animal Work</option>
+                    <option>Travel &amp; Relocation</option>
+                    <option>Exam &amp; Academic Success</option>
+                    <option>Social Media &amp; Fame</option>
+                    <option>Creativity &amp; Artistic Success</option>
+                    <option>Fertility (Pets / Land)</option>
+                </optgroup>
+            </select>
+
+            <select class="fp-select" id="fpServiceType" title="Service Type">
+                <option value="">All Services</option>
+                <option>Spellcasting &amp; Ritual Work</option>
+                <option>Readings &amp; Divination Only</option>
+                <option>Both Spellcasting and Readings</option>
+                <option>Energy Healing &amp; Spiritual Work</option>
+                <option>Consultations &amp; Spiritual Coaching</option>
+            </select>
+
+            <select class="fp-select" id="fpDelivery" title="Delivery Time">
+                <option value="">Any Delivery</option>
+                <option value="fast">Same day – 3 days</option>
+                <option value="week">Within 1 week</option>
+                <option value="twoweeks">Within 2 weeks</option>
+                <option value="month">Within 1 month</option>
+            </select>
+
+            <div class="fp-divider"></div>
+
+            <span class="fp-label">Sort</span>
+            <select class="fp-select" id="fpSort">
+                <option value="newest">Newest First</option>
+                <option value="upvotes">Most Recommended</option>
+                <option value="price_asc">Price: Low → High</option>
+                <option value="price_desc">Price: High → Low</option>
+            </select>
+
+            <button class="fp-clear" id="fpClear">× Clear</button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- <div class="grid-header">
+            <span class="grid-title">Vetted Practitioners</span>
+            <span class="grid-count" id="profileCount">Loading...</span>
+        </div> -->
+
+        <div class="cards-container" id="cardsContainer">
+            <!-- Cards are dynamically loaded from Supabase via script.js -->
+            <div style="grid-column:1/-1;text-align:center;padding:60px 20px;font-family:'Source Code Pro',monospace;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);">Loading profiles...</div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-top">
+            <div class="footer-col">
+                <div class="footer-col-title">The Star Catalog</div>
+                <div style="display:flex;align-items:center;gap:9px;margin-bottom:10px;">
+                    <div class="monogram" style="border-color:#2c3f52;width:32px;height:32px;">
+                        <svg width="20" height="20" viewBox="0 0 26 26" fill="none">
+                            <polygon points="13,2 15,10 23,8 17,14 23,20 15,18 13,26 11,18 3,20 9,14 3,8 11,10" stroke="#c9b97a" stroke-width="1" fill="none"/>
+                        </svg>
+                    </div>
+                    <span style="font-family:'Cinzel',serif;font-size:12px;color:var(--cream);letter-spacing:0.1em;">thestarcatalog</span>
+                </div>
+                <p class="footer-logo-desc">A free, community-run directory of spell casters and spiritual practitioners. Real reviews from real people — built to protect seekers from fraud.</p>
+            </div>
+            <div class="footer-col">
+                <div class="footer-col-title">Quick Links</div>
+                <ul class="footer-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="saved.html">Saved Profiles</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <div class="footer-col-title">Legal</div>
+                <ul class="footer-links">
+                    <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                    <li><a href="terms.html">Terms of Service</a></li>
+                    <li><a href="disclaimer.html">Disclaimer</a></li>
+                    <li><a href="faq.html">FAQ</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <div class="footer-col-title">Directory</div>
+                <ul class="footer-links">
+                    <li><a href="submit-practitioner.html">Submit a Practitioner</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="faq.html">FAQ</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <div class="footer-col-title">Browse by Type</div>
+                <ul class="footer-links">
+                    <li><a href="index.html">Best Voodoo Practitioners</a></li>
+                    <li><a href="index.html">Best Psychic Readers</a></li>
+                    <li><a href="index.html">Best Tarot Readers</a></li>
+                    <li><a href="index.html">Best Witches &amp; Wiccans</a></li>
+                    <li><a href="index.html">Best Energy Healers</a></li>
+                    <li><a href="index.html">Best Shamans</a></li>
+                    <li><a href="index.html">Best Spellcasters</a></li>
+                    <li><a href="index.html">Best Astrologers</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <div class="footer-col-title">Browse by Specialty</div>
+                <ul class="footer-links">
+                    <li><a href="index.html">Best Love Spell Casters</a></li>
+                    <li><a href="index.html">Best Money Spell Casters</a></li>
+                    <li><a href="index.html">Best Protection Specialists</a></li>
+                    <li><a href="index.html">Best Reconciliation Experts</a></li>
+                    <li><a href="index.html">Best Career Spell Casters</a></li>
+                    <li><a href="index.html">Best Obsession Spell Casters</a></li>
+                    <li><a href="index.html">Best Spiritual Healers</a></li>
+                    <li><a href="index.html">Best Revenge &amp; Justice</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span class="footer-copy">© MMXXVI The Star Catalog. All rights reserved.</span>
+            <div class="footer-bottom-links">
+                <a href="privacy-policy.html">Privacy</a>
+                <a href="terms.html">Terms</a>
+                <a href="disclaimer.html">Disclaimer</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Supabase JS Library -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- Shared Auth Module -->
+    <script src="auth.js"></script>
+
+    <!-- Main Script -->
+    <script src="script.js"></script>
+</body>
+</html>

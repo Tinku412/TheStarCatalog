@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-8RKJDCW3DF"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-8RKJDCW3DF');
+</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact — The Star Catalog</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Cinzel:wght@400;600;700&family=Source+Code+Pro:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <header class="site-header">
+        <a class="logo-wrap" href="index.html">
+            <div class="monogram">
+                <svg width="24" height="24" viewBox="0 0 26 26" fill="none">
+                    <polygon points="13,2 15,10 23,8 17,14 23,20 15,18 13,26 11,18 3,20 9,14 3,8 11,10" stroke="#c9b97a" stroke-width="1" fill="none"/>
+                    <circle cx="13" cy="13" r="3" fill="none" stroke="#c9b97a" stroke-width="1"/>
+                    <line x1="11.5" y1="13" x2="14.5" y2="13" stroke="#c9b97a" stroke-width="1"/>
+                    <line x1="13" y1="11.5" x2="13" y2="14.5" stroke="#c9b97a" stroke-width="1"/>
+                </svg>
+            </div>
+            <div class="logo-text">
+                <span class="logo-main">The Star Catalog</span>
+                <span class="logo-sub">Est. MMXXVI — Seeker's Guide</span>
+            </div>
+        </a>
+        <nav class="site-nav">
+            <a href="index.html">Browse</a>
+            <a href="about.html">About</a>
+            <a href="faq.html">FAQ</a>
+            <a href="saved.html">Saved</a>
+            <span id="navAuthArea" class="nav-auth-area"></span>
+        </nav>
+        <a class="nav-cta" href="submit-practitioner.html" style="text-decoration:none;">Submit Practitioner</a>
+        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+            <span></span><span></span><span></span>
+        </button>
+    </header>
+
+    <div class="mobile-nav" id="mobileNav">
+        <a href="index.html" class="mobile-nav-item">Browse Directory</a>
+        <a href="about.html" class="mobile-nav-item">About</a>
+        <a href="faq.html" class="mobile-nav-item">FAQ</a>
+        <a href="contact.html" class="mobile-nav-item">Contact</a>
+        <a href="#" class="mobile-nav-item">Sign In</a>
+    </div>
+
+    <div class="page-hero">
+        <div class="page-hero-inner">
+            <div class="page-eyebrow">Get in Touch</div>
+            <h1 class="page-title">Contact Us</h1>
+            <p class="page-subtitle">Questions about the directory, verification, or your listing? Our council is here to help. We respond to all enquiries within 3–5 business days.</p>
+        </div>
+    </div>
+
+    <div class="page-content">
+        <div class="page-content-inner">
+
+            <div class="content-section">
+                <div class="section-eyebrow">Send a Message</div>
+                <h2 class="section-heading">How Can We Help?</h2>
+
+                <form class="contact-form" id="contactForm">
+                    <div class="form-row">
+                        <div class="form-field">
+                            <label for="contactName">Full Name</label>
+                            <input type="text" id="contactName" name="name" placeholder="Your name" required>
+                        </div>
+                        <div class="form-field">
+                            <label for="contactEmail">Email Address</label>
+                            <input type="email" id="contactEmail" name="email" placeholder="your@email.com" required>
+                        </div>
+                    </div>
+                    <div class="form-field">
+                        <label for="contactSubject">Subject</label>
+                        <select id="contactSubject" name="subject" required>
+                            <option value="">Select a subject</option>
+                            <option value="general">General Enquiry</option>
+                            <option value="listing">Submit My Practice</option>
+                            <option value="report">Report a Listing</option>
+                            <option value="review">Review / Feedback</option>
+                            <option value="dispute">Dispute / Complaint</option>
+                            <option value="media">Media & Press</option>
+                            <option value="partnership">Partnership Enquiry</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-field">
+                        <label for="contactMessage">Message</label>
+                        <textarea id="contactMessage" name="message" rows="7" placeholder="Describe your question or concern in as much detail as possible..." required></textarea>
+                    </div>
+                    <button type="submit" class="form-submit">Send Message</button>
+                </form>
+
+                <div id="contactSuccess" style="display:none;margin-top:1.5rem;padding:1.2rem 1.6rem;background:var(--navy);color:var(--cream);border-left:4px solid var(--green);">
+                    <strong style="font-family:'Source Code Pro',monospace;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;">Message Received</strong>
+                    <p style="margin-top:6px;font-size:0.95rem;line-height:1.65;color:rgba(232,224,204,0.8);">Thank you for reaching out. We will review your message and respond within 3–5 business days.</p>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <div class="section-eyebrow">Other Ways to Reach Us</div>
+                <h2 class="section-heading">Direct Contact</h2>
+                <div class="section-body">
+                    <p>For urgent safety concerns — including reports of active fraud or threats — please mark your message subject as <strong>"URGENT"</strong>. These are reviewed within 24 hours.</p>
+                </div>
+
+                <div class="contact-info-grid">
+                    <div class="contact-info-card">
+                        <div class="contact-info-label">All Enquiries</div>
+                        <div class="contact-info-val">
+                            <a href="mailto:hello@thestarcatalog.com">hello@thestarcatalog.com</a>
+                            <br>Response within 3–5 days
+                        </div>
+                    </div>
+                    <div class="contact-info-card">
+                        <div class="contact-info-label">Submit a Practitioner</div>
+                        <div class="contact-info-val">
+                            Use our <a href="submit-practitioner.html">submission form</a>
+                            <br>No sign-in required
+                        </div>
+                    </div>
+                    <div class="contact-info-card">
+                        <div class="contact-info-label">Report a Concern</div>
+                        <div class="contact-info-val">
+                            <a href="mailto:hello@thestarcatalog.com">hello@thestarcatalog.com</a>
+                            <br>Mark subject "REPORT" for priority
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <div class="section-eyebrow">Before You Write</div>
+                <h2 class="section-heading">Frequently Asked First</h2>
+                <div class="section-body">
+                    <p>Many common questions are already answered in our <a href="faq.html">FAQ</a>. You may find a faster answer there for topics like:</p>
+                    <ul>
+                        <li>How to submit a practitioner for listing</li>
+                        <li>How reviews work and who can leave them</li>
+                        <li>How to report a fraudulent or problematic listing</li>
+                        <li>What information is stored and how it is used</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-top">
+            <div class="footer-col">
+                <div class="footer-col-title">The Star Catalog</div>
+                <div style="display:flex;align-items:center;gap:9px;margin-bottom:10px;">
+                    <div class="monogram" style="border-color:#2c3f52;width:32px;height:32px;">
+                        <svg width="20" height="20" viewBox="0 0 26 26" fill="none"><polygon points="13,2 15,10 23,8 17,14 23,20 15,18 13,26 11,18 3,20 9,14 3,8 11,10" stroke="#c9b97a" stroke-width="1" fill="none"/></svg>
+                    </div>
+                    <span style="font-family:'Cinzel',serif;font-size:12px;color:var(--cream);letter-spacing:0.1em;">thestarcatalog</span>
+                </div>
+                <p class="footer-logo-desc">A free, community-run directory of spell casters and spiritual practitioners. Real reviews from real people — built to protect seekers from fraud.</p>
+            </div>
+            <div class="footer-col">
+                <div class="footer-col-title">Directory</div>
+                <ul class="footer-links">
+                    <li><a href="index.html">Browse All</a></li>
+                    <li><a href="submit-practitioner.html">Submit a Practitioner</a></li>
+                    <li><a href="saved.html">Saved Profiles</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <div class="footer-col-title">Company</div>
+                <ul class="footer-links">
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="faq.html">FAQ</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <div class="footer-col-title">Legal</div>
+                <ul class="footer-links">
+                    <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                    <li><a href="terms.html">Terms of Service</a></li>
+                    <li><a href="disclaimer.html">Disclaimer</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span class="footer-copy">© MMXXVI The Star Catalog. All rights reserved.</span>
+            <div class="footer-bottom-links">
+                <a href="privacy-policy.html">Privacy</a>
+                <a href="terms.html">Terms</a>
+                <a href="disclaimer.html">Disclaimer</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        (function() {
+            var btn = document.getElementById('mobileMenuBtn');
+            var nav = document.getElementById('mobileNav');
+            if (!btn || !nav) return;
+            btn.addEventListener('click', function(e) { e.stopPropagation(); btn.classList.toggle('active'); nav.classList.toggle('active'); });
+            document.addEventListener('click', function(e) { if (nav.classList.contains('active') && !nav.contains(e.target) && !btn.contains(e.target)) { btn.classList.remove('active'); nav.classList.remove('active'); } });
+        })();
+
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            this.style.display = 'none';
+            document.getElementById('contactSuccess').style.display = 'block';
+        });
+    </script>
+</body>
+</html>

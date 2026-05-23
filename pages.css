@@ -1,0 +1,237 @@
+/* Page Layout */
+.page-section {
+    padding: 60px 0;
+    min-height: calc(100vh - 200px);
+    background-color: var(--vampire-black);
+}
+
+.page-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 30px;
+}
+
+.page-title {
+    font-size: 42px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    margin-bottom: 40px;
+    color: var(--cream-light);
+    text-align: center;
+}
+
+.page-content {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.content-block {
+    padding: 30px;
+    background-color: var(--dark-card);
+    border: 2px solid var(--wine-red);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.content-block h2 {
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin-bottom: 15px;
+    color: var(--wine-red);
+    font-family: 'HelveticaLight', Georgia, serif;
+}
+
+.content-block h3 {
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin: 20px 0 10px 0;
+    color: var(--cream-light);
+}
+
+.content-block p {
+    font-size: 15px;
+    line-height: 1.8;
+    margin-bottom: 15px;
+    color: var(--text-muted);
+    font-family: 'HelveticaLight', Georgia, serif;
+}
+
+.content-block p:last-child {
+    margin-bottom: 0;
+}
+
+.content-block ul,
+.content-block ol {
+    margin: 15px 0;
+    padding-left: 25px;
+    color: var(--text-muted);
+}
+
+.content-block ul li,
+.content-block ol li {
+    font-size: 15px;
+    line-height: 1.8;
+    margin-bottom: 10px;
+    font-family: 'HelveticaLight', Georgia, serif;
+}
+
+.content-block strong {
+    color: var(--cream-light);
+    font-weight: 600;
+}
+
+.content-block a {
+    color: var(--wine-red);
+    text-decoration: underline;
+}
+
+.content-block a:hover {
+    color: #8A0D25;
+    text-decoration: none;
+}
+
+/* Contact Form */
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group-page {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-label-page {
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: var(--cream-light);
+    text-transform: uppercase;
+}
+
+.form-input-page,
+.form-textarea-page {
+    width: 100%;
+    background-color: var(--vampire-black);
+    border: 1px solid var(--wine-red);
+    color: var(--cream-text);
+    padding: 12px 15px;
+    font-size: 14px;
+    font-family: 'HelveticaLight', Georgia, serif;
+}
+
+.form-input-page:focus,
+.form-textarea-page:focus {
+    outline: none;
+    border-color: var(--wine-red);
+    box-shadow: 0 0 0 2px rgba(163, 15, 43, 0.2);
+}
+
+.form-textarea-page {
+    resize: vertical;
+    min-height: 150px;
+}
+
+.form-submit-btn {
+    background-color: var(--wine-red);
+    color: var(--cream-light);
+    border: none;
+    padding: 15px 40px;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    font-family: 'HelveticaLight', Georgia, serif;
+    align-self: flex-start;
+}
+
+.form-submit-btn:hover {
+    background-color: #8A0D25;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(163, 15, 43, 0.5);
+}
+
+/* FAQ Specific */
+.faq-item {
+    padding: 25px;
+    background-color: var(--dark-card);
+    border: 2px solid var(--wine-red);
+    border-left: 4px solid var(--wine-red);
+    margin-bottom: 20px;
+}
+
+.faq-question {
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
+    color: var(--wine-red);
+}
+
+.faq-answer {
+    font-size: 15px;
+    line-height: 1.8;
+    color: var(--text-muted);
+}
+
+.faq-answer a {
+    color: var(--wine-red);
+    text-decoration: underline;
+}
+
+.faq-answer a:hover {
+    color: #8A0D25;
+    text-decoration: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .page-container {
+        padding: 0 20px;
+    }
+
+    .page-title {
+        font-size: 32px;
+        letter-spacing: 2px;
+        margin-bottom: 30px;
+    }
+
+    .content-block {
+        padding: 20px;
+    }
+
+    .content-block h2 {
+        font-size: 20px;
+    }
+
+    .faq-item {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .page-title {
+        font-size: 26px;
+        letter-spacing: 1px;
+    }
+
+    .content-block {
+        padding: 15px;
+    }
+
+    .content-block h2 {
+        font-size: 18px;
+    }
+
+    .content-block p,
+    .content-block ul li,
+    .content-block ol li {
+        font-size: 14px;
+    }
+}

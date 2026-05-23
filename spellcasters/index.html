@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Star Catalog — Practitioner Profile</title>
+    <style>
+        body { margin: 0; background: #f5f0e8; display: flex; align-items: center; justify-content: center; height: 100vh; font-family: monospace; color: #1a2a3a; }
+        .msg { text-align: center; opacity: 0.6; font-size: 13px; letter-spacing: 0.05em; }
+    </style>
+</head>
+<body>
+<div class="msg">Loading practitioner profile…</div>
+<script>
+    // Extract the slug from the current URL path.
+    // e.g. /spellcasters/la-bruja-next-door  → slug = "la-bruja-next-door"
+    // e.g. /spellcasters/?slug=la-bruja…    → also supported via query param
+    (function () {
+        var qs   = new URLSearchParams(window.location.search);
+        var slug = qs.get('slug') || qs.get('s') || '';
+
+        if (!slug) {
+            // Try to read slug from the URL path
+            var parts = window.location.pathname.replace(/\/$/, '').split('/').filter(Boolean);
+            // parts = ['spellcasters', 'la-bruja-next-door']  OR just ['la-bruja-next-door']
+            var last = parts[parts.length - 1];
+            if (last && last !== 'index.html' && last !== 'spellcasters') {
+                slug = last;
+            }
+        }
+
+        if (slug) {
+            // Redirect to profile.html keeping the slug param so profile.js can fetch by slug
+            window.location.replace('/profile.html?slug=' + encodeURIComponent(slug));
+        } else {
+            // No slug found — fall back to the directory
+            window.location.replace('/index.html');
+        }
+    })();
+</script>
+</body>
+</html>

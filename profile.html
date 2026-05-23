@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-8RKJDCW3DF"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-8RKJDCW3DF');
+</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="/">
+    <title>Profile — The Star Catalog</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Cinzel:wght@400;600;700&family=Source+Code+Pro:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/profile.css">
+    <link rel="icon" href="/svgviewer-png-output.png" type="image/png" />
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="site-header">
+        <a class="logo-wrap" href="index.html">
+            <div class="monogram">
+                <svg width="24" height="24" viewBox="0 0 26 26" fill="none">
+                    <polygon points="13,2 15,10 23,8 17,14 23,20 15,18 13,26 11,18 3,20 9,14 3,8 11,10" stroke="#c9b97a" stroke-width="1" fill="none"/>
+                    <circle cx="13" cy="13" r="3" fill="none" stroke="#c9b97a" stroke-width="1"/>
+                    <line x1="11.5" y1="13" x2="14.5" y2="13" stroke="#c9b97a" stroke-width="1"/>
+                    <line x1="13" y1="11.5" x2="13" y2="14.5" stroke="#c9b97a" stroke-width="1"/>
+                </svg>
+            </div>
+            <div class="logo-text">
+                <span class="logo-main">The Star Catalog</span>
+                <span class="logo-sub">Est. MMXXVI — Seeker's Guide</span>
+            </div>
+        </a>
+        <nav class="site-nav">
+            <a href="index.html">Browse</a>
+            <a href="about.html">About</a>
+            <a href="faq.html">FAQ</a>
+            <a href="saved.html">Saved</a>
+            <span id="navAuthArea" class="nav-auth-area"></span>
+        </nav>
+        <a class="nav-cta" href="submit-practitioner.html" style="text-decoration:none;">Submit Practitioner</a>
+        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </header>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav" id="mobileNav">
+        <a href="index.html" class="mobile-nav-item">Browse Directory</a>
+        <a href="about.html" class="mobile-nav-item">About</a>
+        <a href="faq.html" class="mobile-nav-item">FAQ</a>
+        <a href="contact.html" class="mobile-nav-item">Contact</a>
+        <a href="saved.html" class="mobile-nav-item">Saved Profiles</a>
+        <a href="submit-practitioner.html" class="mobile-nav-item">Submit Practitioner</a>
+    </div>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+        <a href="index.html">Directory</a>
+        <span>›</span>
+        <span id="profileType">—</span>
+        <span>›</span>
+        <span id="breadcrumbName">—</span>
+    </div>
+
+    <!-- Profile Container (used by profile.js for opacity + error display) -->
+    <div class="profile-container" style="opacity:0;transition:opacity 0.3s ease;">
+        <div class="profile-wrap">
+
+            <!-- LEFT SIDEBAR -->
+            <aside class="profile-sidebar">
+
+                <!-- Photo -->
+                <div class="sidebar-photo">
+                    <img src="" alt="Profile" class="profile-image" id="profileImage">
+                    <div class="sidebar-profession-bar">
+                        <span id="sidebarProfession"></span>
+                    </div>
+                </div>
+
+                <!-- Info Rows -->
+                <div class="sidebar-info">
+                    <div class="info-row">
+                        <span class="info-label">TYpe</span>
+                        <span class="info-val" id="detailIdentity">—</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Location</span>
+                        <span class="info-val" id="detailLocation">—</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Active Since</span>
+                        <span class="info-val" id="detailActiveSince">—</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Experience</span>
+                        <span class="info-val" id="detailExperience">—</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Response Time</span>
+                        <span class="info-val" id="detailResponseTime">Within 48 hrs</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Languages</span>
+                        <span class="info-val" id="detailLanguages">English</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Works Online</span>
+                        <span class="info-val" id="detailWorksOnline">Yes</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Price Range</span>
+                        <span class="info-val" id="detailPriceRange">—</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Provides Proof</span>
+                        <span class="info-val" id="detailProof">—</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Refund Policy</span>
+                        <span class="info-val" id="detailRefund">—</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Delivery Time</span>
+                        <span class="info-val" id="detailDelivery">—</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Emergency Requests</span>
+                        <span class="info-val" id="detailEmergency">—</span>
+                    </div>
+                </div>
+
+                <!-- Specialty Tags -->
+                <div class="sidebar-tags" id="specialtiesTags"></div>
+
+            </aside>
+
+            <!-- MAIN CONTENT -->
+            <div class="profile-main-content">
+
+                <!-- Name Header with Upvote + Bookmark -->
+                <div class="profile-name-header">
+                    <div class="profile-name-header-inner">
+                        <div class="profile-name-row">
+                            <div class="profile-name" id="profileName"></div>
+                            <!-- Upvote, Bookmark & Contact in header -->
+                            <div class="profile-header-actions" id="profileUpvoteSection">
+                                
+                                <button class="profile-action-btn" id="profileUpvote" title="Recommend this practitioner">
+                                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                                        <polygon points="6,1 11,11 1,11" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                    </svg>
+                                    <span id="profileUpvoteCount">0</span>
+                                    <span class="pab-label">Recommend</span>
+                                </button>
+                                <button class="profile-action-btn" id="profileBookmark" title="Bookmark this practitioner">
+                                    <svg width="11" height="13" viewBox="0 0 12 14" fill="none">
+                                        <path d="M1 1h10v12l-5-3.5L1 13V1z" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                    </svg>
+                                    <span class="pab-label">Save</span>
+                                </button>
+                                <button class="profile-action-btn share-action-btn" id="headerShareBtnMobile" title="Share this practitioner">
+                                    <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
+                                        <circle cx="11" cy="2.5" r="1.5" stroke="currentColor" stroke-width="1.2"/>
+                                        <circle cx="11" cy="11.5" r="1.5" stroke="currentColor" stroke-width="1.2"/>
+                                        <circle cx="3" cy="7" r="1.5" stroke="currentColor" stroke-width="1.2"/>
+                                        <line x1="4.4" y1="6.2" x2="9.6" y2="3.3" stroke="currentColor" stroke-width="1.2"/>
+                                        <line x1="4.4" y1="7.8" x2="9.6" y2="10.7" stroke="currentColor" stroke-width="1.2"/>
+                                    </svg>
+                                    <span class="pab-label">Share</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="profile-tagline" id="profileTagline"></div>
+                        <div class="profile-header-bottom-bar">
+                            <div id="headerRating" class="header-rating" style="display:none;"></div>
+                            <div class="header-cta-buttons">
+                                <button class="header-cta-btn review-header-btn" id="headerReviewBtn">
+                                    <svg width="11" height="11" viewBox="0 0 14 14" fill="none">
+                                        <path d="M2 10l1-3L10 1l2 2-7 7-3 1z" stroke="currentColor" stroke-width="1.3" fill="none"/>
+                                        <line x1="8" y1="3" x2="11" y2="6" stroke="currentColor" stroke-width="1.3"/>
+                                    </svg>
+                                    Write a Review
+                                </button>
+                                <button class="header-cta-btn contact-header-btn" id="headerContactBtn">
+                                    <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
+                                        <rect x="1" y="3" width="12" height="8" rx="1" stroke="currentColor" stroke-width="1.2"/>
+                                        <polyline points="1,3 7,8 13,3" stroke="currentColor" stroke-width="1.2"/>
+                                    </svg>
+                                    Contact
+                                </button>
+                                <button class="header-cta-btn share-header-btn" id="headerShareBtn">
+                                    <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
+                                        <circle cx="11" cy="2.5" r="1.5" stroke="currentColor" stroke-width="1.2"/>
+                                        <circle cx="11" cy="11.5" r="1.5" stroke="currentColor" stroke-width="1.2"/>
+                                        <circle cx="3" cy="7" r="1.5" stroke="currentColor" stroke-width="1.2"/>
+                                        <line x1="4.4" y1="6.2" x2="9.6" y2="3.3" stroke="currentColor" stroke-width="1.2"/>
+                                        <line x1="4.4" y1="7.8" x2="9.6" y2="10.7" stroke="currentColor" stroke-width="1.2"/>
+                                    </svg>
+                                    Share
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tabbed Content Block: About / Services Offered / Social Links -->
+                <div class="profile-section-block profile-tabs-block">
+                    <div class="profile-tab-nav">
+                        <button class="profile-tab-btn active" data-tab="about">About</button>
+                        <button class="profile-tab-btn" data-tab="services">Services Offered</button>
+                        <button class="profile-tab-btn" data-tab="social">Social Links</button>
+                    </div>
+                    <div class="tab-panel active" id="tabAbout">
+                        <div class="about-text" id="profileDescription"></div>
+                    </div>
+                    <div class="tab-panel" id="tabServices">
+                        <div class="services-listings-grid" id="servicesListings"></div>
+                        <p class="no-tab-content" id="noServicesMsg" style="display:none;">No services listed for this practitioner.</p>
+                    </div>
+                    <div class="tab-panel" id="tabSocial">
+                        <div id="socialLinksContent">
+                            <p class="no-tab-content">No social links added yet.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Reviews Section -->
+                <div class="profile-section-block" id="reviewsSection">
+                    <div class="review-section-header">
+                        <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+                            <div class="profile-section-title" style="margin-bottom:0;">Reviews</div>
+                            <div id="reviewRatingSummary" style="display:none;"></div>
+                        </div>
+                        <button class="write-review-btn" id="writeReviewBtn">
+                            <svg width="11" height="11" viewBox="0 0 14 14" fill="none">
+                                <path d="M2 10l1-3L10 1l2 2-7 7-3 1z" stroke="currentColor" stroke-width="1.3" fill="none"/>
+                                <line x1="8" y1="3" x2="11" y2="6" stroke="currentColor" stroke-width="1.3"/>
+                            </svg>
+                            Write a Review
+                        </button>
+                    </div>
+                    <div id="reviewsList">
+                        <p class="no-reviews">Loading reviews…</p>
+                    </div>
+                    <div id="reviewPagination"></div>
+                </div>
+
+                <!-- Back Link -->
+                <div class="profile-section-block" style="border-bottom:none;padding-top:0;">
+                    <a href="index.html" class="back-link">← Back to Directory</a>
+                </div>
+
+            </div><!-- /profile-main-content -->
+
+        </div><!-- /profile-wrap -->
+    </div><!-- /profile-container -->
+
+    <!-- ─────────── CONTACT / INQUIRY MODAL ─────────── -->
+    <div class="modal-overlay" id="contactModal" role="dialog" aria-modal="true" aria-labelledby="contactModalTitle">
+        <div class="modal">
+            <div class="modal-header">
+                <div class="modal-title" id="contactModalTitle">Contact Practitioner</div>
+                <div class="modal-subtitle">Send your inquiry directly. The practitioner will reach out to you.</div>
+                <button class="modal-close" id="closeContact" aria-label="Close">×</button>
+            </div>
+            <div class="modal-body">
+                <form class="review-form" id="inquiryForm" autocomplete="off">
+
+                    <div>
+                        <label class="review-label" for="inquiryFullName">Full Name <span style="color:#c9b97a;">*</span></label>
+                        <input type="text" class="review-input" id="inquiryFullName" placeholder="Your full name" required>
+                    </div>
+
+                    <div>
+                        <label class="review-label" for="inquiryDob">Date of Birth <span style="color:#c9b97a;"></span></label>
+                        <input type="date" class="review-input" id="inquiryDob">
+                    </div>
+
+                    <div>
+                        <label class="review-label" for="inquiryEmail">Email Address <span style="color:#c9b97a;">*</span></label>
+                        <input type="email" class="review-input" id="inquiryEmail" placeholder="your@email.com" required>
+                    </div>
+
+                    <div>
+                        <label class="review-label" for="inquiryBudget">Budget <span style="color:var(--muted);font-weight:400;">(optional)</span></label>
+                        <input type="text" class="review-input" id="inquiryBudget" placeholder="e.g. $100 – $300">
+                    </div>
+
+                    <div>
+                        <label class="review-label" for="inquiryDescription">Describe Your Requirement <span style="color:#c9b97a;">*</span></label>
+                        <textarea class="review-textarea" id="inquiryDescription" placeholder="Describe the service you are looking for, any specific details, timeline, or questions you have for the practitioner…" rows="5" required></textarea>
+                    </div>
+
+                    <button type="submit" class="modal-submit" id="contactSubmitBtn">Send Inquiry</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- ─────────── SIGN-IN MODAL ─────────── -->
+    <div class="modal-overlay" id="signInModal" role="dialog" aria-modal="true" aria-labelledby="signInTitle">
+        <div class="modal">
+            <div class="modal-header">
+                <div class="modal-title" id="signInTitle">Sign In to Write a Review</div>
+                <div class="modal-subtitle">Your identity is kept private. We only use your name and avatar from Google.</div>
+                <button class="modal-close" id="closeSignIn" aria-label="Close">×</button>
+            </div>
+            <div class="modal-body">
+                <p style="font-size:13.5px;color:var(--muted);line-height:1.7;margin-bottom:1.4rem;">Sign in with Google to share your experience with this practitioner. Reviews help the community find genuine, trustworthy casters.</p>
+                <button class="google-signin-btn" id="googleSignInBtn">
+                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.875 2.684-6.615z" fill="#4285F4"/>
+                        <path d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332C2.438 15.983 5.482 18 9 18z" fill="#34A853"/>
+                        <path d="M3.964 10.71c-.18-.54-.282-1.117-.282-1.71s.102-1.17.282-1.71V4.958H.957C.347 6.173 0 7.548 0 9s.348 2.827.957 4.042l3.007-2.332z" fill="#FBBC05"/>
+                        <path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0 5.482 0 2.438 2.017.957 4.958L3.964 6.29C4.672 4.163 6.656 3.58 9 3.58z" fill="#EA4335"/>
+                    </svg>
+                    Continue with Google
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ─────────── REVIEW MODAL ─────────── -->
+    <div class="modal-overlay" id="reviewModal" role="dialog" aria-modal="true" aria-labelledby="reviewTitle">
+        <div class="modal">
+            <div class="modal-header">
+                <div class="modal-title" id="reviewTitle">Write a Review</div>
+                <div class="modal-subtitle">Share your experience — this helps others in the community.</div>
+                <button class="modal-close" id="closeReview" aria-label="Close">×</button>
+            </div>
+            <div class="modal-body">
+                <form class="review-form" id="reviewForm" autocomplete="off">
+
+                    <!-- Sub-ratings -->
+                    <div>
+                        <label class="review-label">Rate Your Experience <span style="color:#c9b97a;">*</span></label>
+                        <div class="sub-ratings-group">
+                            <div class="sub-rating-row">
+                                <span class="sub-rating-label">Communication</span>
+                                <div class="sub-star-input" id="subStarCommunication" data-key="communication" role="group" aria-label="Communication Rating">
+                                    <button type="button" class="star-btn" data-value="1">★</button>
+                                    <button type="button" class="star-btn" data-value="2">★</button>
+                                    <button type="button" class="star-btn" data-value="3">★</button>
+                                    <button type="button" class="star-btn" data-value="4">★</button>
+                                    <button type="button" class="star-btn" data-value="5">★</button>
+                                </div>
+                            </div>
+                            <div class="sub-rating-row">
+                                <span class="sub-rating-label">Accuracy</span>
+                                <div class="sub-star-input" id="subStarAccuracy" data-key="accuracy" role="group" aria-label="Accuracy Rating">
+                                    <button type="button" class="star-btn" data-value="1">★</button>
+                                    <button type="button" class="star-btn" data-value="2">★</button>
+                                    <button type="button" class="star-btn" data-value="3">★</button>
+                                    <button type="button" class="star-btn" data-value="4">★</button>
+                                    <button type="button" class="star-btn" data-value="5">★</button>
+                                </div>
+                            </div>
+                            <div class="sub-rating-row">
+                                <span class="sub-rating-label">Value for Money</span>
+                                <div class="sub-star-input" id="subStarValue" data-key="value" role="group" aria-label="Value Rating">
+                                    <button type="button" class="star-btn" data-value="1">★</button>
+                                    <button type="button" class="star-btn" data-value="2">★</button>
+                                    <button type="button" class="star-btn" data-value="3">★</button>
+                                    <button type="button" class="star-btn" data-value="4">★</button>
+                                    <button type="button" class="star-btn" data-value="5">★</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="overall-rating-display" id="overallRatingDisplay" style="display:none;">
+                            Overall: <span id="overallRatingValue" style="color:#c9b97a;font-weight:700;"></span> / 5
+                            <div class="star-input" id="starInput" style="display:inline-flex;margin-left:8px;">
+                                <button type="button" class="star-btn" data-value="1" title="1 star">★</button>
+                                <button type="button" class="star-btn" data-value="2" title="2 stars">★</button>
+                                <button type="button" class="star-btn" data-value="3" title="3 stars">★</button>
+                                <button type="button" class="star-btn" data-value="4" title="4 stars">★</button>
+                                <button type="button" class="star-btn" data-value="5" title="5 stars">★</button>
+                            </div>
+                        </div>
+                        <div class="star-hint" id="starHint" style="margin-top:6px;"></div>
+                    </div>
+
+                    <!-- Services Purchased -->
+                    <div>
+                        <label class="review-label" for="reviewServicesPurchased">Services Purchased <span style="color:var(--muted);font-weight:400;"></span></label>
+                        <input type="text" class="review-input" id="reviewServicesPurchased" placeholder="e.g. Love Binding Spell, Protection Ritual, Tarot Reading" autocomplete="off">
+                        <span class="review-field-hint">Comma-separated list of services you purchased</span>
+                    </div>
+
+                    <!-- Would you hire again? -->
+                    <div>
+                        <label class="review-label">Would you hire again? <span style="color:var(--muted);font-weight:400;"></span></label>
+                        <div class="review-radio-group">
+                            <label class="review-radio-option">
+                                <input type="radio" name="hireAgain" value="Yes"> Yes
+                            </label>
+                            <label class="review-radio-option">
+                                <input type="radio" name="hireAgain" value="No"> No
+                            </label>
+                            <label class="review-radio-option">
+                                <input type="radio" name="hireAgain" value="Maybe"> Maybe
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- How long did results take? -->
+                    <div>
+                        <label class="review-label">How long did results take? <span style="color:var(--muted);font-weight:400;"></span></label>
+                        <div class="review-radio-group">
+                            <label class="review-radio-option">
+                                <input type="radio" name="resultTime" value="1–2 weeks"> 1–2 weeks
+                            </label>
+                            <label class="review-radio-option">
+                                <input type="radio" name="resultTime" value="1–3 months"> 1–3 months
+                            </label>
+                            <label class="review-radio-option">
+                                <input type="radio" name="resultTime" value="3–6 months"> 3–6 months
+                            </label>
+                            <label class="review-radio-option">
+                                <input type="radio" name="resultTime" value="Still waiting"> Still waiting
+                            </label>
+                            <label class="review-radio-option">
+                                <input type="radio" name="resultTime" value="N/A — I only got a reading"> N/A — I only got a reading
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Review Text -->
+                    <div>
+                        <label class="review-label" for="reviewText">Your Review <span style="color:#c9b97a;">*</span></label>
+                        <textarea class="review-textarea" id="reviewText" placeholder="Describe your experience with this practitioner — what service did you use, how was the communication, did the results meet your expectations?" rows="5"></textarea>
+                    </div>
+
+                    <!-- Image Upload -->
+                    <div>
+                        <label class="review-label">Proof / Screenshots <span style="color:var(--muted);font-weight:400;">(optional but recommended— max 2 images)</span></label>
+                        <div class="image-upload-zone" id="imageUploadZone">
+                            <input type="file" id="reviewImages" accept="image/*" multiple>
+                            <label for="reviewImages" class="image-upload-label">
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="margin-right:6px;vertical-align:middle;">
+                                    <rect x="1" y="4" width="14" height="10" rx="1" stroke="currentColor" stroke-width="1.2"/>
+                                    <path d="M5 4V3a3 3 0 0 1 6 0v1" stroke="currentColor" stroke-width="1.2"/>
+                                    <line x1="8" y1="8" x2="8" y2="11" stroke="currentColor" stroke-width="1.2"/>
+                                    <line x1="6.5" y1="9.5" x2="9.5" y2="9.5" stroke="currentColor" stroke-width="1.2"/>
+                                </svg>
+                                Click to upload images
+                            </label>
+                            <div class="image-previews" id="imagePreviews"></div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="modal-submit" id="reviewSubmitBtn">Submit Review</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- ─────────── IMAGE LIGHTBOX ─────────── -->
+    <div class="modal-overlay" id="lightboxOverlay" style="background:rgba(10,20,30,0.93);" onclick="this.classList.remove('active')">
+        <img id="lightboxImg" src="" alt="Review image" style="max-width:90vw;max-height:90vh;object-fit:contain;border:2px solid var(--border);display:block;">
+    </div>
+
+    <!-- Notice Strip -->
+    <div class="notice-strip">
+        <svg width="11" height="11" viewBox="0 0 14 14" fill="none">
+            <circle cx="7" cy="7" r="6" stroke="#1b2d3e" stroke-width="1.3"/>
+            <line x1="7" y1="5" x2="7" y2="9" stroke="#1b2d3e" stroke-width="1.3"/>
+            <circle cx="7" cy="3.5" r="0.6" fill="#1b2d3e"/>
+        </svg>
+        The Star Catalog does not mediate transactions. Always exercise discretion. Results are not guaranteed.
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-top">
+            <div class="footer-col">
+                <div class="footer-col-title">The Star Catalog</div>
+                <div style="display:flex;align-items:center;gap:9px;margin-bottom:10px;">
+                    <div class="monogram" style="border-color:#2c3f52;width:32px;height:32px;">
+                        <svg width="20" height="20" viewBox="0 0 26 26" fill="none">
+                            <polygon points="13,2 15,10 23,8 17,14 23,20 15,18 13,26 11,18 3,20 9,14 3,8 11,10" stroke="#c9b97a" stroke-width="1" fill="none"/>
+                        </svg>
+                    </div>
+                    <span style="font-family:'Cinzel',serif;font-size:12px;color:var(--cream);letter-spacing:0.1em;">thestarcatalog</span>
+                </div>
+                <p class="footer-logo-desc">A free, community-run directory of spell casters and spiritual practitioners. Real reviews from real people — built to protect seekers from fraud.</p>
+            </div>
+            <div class="footer-col">
+                <div class="footer-col-title">Quick Links</div>
+                <ul class="footer-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="saved.html">Saved Profiles</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <div class="footer-col-title">Legal</div>
+                <ul class="footer-links">
+                    <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                    <li><a href="terms.html">Terms of Service</a></li>
+                    <li><a href="disclaimer.html">Disclaimer</a></li>
+                    <li><a href="faq.html">FAQ</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <div class="footer-col-title">Directory</div>
+                <ul class="footer-links">
+                    <li><a href="submit-practitioner.html">Submit a Practitioner</a></li>
+                    <li><a href="index.html">Browse All</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span class="footer-copy">© MMXXVI The Star Catalog. All rights reserved.</span>
+            <div class="footer-bottom-links">
+                <a href="privacy-policy.html">Privacy</a>
+                <a href="terms.html">Terms</a>
+                <a href="disclaimer.html">Disclaimer</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Supabase JS Library -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- Shared Auth Module -->
+    <script src="/auth.js"></script>
+
+    <!-- Profile Script -->
+    <script src="/profile.js"></script>
+
+    <script>
+        // ── Mobile Menu Toggle ──────────────────────
+        (function() {
+            const btn = document.getElementById('mobileMenuBtn');
+            const nav = document.getElementById('mobileNav');
+            if (!btn || !nav) return;
+
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                btn.classList.toggle('active');
+                nav.classList.toggle('active');
+            });
+
+            document.addEventListener('click', function(e) {
+                if (nav.classList.contains('active') &&
+                    !nav.contains(e.target) &&
+                    !btn.contains(e.target)) {
+                    btn.classList.remove('active');
+                    nav.classList.remove('active');
+                }
+            });
+
+            nav.querySelectorAll('.mobile-nav-item').forEach(function(item) {
+                item.addEventListener('click', function() {
+                    btn.classList.remove('active');
+                    nav.classList.remove('active');
+                });
+            });
+        })();
+
+        // ── Sync breadcrumb & sidebar from profile.js data ──
+        const profileTypeEl      = document.getElementById('profileType');
+        const sidebarProfessionEl = document.getElementById('sidebarProfession');
+        const breadcrumbNameEl   = document.getElementById('breadcrumbName');
+        const profileNameEl      = document.getElementById('profileName');
+
+        if (profileTypeEl && sidebarProfessionEl) {
+            new MutationObserver(function() {
+                if (profileTypeEl.textContent && profileTypeEl.textContent !== '—') {
+                    sidebarProfessionEl.textContent = profileTypeEl.textContent;
+                }
+            }).observe(profileTypeEl, { childList: true, characterData: true, subtree: true });
+        }
+
+        if (profileNameEl && breadcrumbNameEl) {
+            new MutationObserver(function() {
+                if (profileNameEl.textContent && profileNameEl.textContent !== 'Loading...') {
+                    breadcrumbNameEl.textContent = profileNameEl.textContent;
+                }
+            }).observe(profileNameEl, { childList: true, characterData: true, subtree: true });
+        }
+    </script>
+</body>
+</html>
