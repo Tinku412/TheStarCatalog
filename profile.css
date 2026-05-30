@@ -18,23 +18,30 @@
     flex-wrap: wrap;
 }
 .breadcrumb a { color: var(--muted); text-decoration: none; }
-.breadcrumb a:hover { color: var(--navy); }
+.breadcrumb a:hover { color: var(--navy); text-decoration: underline; }
 .breadcrumb > span { color: var(--navy); opacity: .45; }
-.breadcrumb #profileType,
-.breadcrumb #breadcrumbName { opacity: 1; color: var(--navy); }
+.breadcrumb #breadcrumbName { opacity: 1; color: var(--navy); font-weight: 600; }
 
 /* ========== PROFILE CONTAINER ========== */
 
-.profile-container { transition: opacity 0.2s; }
+.profile-container {
+    transition: opacity 0.2s;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+}
 
 /* ========== PROFILE LAYOUT ========== */
 
 .profile-wrap {
     display: grid;
-    grid-template-columns: 260px 1fr;
+    grid-template-columns: min(260px, 30vw) 1fr;
     border-bottom: 2px solid var(--border);
     min-height: 70vh;
     align-items: start;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
 }
 
 /* ========== LEFT SIDEBAR ========== */
@@ -44,7 +51,7 @@
     display: flex;
     flex-direction: column;
     position: sticky;
-    top: 62px;
+    /* top: 62px; */
     max-height: calc(100vh - 62px);
     /* overflow-y: auto; */
 }
@@ -496,8 +503,8 @@
 }
 .edit-profile-btn {
     background: transparent;
-    border-color: var(--border);
-    color: var(--muted);
+    /* border-color: var(--border);
+    color: var(--muted); */
     font-size: 9.5px;
 }
 .edit-profile-btn:hover {
@@ -632,7 +639,7 @@
 /* ========== RESPONSIVE ========== */
 
 @media (max-width: 1024px) {
-    .profile-wrap { grid-template-columns: 230px 1fr; }
+    .profile-wrap { grid-template-columns: min(230px, 32vw) 1fr; }
 }
 
 @media (max-width: 768px) {
@@ -645,15 +652,17 @@
         position: static;
         max-height: none;
         overflow-y: visible;
+        width: 100%;
+        max-width: 100%;
     }
     .sidebar-photo {
         aspect-ratio: 4/3;
-        max-height: 320px;
+        max-height: 55vw;
     }
-    .breadcrumb { padding: 0.7rem 1rem; }
-    .profile-name-header { padding: 1.2rem 1.2rem; }
-    .profile-name { font-size: 1.4rem; }
-    .profile-section-block { padding: 1.2rem 1.2rem; }
+    .breadcrumb { padding: 0.7rem 1rem; font-size: 9px; }
+    .profile-name-header { padding: 1rem; }
+    .profile-name { font-size: clamp(1.1rem, 4.5vw, 1.4rem); }
+    .profile-section-block { padding: 1rem; }
 
     /* Name row: name shrinks/wraps; icons always stay visible on the right */
     .profile-name-row {
@@ -680,15 +689,15 @@
         align-self: flex-start;
     }
     /* Tagline sits on its own line below the name row */
-    .profile-tagline { margin-top: 6px; margin-bottom: 10px; }
+    .profile-tagline { margin-top: 6px; margin-bottom: 10px; font-size: clamp(0.85rem, 3.5vw, 1rem); }
     .profile-header-bottom-bar { flex-direction: column; align-items: flex-start; margin-top: 4px; }
-    .header-cta-buttons { width: 100%; }
-    .header-cta-btn { flex: 1; justify-content: center; }
+    .header-cta-buttons { width: 100%; flex-wrap: wrap; }
+    .header-cta-btn { flex: 1 1 auto; min-width: 0; justify-content: center; font-size: 9.5px; padding: 9px 10px; }
 
     .profile-contact-buttons { flex-direction: column; }
     .pcb-primary, .pcb-secondary { flex: none; width: 100%; }
     .notice-strip { padding: 10px 1rem; }
-    .profile-tab-btn { padding: 9px 12px; font-size: 9px; }
+    .profile-tab-btn { padding: 9px 10px; font-size: 8.5px; }
 
     /* Desktop Share button hidden on mobile — share-action-btn in icon row covers it */
     .share-header-btn { display: none; }
@@ -699,9 +708,16 @@
     #profileUpvoteCount { font-size: 10px; }
     /* Show the share icon button inside the action cluster */
     .share-action-btn { display: inline-flex; }
+
+    /* Reviews */
+    .review-card { padding: 0.9rem 1rem; }
+    .review-card-header { gap: 8px; }
+    .review-overall-rating { margin-left: auto; }
 }
 
 @media (max-width: 480px) {
-    .profile-name { font-size: 1.2rem; }
-    .profile-tagline { font-size: 0.85rem; }
+    .profile-name { font-size: clamp(1rem, 4vw, 1.2rem); }
+    .profile-tagline { font-size: 0.82rem; }
+    .header-cta-btn { font-size: 9px; padding: 8px 8px; }
+    .sidebar-photo { max-height: 60vw; }
 }

@@ -201,8 +201,7 @@ function populateProfile(profile) {
     document.getElementById('profileImage').src = profile.profile_picture_url || 'placeholder.jpg';
     document.getElementById('profileImage').alt = profile.professional_name;
     document.getElementById('profileName').textContent = profile.professional_name;
-    document.getElementById('profileTagline').textContent = profile.one_liner;
-    document.getElementById('profileType').textContent = profile.professional_identity;
+    document.getElementById('profileTagline').textContent = profile.one_liner || '';
     document.getElementById('profileUpvoteCount').textContent = profile.upvotes || 0;
     
     

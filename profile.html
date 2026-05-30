@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <!-- Google tag (gtag.js) -->
@@ -11,7 +11,7 @@
   gtag('config', 'G-8RKJDCW3DF');
 </script>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <base href="/">
     <title>Profile — The Star Catalog</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -66,9 +66,9 @@
 
     <!-- Breadcrumb -->
     <div class="breadcrumb">
-        <a href="index.html">Directory</a>
+        <a href="/index.html">Home</a>
         <span>›</span>
-        <span id="profileType">—</span>
+        <a href="/index.html">All Spellcasters</a>
         <span>›</span>
         <span id="breadcrumbName">—</span>
     </div>
@@ -581,19 +581,9 @@
             });
         })();
 
-        // ── Sync breadcrumb & sidebar from profile.js data ──
-        const profileTypeEl      = document.getElementById('profileType');
-        const sidebarProfessionEl = document.getElementById('sidebarProfession');
-        const breadcrumbNameEl   = document.getElementById('breadcrumbName');
-        const profileNameEl      = document.getElementById('profileName');
-
-        if (profileTypeEl && sidebarProfessionEl) {
-            new MutationObserver(function() {
-                if (profileTypeEl.textContent && profileTypeEl.textContent !== '—') {
-                    sidebarProfessionEl.textContent = profileTypeEl.textContent;
-                }
-            }).observe(profileTypeEl, { childList: true, characterData: true, subtree: true });
-        }
+        // ── Sync breadcrumb name from profile.js data ──
+        const breadcrumbNameEl = document.getElementById('breadcrumbName');
+        const profileNameEl    = document.getElementById('profileName');
 
         if (profileNameEl && breadcrumbNameEl) {
             new MutationObserver(function() {
