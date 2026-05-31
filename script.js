@@ -80,7 +80,7 @@ async function loadProfiles() {
 // ============================================
 function createProfileCard(profile) {
     const card = document.createElement('article');
-    card.className         = 'profile-card';
+    card.className         = 'profile-card featured-card';
     card.dataset.profileId = profile.id;
     card.dataset.upvotes   = profile.upvotes || 0;
 
@@ -88,16 +88,9 @@ function createProfileCard(profile) {
         ? profile.one_liner.substring(0, 90) + '…'
         : (profile.one_liner || '');
 
-    const specialties = profile.specialties
-        ? profile.specialties.split(',').map(s => s.trim()).filter(Boolean)
-        : [];
-    const tagsHtml = `<div class="card-tags">${specialties.slice(0, 4).map((t, i) =>
-        `<span class="tag${i > 0 ? ' outline' : ''}">${t}</span>`).join('')}</div>`;
-
-    const verifiedIcon = `<svg width="10" height="10" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="#ffffff" stroke-width="2" stroke-linecap="square"/></svg>`;
-    const upvoteIcon   = `<svg width="10" height="10" viewBox="0 0 12 12" fill="none"><polygon points="6,1 11,11 1,11" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>`;
-    const saveIcon     = `<svg width="10" height="10" viewBox="0 0 12 14" fill="none"><path d="M1 1h10v12l-5-3.5L1 13V1z" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>`;
-    const starIcon     = `<svg width="9" height="9" viewBox="0 0 12 12" fill="none"><polygon points="6,1 7.5,4.5 11,5 8.5,7.5 9.5,11 6,9 2.5,11 3.5,7.5 1,5 4.5,4.5" fill="currentColor"/></svg>`;
+    const upvoteIcon = `<svg width="10" height="10" viewBox="0 0 12 12" fill="none"><polygon points="6,1 11,11 1,11" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>`;
+    const saveIcon   = `<svg width="10" height="10" viewBox="0 0 12 14" fill="none"><path d="M1 1h10v12l-5-3.5L1 13V1z" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>`;
+    const starIcon   = `<svg width="9" height="9" viewBox="0 0 12 12" fill="none"><polygon points="6,1 7.5,4.5 11,5 8.5,7.5 9.5,11 6,9 2.5,11 3.5,7.5 1,5 4.5,4.5" fill="currentColor"/></svg>`;
 
     const upvotes     = profile.upvotes || 0;
     const avgRating   = profile.average_rating ? parseFloat(profile.average_rating).toFixed(1) : null;
@@ -116,25 +109,31 @@ function createProfileCard(profile) {
     const isUpvoted = (typeof scAuth !== 'undefined') && scAuth.userUpvotes.has(profile.id);
     const isSaved   = (typeof scAuth !== 'undefined') && scAuth.userSaves.has(profile.id);
 
+    const priceLabel = profile.minimum_price
+        ? (String(profile.minimum_price).toUpperCase().startsWith('FROM') ? profile.minimum_price : `FROM ${profile.minimum_price}`)
+        : '';
+
     card.innerHTML = `
         <div class="card-image-wrap">
-            <img src="${profile.profile_picture_url || 'placeholder.jpg'}" alt="${profile.professional_name}" loading="lazy">
+            <img class="featured-card-img" src="${profile.profile_picture_url || 'placeholder.jpg'}" alt="${profile.professional_name}" loading="lazy">
             <div class="card-profession">${profile.professional_identity || ''}</div>
         </div>
-        <div class="card-body">
-            <div class="card-name-row">
-                <div class="card-name">${profile.professional_name}</div>
+        <div class="featured-card-body">
+            <div class="featured-card-top-row">
+                <div class="featured-card-name">${profile.professional_name}</div>
                 <div class="card-actions">
                     <button class="action-btn upvote-btn${isUpvoted ? ' active' : ''}" title="Recommend">${upvoteIcon}</button>
                     <button class="action-btn bookmark-btn${isSaved   ? ' active' : ''}" title="Save">${saveIcon}</button>
                 </div>
             </div>
-            <div class="card-desc">${desc}</div>
-            ${tagsHtml}
-        </div>
-        <div class="card-footer">
-            <div class="card-rating" style="color:var(--accent)">${starIcon}&nbsp;<span class="upvote-display" style="color:var(--text)">${ratingDisplay}</span></div>
-            <div class="card-price">${profile.minimum_price || '—'}</div>
+            ${desc ? `<div class="featured-card-tagline">${desc}</div>` : ''}
+            <div class="featured-card-footer">
+                <div class="featured-card-rating">
+                    <span class="featured-card-stars">${starIcon}</span>
+                    <span class="featured-card-rating-val${reviewCount === 0 ? ' rating-val-compact' : ''}">${ratingDisplay}</span>
+                </div>
+                <div class="featured-card-price">${priceLabel || '—'}</div>
+            </div>
         </div>
     `;
 
@@ -168,6 +167,12 @@ function applyUserStateToCards() {
 }
 
 // ============================================
+function getCardProfileName(card) {
+    const el = card.querySelector('.featured-card-name') || card.querySelector('.card-name');
+    return el ? el.textContent.trim() : 'this practitioner';
+}
+
+// ============================================
 // CARD INTERACTIONS — auth checked on demand
 // No auth needed to browse; only needed to write
 // ============================================
@@ -181,7 +186,7 @@ function initializeCardInteractions() {
 
             const card         = this.closest('.profile-card');
             const profileId    = card.dataset.profileId;
-            const profileName  = card.querySelector('.card-name').textContent;
+            const profileName  = getCardProfileName(card);
             const currentCount = parseInt(card.dataset.upvotes || '0');
 
             // Auth check on demand — don't require scAuth to be pre-initialized
@@ -202,8 +207,6 @@ function initializeCardInteractions() {
 
             this.classList.toggle('active', willUpvote);
             card.dataset.upvotes = newCount;
-            const display = card.querySelector('.upvote-display');
-            if (display) display.textContent = `${newCount} recommendations`;
 
             // Persist — delegate to scAuth if available, else do it directly
             try {
@@ -225,7 +228,6 @@ function initializeCardInteractions() {
                 // Revert optimistic update on error
                 this.classList.toggle('active', !willUpvote);
                 card.dataset.upvotes = currentCount;
-                if (display) display.textContent = `${currentCount} recommendations`;
                 console.error('Upvote error:', err);
             }
         });
@@ -239,7 +241,7 @@ function initializeCardInteractions() {
 
             const card        = this.closest('.profile-card');
             const profileId   = card.dataset.profileId;
-            const profileName = card.querySelector('.card-name').textContent;
+            const profileName = getCardProfileName(card);
 
             // Auth check on demand
             const { data: { user } } = await supabaseClient.auth.getUser();
