@@ -336,6 +336,38 @@ a.mobile-nav-item { color: rgba(232,224,204,0.7); }
 }
 .fp-clear:hover { color: var(--navy); }
 
+/* Mobile filter toggle — hidden on desktop */
+.fp-mobile-toggle {
+    display: none;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-family: 'Source Code Pro', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    border: 1.5px solid var(--border);
+    background: var(--cream2);
+    color: var(--navy);
+    padding: 10px 14px;
+    cursor: pointer;
+    transition: background 0.12s, border-color 0.12s;
+}
+.fp-mobile-toggle:hover { background: var(--cream); }
+.fp-mobile-toggle-icon {
+    font-size: 9px;
+    opacity: 0.7;
+    transition: transform 0.2s;
+}
+.filter-panel.is-open .fp-mobile-toggle-icon { transform: rotate(180deg); }
+.filter-panel.is-open .fp-mobile-toggle {
+    border-color: var(--navy);
+    background: var(--cream);
+}
+
+.fp-filters-body { display: block; width: 100%; }
+
 /* ========== GRID SECTION ========== */
 
 .grid-section,
@@ -1304,19 +1336,22 @@ body { width: 100%; max-width: 100vw; overflow-x: hidden; }
   .hero h1 { font-size: clamp(1.3rem, 5vw, 1.6rem); }
   .hero-stats { flex-wrap: wrap; }
 
-  /* Filter panel — wrap into 2-column grid on mobile, no overflow */
+  /* Filter panel — collapsible on mobile */
   .filter-panel { padding: 0.6rem 1rem; overflow: hidden; }
+  .fp-mobile-toggle { display: flex; }
+  .fp-filters-body { display: none; padding-top: 10px; }
+  .filter-panel.is-open .fp-filters-body { display: block; }
   .fp-row { gap: 5px; width: 100%; }
   .fp-select { flex: 1 1 calc(50% - 3px); max-width: calc(50% - 3px); font-size: 11px; }
   .fp-label { width: 100%; flex-shrink: 0; }
   .fp-divider { display: none; }
   .fp-clear { margin-left: auto; }
 
-  /* Grids */
+  /* Grids — single column on mobile */
   .grid-section, .main-content { padding: 1.2rem 1rem; width: 100%; max-width: 100%; }
   .cards-container {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 10px;
+    grid-template-columns: 1fr;
+    gap: 12px;
     width: 100%;
   }
   .profile-card,
@@ -1369,8 +1404,8 @@ body { width: 100%; max-width: 100vw; overflow-x: hidden; }
 
 @media (max-width: 600px) {
   .cards-container {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 8px;
+    grid-template-columns: 1fr;
+    gap: 10px;
   }
   .hero h1 { font-size: 1.35rem; }
   .hero-eyebrow { font-size: 9.5px; }
@@ -1381,10 +1416,9 @@ body { width: 100%; max-width: 100vw; overflow-x: hidden; }
 }
 
 @media (max-width: 480px) {
-  /* iPhone: keep 2 columns like landing page */
   .cards-container {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 8px;
+    grid-template-columns: 1fr;
+    gap: 10px;
   }
   .card-profession { font-size: 8px; padding: 3px 6px; }
   .fp-select { flex: 1 1 100%; max-width: 100%; }

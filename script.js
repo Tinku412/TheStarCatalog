@@ -411,6 +411,16 @@ function initializeFilters() {
         if (searchEl) searchEl.value = '';
         applyFiltersAndSort();
     });
+
+    // Mobile: toggle filter/sort panel
+    const fpToggle = document.getElementById('fpMobileToggle');
+    const fpPanel  = document.getElementById('filterPanel');
+    if (fpToggle && fpPanel) {
+        fpToggle.addEventListener('click', () => {
+            const open = fpPanel.classList.toggle('is-open');
+            fpToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        });
+    }
 }
 
 // ============================================

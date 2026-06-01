@@ -136,6 +136,7 @@
     padding: 6px 0;
     border-bottom: 1px solid var(--cream3);
     font-family: 'Source Code Pro', monospace;
+    flex-wrap: nowrap;
 }
 .info-row:last-child { border-bottom: none; }
 .info-label {
@@ -150,7 +151,11 @@
     color: var(--navy);
     font-weight: 500;
     text-align: right;
-    word-break: break-word;
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     line-height: 1.4;
 }
 
@@ -786,6 +791,7 @@
     .header-cta-btn { font-size: 8.5px; padding: 8px 6px; }
     .profile-section-block { padding: 0.85rem; }
     .profile-name-header { padding: 0.85rem; }
-    .info-row { flex-wrap: wrap; }
-    .info-val { text-align: left; width: 100%; }
+    .info-row { flex-wrap: nowrap; gap: 6px; }
+    .info-label { font-size: 9px; }
+    .info-val { font-size: 11px; text-align: right; width: auto; white-space: nowrap; }
 }
