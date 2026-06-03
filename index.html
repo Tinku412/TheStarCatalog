@@ -327,8 +327,21 @@
             margin-bottom: 28px;
             flex-wrap: wrap;
         }
+        .featured-section-header--centered {
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
         .featured-section-header .landing-h2 { margin-bottom: 0; }
         .featured-view-more { white-space: nowrap; flex-shrink: 0; }
+        .featured-section-footer {
+            display: none;
+            margin-top: 28px;
+            text-align: center;
+        }
+        .featured-section-footer .featured-view-more {
+            display: inline-flex;
+        }
         .featured-cards-row {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -415,6 +428,10 @@
             .two-col-layout { grid-template-columns: 1fr; gap: 32px; }
             .two-col-layout.reverse { direction: ltr; }
             .featured-cards-row { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 768px) {
+            .featured-section-header .featured-view-more { display: none; }
+            .featured-section-footer { display: block; }
         }
         @media (max-width: 520px) {
             .featured-cards-row { grid-template-columns: 1fr 1fr; }
@@ -530,11 +547,11 @@
                 <svg width="12" height="12" viewBox="0 0 14 14" fill="none" aria-hidden="true">
                     <polygon points="7,1 8.5,5.5 13,5.5 9.5,8.5 11,13 7,10 3,13 4.5,8.5 1,5.5 5.5,5.5" stroke="#c9b97a" stroke-width="1" fill="none"/>
                 </svg>
-                Trusted by seekers worldwide
+                Community-reviewed spell casters
             </div>
 
             <h1 class="landing-hero-h1">
-                Real Spell Caster Reviews <br><span style="color:#c9b97a;">Find Trusted Witches & Psychics</span>
+                Spell Caster Reviews <br><span style="color:#c9b97a;">Find Trusted Witches & Psychics</span>
             </h1>
 
             <p class="landing-hero-desc" style="max-width:600px;margin:18px auto 0;">
@@ -555,21 +572,32 @@
     <!-- ══════════════════════════════════════════════
          TOP RATED SPELL CASTERS
     ═══════════════════════════════════════════════ -->
-    <section class="landing-section cream-bg" id="topRated" aria-labelledby="topRatedHeading">
-        <div class="landing-centered" style="margin-bottom:10px;">
-            <div class="landing-eyebrow" style="justify-content:center;">
-                <svg width="11" height="11" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                    <polygon points="7,1 8.5,5.5 13,5.5 9.5,8.5 11,13 7,10 3,13 4.5,8.5 1,5.5 5.5,5.5" stroke="#c9b97a" stroke-width="1" fill="none"/>
-                </svg>
-                Highest community ratings
+    <section class="landing-section cream-bg featured-section" id="topRated" aria-labelledby="topRatedHeading">
+        <div class="featured-section-header featured-section-header--centered">
+            <div>
+                <div class="landing-eyebrow" style="justify-content:center;margin-bottom:6px;">
+                    <svg width="11" height="11" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                        <polygon points="7,1 8.5,5.5 13,5.5 9.5,8.5 11,13 7,10 3,13 4.5,8.5 1,5.5 5.5,5.5" stroke="#c9b97a" stroke-width="1" fill="none"/>
+                    </svg>
+                    Highest community ratings
+                </div>
+                <h2 id="topRatedHeading" class="landing-h2" style="text-align:center;margin-bottom:4px;">Top Rated Spell Casters</h2>
+                <p style="font-family:'Source Code Pro',monospace;font-size:11px;color:var(--muted);letter-spacing:0.05em;text-align:center;">Ranked by verified reviews from real clients across all spell casting services</p>
             </div>
-            <h2 id="topRatedHeading" class="landing-h2" style="text-align:center;">Top Rated Spell Casters</h2>
-            <p style="font-family:'Source Code Pro',monospace;font-size:11px;color:var(--muted);letter-spacing:0.05em;text-align:center;margin-top:6px;">Ranked by verified reviews from real clients across all spell casting services</p>
+            <a href="spellcasters.html" class="landing-btn-secondary featured-view-more" aria-label="Browse all top rated spell casters">Browse All →</a>
+        </div>
+        <div class="featured-cards-row" id="topRatedRow" role="list" aria-label="Top rated spell casters">
+            <div class="featured-card-loading">Loading practitioners…</div>
+        </div>
+        <div class="featured-section-footer">
+            <a href="spellcasters.html" class="landing-btn-secondary featured-view-more" aria-label="Browse all top rated spell casters">Browse All →</a>
         </div>
     </section>
 
+    <div class="landing-divider"></div>
+
     <!-- ── Love Spell Casters ── -->
-    <section class="landing-section cream-bg featured-section" id="loveCasters" aria-labelledby="loveCastersHeading" style="padding-top:0;">
+    <section class="landing-section cream-bg featured-section" id="loveCasters" aria-labelledby="loveCastersHeading">
         <div class="featured-section-header">
             <div>
                 <div class="landing-eyebrow" style="margin-bottom:6px;">
@@ -581,10 +609,13 @@
                 <h2 id="loveCastersHeading" class="landing-h2" style="margin-bottom:4px;">Love Spell Casters</h2>
                 <p style="font-family:'Source Code Pro',monospace;font-size:11px;color:var(--muted);letter-spacing:0.05em;">Love attraction, bring back ex, reconciliation, binding spells &amp; more</p>
             </div>
-            <a href="spellcasters.html?specialty=love" class="landing-btn-secondary featured-view-more" aria-label="View all love spell casters">View More →</a>
+            <a href="love-spell-casters.html" class="landing-btn-secondary featured-view-more" aria-label="View all love spell casters">View More →</a>
         </div>
         <div class="featured-cards-row" id="loveCastersRow" role="list" aria-label="Top love spell casters">
             <div class="featured-card-loading">Loading practitioners…</div>
+        </div>
+        <div class="featured-section-footer">
+            <a href="love-spell-casters.html" class="landing-btn-secondary featured-view-more" aria-label="View all love spell casters">View More →</a>
         </div>
     </section>
 
@@ -607,6 +638,9 @@
         </div>
         <div class="featured-cards-row" id="moneyCastersRow" role="list" aria-label="Top money spell casters">
             <div class="featured-card-loading">Loading practitioners…</div>
+        </div>
+        <div class="featured-section-footer">
+            <a href="spellcasters.html?specialty=money" class="landing-btn-secondary featured-view-more" aria-label="View all money spell casters">View More →</a>
         </div>
     </section>
 
@@ -631,6 +665,9 @@
         </div>
         <div class="featured-cards-row" id="newThisWeekRow" role="list" aria-label="New spell casters this week">
             <div class="featured-card-loading">Loading practitioners…</div>
+        </div>
+        <div class="featured-section-footer">
+            <a href="spellcasters.html" class="landing-btn-secondary featured-view-more" aria-label="Browse all new spell casters">Browse All →</a>
         </div>
     </section>
 
@@ -943,7 +980,7 @@
         </div>
 
         <div style="margin-top:40px;" class="landing-cta-row">
-            <a href="spellcasters.html" class="landing-btn-primary accent-bg">Start Browsing  It's Free</a>
+            <a href="spellcasters.html" class="landing-btn-primary accent-bg">Start Browsing    </a>
             <a href="submit-practitioner.html" class="landing-btn-secondary">Submit a Practitioner</a>
         </div>
         </div>
@@ -980,17 +1017,17 @@
     <!-- ══════════════════════════════════════════════
          FOR PRACTITIONERS CTA STRIP
     ═══════════════════════════════════════════════ -->
-    <section class="landing-section navy-bg" style="padding:60px 120px;">
-        <div style="max-width:700px;margin:0 auto;text-align:center;">
+    <section class="landing-section navy-bg" >
+        <div style="max-width:800px;margin:0 auto;text-align:center;">
             <div class="landing-eyebrow" style="justify-content:center;">
                 <svg width="11" height="11" viewBox="0 0 14 14" fill="none">
                     <polygon points="7,1 8.5,5.5 13,5.5 9.5,8.5 11,13 7,10 3,13 4.5,8.5 1,5.5 5.5,5.5" stroke="#c9b97a" stroke-width="1" fill="none"/>
                 </svg>
                 Are you a practitioner?
             </div>
-            <h2 class="landing-h2 light" style="text-align:center;">Are you a genuine practitioner? Let's get you seen.</h2>
-            <p class="landing-desc light" style="max-width:560px;margin:0 auto 28px;text-align:center;">
-                If you're the real deal, submit your profile for free, collect honest reviews from your clients, and let your reputation grow the natural way.
+            <h2 class="landing-h2 light" style="text-align:center;">Are you a genuine practitioner?</h2>
+            <p class="landing-desc light" style="max-width:800px;margin:0 auto 28px;text-align:center;">
+                Submit your profile for free, collect honest reviews from your clients, and let your reputation grow the natural way.
             </p>
             <div class="landing-cta-row" style="justify-content:center;">
                 <a href="submit-practitioner.html" class="landing-btn-primary accent-bg">Submit Your Profile</a>
@@ -1357,6 +1394,48 @@
                 }
             }
 
+            async function loadTopRated() {
+                const container = document.getElementById('topRatedRow');
+                if (!container) return;
+
+                try {
+                    const { data, error } = await supabaseClient
+                        .from('sc_profiles')
+                        .select('id, professional_name, personal_name, professional_identity, profile_picture_url, average_rating, review_count, slug, specialties')
+                        .eq('is_active', true)
+                        .gt('review_count', 0)
+                        .not('average_rating', 'is', null)
+                        .order('average_rating', { ascending: false, nullsFirst: false })
+                        .order('review_count', { ascending: false })
+                        .limit(4);
+
+                    if (error) throw error;
+
+                    if (!data || data.length === 0) {
+                        // Fallback: show highest-rated even without reviews filter
+                        const { data: fallback, error: fbErr } = await supabaseClient
+                            .from('sc_profiles')
+                            .select('id, professional_name, personal_name, professional_identity, profile_picture_url, average_rating, review_count, slug, specialties')
+                            .eq('is_active', true)
+                            .order('average_rating', { ascending: false, nullsFirst: false })
+                            .limit(4);
+
+                        if (fbErr || !fallback || fallback.length === 0) {
+                            container.innerHTML = '<div class="featured-card-loading">No practitioners found yet — be the first to submit one!</div>';
+                            return;
+                        }
+                        container.innerHTML = '';
+                        fallback.forEach(p => container.appendChild(buildFeaturedCard(p)));
+                        return;
+                    }
+
+                    container.innerHTML = '';
+                    data.forEach(p => container.appendChild(buildFeaturedCard(p)));
+                } catch (err) {
+                    container.innerHTML = '<div class="featured-card-loading">Could not load practitioners right now.</div>';
+                }
+            }
+
             async function loadNewThisWeek() {
                 const container = document.getElementById('newThisWeekRow');
                 if (!container) return;
@@ -1379,6 +1458,7 @@
             }
 
             await Promise.all([
+                loadTopRated(),
                 loadSection('loveCastersRow',  ['love', 'attraction', 'reconciliation', 'binding', 'marriage', 'commitment', 'obsession', 'lust']),
                 loadSection('moneyCastersRow', ['money', 'wealth', 'prosperity', 'abundance', 'career', 'fortune', 'luck', 'business']),
                 loadNewThisWeek()
