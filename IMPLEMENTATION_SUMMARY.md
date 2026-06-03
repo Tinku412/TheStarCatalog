@@ -23,7 +23,8 @@ All pages now have a professional, non-sticky footer with:
 - Consistent styling across all pages
 
 #### Files Updated:
-- ✅ `index.html` - Main directory page
+- ✅ `index.html` - Home / landing page
+- ✅ `spellcasters.html` - Practitioner directory page
 - ✅ `profile.html` - Profile detail page
 - ✅ `admin.html` - Admin submission page
 - ✅ `styles.css` - Global footer styles
@@ -216,7 +217,7 @@ All tables use `SC_` prefix as requested:
    - View analytics
 
 3. **Frontend Integration**
-   - Load profiles from Supabase on index.html
+   - Load profiles from Supabase on spellcasters.html
    - Real-time updates
    - Search and filter
    - Pagination

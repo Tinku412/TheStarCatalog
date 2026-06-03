@@ -88,7 +88,7 @@ Once everything is working:
 1. Test with real data
 2. Set up authentication (optional)
 3. Build admin dashboard to manage submissions
-4. Connect index.html to load profiles from Supabase
+4. Connect spellcasters.html to load profiles from Supabase
 5. Add search and filter functionality
 
 ---

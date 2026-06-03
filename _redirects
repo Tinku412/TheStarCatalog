@@ -1,3 +1,6 @@
 # Netlify rewrites — maps pretty profile URLs to profile.html?slug=...
 # This allows direct navigation to /spellcasters/la-bruja-next-door to work.
 /spellcasters/:slug  /profile.html?slug=:slug  200
+
+# Legacy URLs (renamed pages)
+/landing.html  /index.html  301

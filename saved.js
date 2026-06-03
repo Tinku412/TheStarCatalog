@@ -1,4 +1,4 @@
-// ============================================
+﻿// ============================================
 // SUPABASE CONFIGURATION
 // ============================================
 const SUPABASE_URL      = 'https://uapjfrxjjpotmvpuidsq.supabase.co';
@@ -119,7 +119,7 @@ async function loadSavedProfiles() {
 }
 
 // ============================================
-// CREATE SAVED CARD  (same visual style as index.html)
+// CREATE SAVED CARD  (same visual style as spellcasters.html)
 // ============================================
 function createSavedCard(profile) {
     const card = document.createElement('article');
@@ -290,7 +290,7 @@ function showEmptyState(container, heading) {
             </svg>
             <p style="font-family:'Cinzel',serif;font-size:15px;color:var(--navy);margin:0 0 8px;">No saved practitioners yet</p>
             <p style="font-family:'Source Code Pro',monospace;font-size:12px;color:var(--muted);max-width:340px;line-height:1.7;margin:0 0 24px;">Browse the directory and click the bookmark icon on any practitioner to save them here.</p>
-            <a href="index.html" style="display:inline-block;padding:10px 22px;background:var(--navy);color:var(--cream);font-family:'Source Code Pro',monospace;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;border-radius:3px;">Browse Directory</a>
+            <a href="spellcasters.html" style="display:inline-block;padding:10px 22px;background:var(--navy);color:var(--cream);font-family:'Source Code Pro',monospace;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;border-radius:3px;">Browse Directory</a>
         </div>
     `;
 }

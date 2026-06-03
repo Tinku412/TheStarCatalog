@@ -13,7 +13,11 @@
     RewriteCond %{REQUEST_FILENAME} -d
     RewriteRule ^ - [L]
 
-    # ── 2. Pretty practitioner URLs ─────────────────────────────────────
+    # ── 2. Legacy page rename ───────────────────────────────────────────
+    # landing.html is now index.html (home); directory is spellcasters.html
+    RewriteRule ^landing\.html$ /index.html [R=301,L,NC]
+
+    # ── 3. Pretty practitioner URLs ─────────────────────────────────────
     # /spellcasters/la-bruja-next-door  →  profile.html?slug=la-bruja-next-door
     # Browser address bar stays on /spellcasters/... (internal rewrite, not 302).
     RewriteRule ^spellcasters/([a-z0-9][a-z0-9-]*)/?$ /profile.html?slug=$1 [L,QSA,NC]

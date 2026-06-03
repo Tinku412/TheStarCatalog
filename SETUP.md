@@ -157,7 +157,7 @@ For production, consider:
 
 ## Step 3: Testing
 
-1. Open `index.html` in a web browser
+1. Open `index.html` (home) or `spellcasters.html` (directory) in a web browser
 2. Click "Add a Spell Caster" button
 3. Fill out the form (all fields are optional)
 4. Upload an image (optional)

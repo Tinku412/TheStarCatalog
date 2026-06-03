@@ -43,7 +43,8 @@ Each card includes:
 
 ```
 /
-├── index.html          # Main HTML structure
+├── index.html          # Home / landing page
+├── spellcasters.html   # Practitioner directory
 ├── styles.css          # Editorial magazine styling
 ├── script.js           # Minimal JavaScript interactions
 └── README.md          # Documentation

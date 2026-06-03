@@ -1,7 +1,7 @@
 # Layout Redesign Summary
 
 ## Overview
-Redesigned both the profile cards on index.html and the profile page layout for better readability and visual hierarchy.
+Redesigned both the profile cards on spellcasters.html and the profile page layout for better readability and visual hierarchy.
 
 ---
 

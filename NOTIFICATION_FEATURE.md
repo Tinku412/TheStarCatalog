@@ -78,7 +78,7 @@ showNotification('Changes discarded', 'info');
 
 ## User Experience Flow
 
-### On Directory Page (index.html):
+### On Directory Page (spellcasters.html):
 1. User clicks upvote button on a profile card
 2. Upvote count increases/decreases
 3. Notification slides in from right: "Upvoted [Name]! ▲"
@@ -161,7 +161,7 @@ showNotification('Changes discarded', 'info');
 - [ ] Auto-dismiss works correctly
 
 ### Both Pages:
-- [ ] Works on index.html (directory)
+- [ ] Works on spellcasters.html (directory)
 - [ ] Works on profile.html (individual profiles)
 - [ ] Consistent styling across pages
 - [ ] No console errors

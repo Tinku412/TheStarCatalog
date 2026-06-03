@@ -1,7 +1,7 @@
 # Database Integration Guide
 
 ## Overview
-The Star Catalog now dynamically loads profiles from Supabase database and displays them on both the directory page (index.html) and individual profile pages (profile.html).
+The Star Catalog now dynamically loads profiles from Supabase database and displays them on both the directory page (spellcasters.html) and individual profile pages (profile.html).
 
 ## How It Works
 
@@ -110,11 +110,11 @@ await supabaseClient
 2. Profile is uploaded to Supabase
 3. Status defaults to "pending"
 4. Admin approves in Supabase dashboard (change status to "approved")
-5. Profile automatically appears on index.html
+5. Profile automatically appears on spellcasters.html
 6. Users can click to see full profile details
 
 ### Viewing Profiles (Public)
-1. User visits index.html
+1. User visits spellcasters.html
 2. Sees all approved profiles as cards
 3. Clicks "VIEW PROFILE" on any card
 4. Redirected to `profile.html?id=xxx`
@@ -124,12 +124,12 @@ await supabaseClient
 ## Files Modified
 
 ### JavaScript Files:
-- ✅ `script.js` - Loads and displays profiles on index.html
+- ✅ `script.js` - Loads and displays profiles on spellcasters.html
 - ✅ `profile.js` - Loads individual profile on profile.html
 - ✅ `admin.js` - Already updated (submits new profiles)
 
 ### HTML Files:
-- ✅ `index.html` - Added Supabase library script
+- ✅ `spellcasters.html` - Added Supabase library script
 - ✅ `profile.html` - Added Supabase library script
 
 ### No Changes Needed:

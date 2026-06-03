@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -24,7 +24,7 @@
             var parts = window.location.pathname.replace(/\/$/, '').split('/').filter(Boolean);
             // parts = ['spellcasters', 'la-bruja-next-door']  OR just ['la-bruja-next-door']
             var last = parts[parts.length - 1];
-            if (last && last !== 'index.html' && last !== 'spellcasters') {
+            if (last && last !== 'spellcasters.html' && last !== 'spellcasters') {
                 slug = last;
             }
         }
@@ -34,7 +34,7 @@
             window.location.replace('/profile.html?slug=' + encodeURIComponent(slug));
         } else {
             // No slug found — fall back to the directory
-            window.location.replace('/index.html');
+            window.location.replace('/spellcasters.html');
         }
     })();
 </script>

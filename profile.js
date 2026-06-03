@@ -1,4 +1,4 @@
-// ============================================
+﻿// ============================================
 // SUPABASE CONFIGURATION
 // ============================================
 const SUPABASE_URL = 'https://uapjfrxjjpotmvpuidsq.supabase.co';
@@ -22,7 +22,7 @@ function resolveProfileFromUrl() {
     const idx   = parts.findIndex(p => p.toLowerCase() === 'spellcasters');
     if (idx >= 0 && parts[idx + 1]) {
         const segment = decodeURIComponent(parts[idx + 1]).toLowerCase();
-        if (segment && segment !== 'index.html') {
+        if (segment && segment !== 'spellcasters.html') {
             return { id: null, slug: segment };
         }
     }
@@ -493,7 +493,7 @@ function showError(message) {
         container.innerHTML = `
             <div style="text-align: center; padding: 60px 20px;">
                 <h2 style="font-size: 24px; margin-bottom: 20px; color: #e14b22;">${message}</h2>
-                <a href="/index.html" class="back-button">← Back to Directory</a>
+                <a href="/spellcasters.html" class="back-button">← Back to Directory</a>
             </div>
         `;
     }
