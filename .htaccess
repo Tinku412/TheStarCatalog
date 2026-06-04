@@ -17,6 +17,10 @@
     # landing.html is now index.html (home); directory is spellcasters.html
     RewriteRule ^landing\.html$ /index.html [R=301,L,NC]
 
+    # Legacy specialty URLs → canonical pages
+    RewriteRule ^career-spell-casters\.html$ /road-opener-spell-casters.html [R=301,L,NC]
+    RewriteRule ^cord-cutting-spell-casters\.html$ /cord-cutting-practitioners.html [R=301,L,NC]
+
     # ── 3. Pretty practitioner URLs ─────────────────────────────────────
     # /spellcasters/la-bruja-next-door  →  profile.html?slug=la-bruja-next-door
     # Browser address bar stays on /spellcasters/... (internal rewrite, not 302).
