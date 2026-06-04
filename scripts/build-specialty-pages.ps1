@@ -921,9 +921,9 @@ $($faqData.schema)
 
     <nav class="lsc-breadcrumb" aria-label="Breadcrumb">
         <a href="index.html">Home</a>
-        <span class="lsc-breadcrumb-sep" aria-hidden="true">›</span>
+        <span class="lsc-breadcrumb-sep" aria-hidden="true">&rsaquo;</span>
         <a href="spellcasters.html">All Spell Casters</a>
-        <span class="lsc-breadcrumb-sep" aria-hidden="true">›</span>
+        <span class="lsc-breadcrumb-sep" aria-hidden="true">&rsaquo;</span>
         <span aria-current="page">$($p.ldBreadcrumb)</span>
     </nav>
 
