@@ -33,6 +33,7 @@
                     <li><a href="about.html">About Us</a></li>
                     <li><a href="contact.html">Contact</a></li>
                     <li><a href="saved.html">Saved Profiles</a></li>
+                    <li><a href="my-reviews.html">My Reviews</a></li>
                     <li><a href="submit-practitioner.html">Submit a Practitioner</a></li>
                 </ul>
             </div>

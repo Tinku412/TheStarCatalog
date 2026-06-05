@@ -453,6 +453,28 @@
                         <span class="review-field-hint">Comma-separated list of services you purchased</span>
                     </div>
 
+                    <!-- Date Purchased -->
+                    <div>
+                        <label class="review-label">Date purchased? <span style="color:var(--muted);font-weight:400;">(optional)</span></label>
+                        <div class="review-radio-group">
+                            <label class="review-radio-option">
+                                <input type="radio" name="purchaseDate" value="< 1 week ago"> &lt; 1 week ago
+                            </label>
+                            <label class="review-radio-option">
+                                <input type="radio" name="purchaseDate" value="< 1 month ago"> &lt; 1 month ago
+                            </label>
+                            <label class="review-radio-option">
+                                <input type="radio" name="purchaseDate" value="2–3 months ago"> 2–3 months ago
+                            </label>
+                            <label class="review-radio-option">
+                                <input type="radio" name="purchaseDate" value="3–6 months ago"> 3–6 months ago
+                            </label>
+                            <label class="review-radio-option">
+                                <input type="radio" name="purchaseDate" value="> 6 months ago"> &gt; 6 months ago
+                            </label>
+                        </div>
+                    </div>
+
                     <!-- Would you hire again? -->
                     <div>
                         <label class="review-label">Would you hire again? <span style="color:var(--muted);font-weight:400;"></span></label>
@@ -516,6 +538,26 @@
                     </div>
 
                     <button type="submit" class="modal-submit" id="reviewSubmitBtn">Submit Review</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- ----------- REVIEW UPDATE MODAL ----------- -->
+    <div class="modal-overlay" id="updateModal" role="dialog" aria-modal="true" aria-labelledby="updateModalTitle">
+        <div class="modal">
+            <div class="modal-header">
+                <div class="modal-title" id="updateModalTitle">Share an Update</div>
+                <div class="modal-subtitle">Add a follow-up note to your original review.</div>
+                <button class="modal-close" id="closeUpdate" aria-label="Close">×</button>
+            </div>
+            <div class="modal-body">
+                <form class="review-form" id="updateForm" autocomplete="off">
+                    <div>
+                        <label class="review-label" for="updateText">Your Update <span style="color:#c9b97a;">*</span></label>
+                        <textarea class="review-textarea" id="updateText" placeholder="Share what's changed since your original review — new results, follow-up communication, or anything else worth adding…" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="modal-submit" id="updateSubmitBtn">Submit Update</button>
                 </form>
             </div>
         </div>

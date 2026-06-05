@@ -1788,7 +1788,7 @@ body { width: 100%; max-width: 100vw; overflow-x: hidden; }
 }
 .review-stars {
   font-size: 15px;
-  color: var(--accent);
+  color: #cda403;
   letter-spacing: 2px;
   flex-shrink: 0;
 }
@@ -1851,7 +1851,7 @@ body { width: 100%; max-width: 100vw; overflow-x: hidden; }
   padding: 2px;
   background: none;
   border: none;
-  color: rgba(201,185,122,0.3);
+  /* color: rgba(201,185,122,0.3); */
   cursor: pointer;
   transition: color 0.1s, transform 0.1s;
   line-height: 1;
@@ -1915,7 +1915,7 @@ body { width: 100%; max-width: 100vw; overflow-x: hidden; }
 }
 .sub-rating-display-stars {
   font-size: 11px;
-  color: var(--accent);
+  color: #cda403;
   letter-spacing: 1px;
 }
 .sub-rating-display-num {

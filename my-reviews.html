@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8RKJDCW3DF"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-8RKJDCW3DF');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <base href="/">
+
+    <title>My Reviews | The Star Catalog</title>
+    <meta name="description" content="View and manage all the reviews you've written on The Star Catalog. Add updates to your reviews to share new insights with the community.">
+    <meta name="robots" content="noindex, nofollow">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Cinzel:wght@400;600;700&family=Source+Code+Pro:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/profile.css">
+    <link rel="icon" href="/svgviewer-png-output.png" type="image/png">
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="site-header">
+        <a class="logo-wrap" href="index.html">
+            <div class="monogram">
+                <svg width="24" height="24" viewBox="0 0 26 26" fill="none">
+                    <polygon points="13,2 15,10 23,8 17,14 23,20 15,18 13,26 11,18 3,20 9,14 3,8 11,10" stroke="#c9b97a" stroke-width="1" fill="none"/>
+                    <circle cx="13" cy="13" r="3" fill="none" stroke="#c9b97a" stroke-width="1"/>
+                    <line x1="11.5" y1="13" x2="14.5" y2="13" stroke="#c9b97a" stroke-width="1"/>
+                    <line x1="13" y1="11.5" x2="13" y2="14.5" stroke="#c9b97a" stroke-width="1"/>
+                </svg>
+            </div>
+            <div class="logo-text">
+                <span class="logo-main">The Star Catalog</span>
+                <span class="logo-sub">Est. MMXXVI — Seeker's Guide</span>
+            </div>
+        </a>
+        <nav class="site-nav">
+            <a href="spellcasters.html">Browse</a>
+            <a href="about.html">About</a>
+            <a href="faq.html">FAQ</a>
+            <a href="saved.html">Saved</a>
+            <a href="my-reviews.html" class="active">My Reviews</a>
+            <span id="navAuthArea" class="nav-auth-area"></span>
+        </nav>
+        <a class="nav-cta" href="submit-practitioner.html" style="text-decoration:none;">Submit Practitioner</a>
+        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+            <span></span><span></span><span></span>
+        </button>
+    </header>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav" id="mobileNav">
+        <a href="spellcasters.html" class="mobile-nav-item">Browse Directory</a>
+        <a href="about.html" class="mobile-nav-item">About</a>
+        <a href="faq.html" class="mobile-nav-item">FAQ</a>
+        <a href="contact.html" class="mobile-nav-item">Contact</a>
+        <a href="saved.html" class="mobile-nav-item">Saved Profiles</a>
+        <a href="my-reviews.html" class="mobile-nav-item">My Reviews</a>
+        <a href="submit-practitioner.html" class="mobile-nav-item">Submit Practitioner</a>
+    </div>
+
+    <!-- Hero -->
+    <div class="mr-page-hero">
+        <div class="mr-eyebrow">
+            <svg width="11" height="11" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                <polygon points="7,1 8.5,5.5 13,5.5 9.5,8.5 11,13 7,10 3,13 4.5,8.5 1,5.5 5.5,5.5" stroke="#c9b97a" stroke-width="1" fill="none"/>
+            </svg>
+            Your contributions
+        </div>
+        <h1 class="mr-h1">My Reviews</h1>
+        <p class="mr-subtitle">All the reviews you've written — and a place to add updates as your experience evolves.</p>
+    </div>
+
+    <!-- Main content -->
+    <main class="mr-content" id="mrContent">
+        <div id="mrList"></div>
+    </main>
+
+    <!-- Review Update Modal -->
+    <div class="modal-overlay" id="updateModal" role="dialog" aria-modal="true" aria-labelledby="updateModalTitle">
+        <div class="modal">
+            <div class="modal-header">
+                <div class="modal-title" id="updateModalTitle">Share an Update</div>
+                <div class="modal-subtitle">Add a follow-up note to your original review.</div>
+                <button class="modal-close" id="closeUpdate" aria-label="Close">×</button>
+            </div>
+            <div class="modal-body">
+                <form class="review-form" id="updateForm" autocomplete="off">
+                    <div>
+                        <label class="review-label" for="updateText">Your Update <span style="color:#c9b97a;">*</span></label>
+                        <textarea class="review-textarea" id="updateText" placeholder="Share what's changed since your original review — new results, follow-up communication, or anything else worth adding…" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="modal-submit" id="updateSubmitBtn">Submit Update</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer" id="siteFooter" role="contentinfo"></footer>
+    <script src="site-footer.js"></script>
+
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- Shared Auth -->
+    <script src="/auth.js"></script>
+
+    <script>
+    (function () {
+        // ── Config ──────────────────────────────────────────────
+        const SUPABASE_URL      = 'https://uapjfrxjjpotmvpuidsq.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVhcGpmcnhqanBvdG12cHVpZHNxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjAxMjcxMzAsImV4cCI6MjA3NTcwMzEzMH0.NAFy5Iqs6xm39R42yxBHpjxdBmT66cB7l9LcpULUGoI';
+
+        const { createClient } = supabase;
+        const sc = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        let currentUser    = null;
+        let _updateReviewId = null;
+        let _updateCardEl   = null;
+
+        // ── Helpers ─────────────────────────────────────────────
+        function esc(s) {
+            return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+        }
+
+        function fmtDate(iso) {
+            if (!iso) return '';
+            return new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+        }
+
+        function showNotification(msg, type) {
+            const n = document.createElement('div');
+            n.textContent = msg;
+            n.style.cssText = [
+                'position:fixed;bottom:24px;right:24px;z-index:9999',
+                'padding:12px 20px',
+                'font-family:"Source Code Pro",monospace;font-size:11.5px;letter-spacing:.04em',
+                'border-radius:2px;box-shadow:0 4px 18px rgba(0,0,0,.18)',
+                type === 'error'
+                    ? 'background:#2a1a1a;color:#e8a8a8;border:1px solid #8b3a3a'
+                    : 'background:#1b2d3e;color:#e8e0cc;border:1px solid #c9b97a'
+            ].join(';');
+            document.body.appendChild(n);
+            setTimeout(() => n.remove(), 3500);
+        }
+
+        // ── Update modal ─────────────────────────────────────────
+        function openUpdateModal(reviewId, cardEl) {
+            _updateReviewId = reviewId;
+            _updateCardEl   = cardEl;
+            const ta = document.getElementById('updateText');
+            if (ta) ta.value = '';
+            document.getElementById('updateModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+            setTimeout(() => ta?.focus(), 80);
+        }
+        function closeUpdateModal() {
+            document.getElementById('updateModal').classList.remove('active');
+            document.body.style.overflow = '';
+            _updateReviewId = null;
+            _updateCardEl   = null;
+        }
+
+        document.getElementById('closeUpdate').addEventListener('click', closeUpdateModal);
+        document.getElementById('updateModal').addEventListener('click', function(e) {
+            if (e.target === e.currentTarget) closeUpdateModal();
+        });
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeUpdateModal();
+        });
+
+        document.getElementById('updateForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const text = (document.getElementById('updateText').value || '').trim();
+            if (!text) { showNotification('Please write your update before submitting.', 'error'); return; }
+
+            const btn = document.getElementById('updateSubmitBtn');
+            btn.textContent = 'Submitting…'; btn.disabled = true;
+
+            try {
+                const { data, error } = await sc
+                    .from('sc_reviews')
+                    .update({ review_update: text, review_updated_at: new Date().toISOString() })
+                    .eq('id', _updateReviewId)
+                    .eq('reviewer_id', currentUser.id)
+                    .select()
+                    .single();
+
+                if (error) throw error;
+
+                // Update card in-place
+                if (_updateCardEl) {
+                    _updateCardEl.querySelector('.review-update-block')?.remove();
+                    _updateCardEl.querySelector('.review-update-link')?.remove();
+                    _updateCardEl.appendChild(buildUpdateBlock(text, data.review_updated_at));
+                    _updateCardEl.appendChild(createUpdateLink(_updateReviewId, _updateCardEl));
+                }
+
+                closeUpdateModal();
+                showNotification('Update submitted — thank you!', 'success');
+            } catch (err) {
+                console.error('Update error:', err);
+                showNotification('Failed to submit update. Please try again.', 'error');
+            } finally {
+                btn.textContent = 'Submit Update'; btn.disabled = false;
+            }
+        });
+
+        function buildUpdateBlock(text, updatedAt) {
+            const block = document.createElement('div');
+            block.className = 'review-update-block';
+            block.innerHTML = `
+                <div class="review-update-label">
+                    <svg width="11" height="11" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                        <path d="M2 10l1-3L10 1l2 2-7 7-3 1z" stroke="currentColor" stroke-width="1.3" fill="none"/>
+                        <line x1="8" y1="3" x2="11" y2="6" stroke="currentColor" stroke-width="1.3"/>
+                    </svg>
+                    Reviewer's Update
+                </div>
+                <p class="review-update-text">${esc(text)}</p>
+                ${updatedAt ? `<span class="review-update-date">Updated on ${fmtDate(updatedAt)}</span>` : ''}
+            `;
+            return block;
+        }
+
+        function createUpdateLink(reviewId, cardEl) {
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'review-update-link';
+            btn.textContent = 'Want to share an update?';
+            btn.addEventListener('click', () => openUpdateModal(reviewId, cardEl));
+            return btn;
+        }
+
+        // ── Build review card ─────────────────────────────────────
+        function buildReviewCard(r) {
+            const div = document.createElement('div');
+            div.className = 'review-card';
+            div.dataset.reviewId   = r.id;
+            div.dataset.reviewerId = r.reviewer_id || '';
+
+            const filled = '★'.repeat(r.rating);
+            const empty  = '☆'.repeat(5 - r.rating);
+            const date   = fmtDate(r.created_at);
+
+            const avatarHtml = r.reviewer_avatar
+                ? `<img src="${esc(r.reviewer_avatar)}" alt="${esc(r.reviewer_name)}" class="reviewer-avatar" loading="lazy">`
+                : `<div class="reviewer-avatar-placeholder">${(r.reviewer_name || 'A')[0].toUpperCase()}</div>`;
+
+            const subRatingDefs = [
+                { key: 'rating_communication', label: 'Communication' },
+                { key: 'rating_accuracy',      label: 'Accuracy' },
+                { key: 'rating_value',         label: 'Value' },
+            ];
+            const hasSub = subRatingDefs.some(s => r[s.key] != null);
+            const subHtml = hasSub ? `<div class="review-sub-ratings">${
+                subRatingDefs.filter(s => r[s.key] != null).map(s => `
+                    <div class="sub-rating-display">
+                        <span class="sub-rating-display-label">${s.label}</span>
+                        <span class="sub-rating-display-stars">${'★'.repeat(r[s.key])}<span style="opacity:0.3;">${'★'.repeat(5 - r[s.key])}</span></span>
+                        <span class="sub-rating-display-num">${r[s.key]}/5</span>
+                    </div>`).join('')
+            }</div>` : '';
+
+            let imageUrls = [];
+            try { imageUrls = typeof r.image_urls === 'string' ? JSON.parse(r.image_urls || '[]') : (Array.isArray(r.image_urls) ? r.image_urls : []); }
+            catch (_) { imageUrls = []; }
+            const imagesHtml = imageUrls.length
+                ? `<div class="review-images">${imageUrls.map(u => `<img src="${u}" alt="Review proof" class="review-img" loading="lazy" onclick="window.open('${u}','_blank')">`).join('')}</div>`
+                : '';
+
+            const pills = [
+                r.purchase_date ? `<span class="review-meta-pill">Purchased: <strong>${esc(r.purchase_date)}</strong></span>` : '',
+                r.hire_again    ? `<span class="review-meta-pill">Hire again: <strong>${esc(r.hire_again)}</strong></span>` : '',
+                r.result_time   ? `<span class="review-meta-pill">Results: <strong>${esc(r.result_time)}</strong></span>` : '',
+            ].filter(Boolean).join('');
+
+            div.innerHTML = `
+                <div class="review-card-header">
+                    ${avatarHtml}
+                    <div class="reviewer-meta">
+                        <span class="reviewer-name">${esc(r.reviewer_name)}</span>
+                        <span class="review-date">Reviewed on ${date}</span>
+                    </div>
+                    <div class="review-overall-rating">
+                        <div class="review-stars" title="${r.rating} out of 5">${filled}<span style="opacity:0.35;">${empty}</span></div>
+                        <span class="review-overall-label">Overall</span>
+                    </div>
+                </div>
+                <p class="review-text">${esc(r.review_text)}</p>
+                ${subHtml}
+                ${r.services_purchased ? `<div class="review-services-purchased"><span class="review-services-label">Services Purchased:</span> <span class="review-services-tags">${esc(r.services_purchased).split(',').map(s => `<span class="review-service-tag">${s.trim()}</span>`).join('')}</span></div>` : ''}
+                ${pills ? `<div class="review-meta-pills">${pills}</div>` : ''}
+                ${imagesHtml}
+            `;
+
+            if (r.review_update) div.appendChild(buildUpdateBlock(r.review_update, r.review_updated_at));
+            div.appendChild(createUpdateLink(r.id, div));
+
+            return div;
+        }
+
+        // ── Render reviews list ───────────────────────────────────
+        function renderList(reviews, profilesMap) {
+            const list = document.getElementById('mrList');
+            if (!reviews.length) {
+                list.innerHTML = `
+                    <div class="mr-empty">
+                        <p>You haven't written any reviews yet.</p>
+                        <p style="margin-top:10px;"><a href="spellcasters.html" style="color:var(--accent);">Browse practitioners</a> and share your experience with the community.</p>
+                    </div>`;
+                return;
+            }
+
+            const countEl = document.createElement('p');
+            countEl.className = 'mr-count';
+            countEl.textContent = reviews.length + ' review' + (reviews.length !== 1 ? 's' : '') + ' written';
+            list.appendChild(countEl);
+
+            reviews.forEach(function(r) {
+                const profile = profilesMap[r.profile_id] || {};
+                const practName = profile.professional_name || profile.personal_name || 'Unknown Practitioner';
+                const practSlug = profile.slug;
+                const practHref = practSlug ? ('/spellcasters/' + encodeURIComponent(practSlug)) : ('/profile.html?id=' + encodeURIComponent(r.profile_id));
+
+                const group = document.createElement('div');
+                group.className = 'mr-review-group';
+
+                const header = document.createElement('a');
+                header.href = practHref;
+                header.className = 'mr-practitioner-header';
+                header.innerHTML = `
+                    <svg width="12" height="12" viewBox="0 0 14 14" fill="none" aria-hidden="true" style="flex-shrink:0;color:var(--accent);">
+                        <polygon points="7,1 8.5,5.5 13,5.5 9.5,8.5 11,13 7,10 3,13 4.5,8.5 1,5.5 5.5,5.5" stroke="currentColor" stroke-width="1" fill="none"/>
+                    </svg>
+                    <span class="mr-practitioner-name">${esc(practName)}</span>
+                    <span class="mr-practitioner-arrow">View profile →</span>
+                `;
+                group.appendChild(header);
+                group.appendChild(buildReviewCard(r));
+                list.appendChild(group);
+            });
+        }
+
+        // ── Show sign-in prompt ────────────────────────────────────
+        function showSignInPrompt() {
+            const list = document.getElementById('mrList');
+            list.innerHTML = `
+                <div class="mr-signin-prompt">
+                    <p style="font-family:'IM Fell English',serif;font-size:1.05rem;color:var(--muted);line-height:1.7;">
+                        Sign in to see the reviews you've written.
+                    </p>
+                    <button class="mr-signin-btn" id="mrSignInBtn">
+                        <svg width="16" height="16" viewBox="0 0 18 18" fill="none">
+                            <path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.875 2.684-6.615z" fill="#4285F4"/>
+                            <path d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332C2.438 15.983 5.482 18 9 18z" fill="#34A853"/>
+                            <path d="M3.964 10.71c-.18-.54-.282-1.117-.282-1.71s.102-1.17.282-1.71V4.958H.957C.347 6.173 0 7.548 0 9s.348 2.827.957 4.042l3.007-2.332z" fill="#FBBC05"/>
+                            <path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0 5.482 0 2.438 2.017.957 4.958L3.964 6.29C4.672 4.163 6.656 3.58 9 3.58z" fill="#EA4335"/>
+                        </svg>
+                        Sign in with Google
+                    </button>
+                </div>`;
+            document.getElementById('mrSignInBtn')?.addEventListener('click', async function() {
+                await sc.auth.signInWithOAuth({
+                    provider: 'google',
+                    options: { redirectTo: window.location.href }
+                });
+            });
+        }
+
+        // ── Main init ─────────────────────────────────────────────
+        document.addEventListener('DOMContentLoaded', async function() {
+            // Auth init (for nav area + sign-in state)
+            try {
+                if (typeof scAuth !== 'undefined') {
+                    scAuth.init(sc, {}).catch(function(){});
+                }
+            } catch(_) {}
+
+            const { data: { user } } = await sc.auth.getUser();
+            currentUser = user;
+
+            if (!user) {
+                showSignInPrompt();
+                return;
+            }
+
+            // Fetch all reviews by this user, newest first
+            const { data: reviews, error } = await sc
+                .from('sc_reviews')
+                .select('*')
+                .eq('reviewer_id', user.id)
+                .order('created_at', { ascending: false });
+
+            if (error || !reviews || !reviews.length) {
+                renderList([], {});
+                return;
+            }
+
+            // Batch-fetch associated profiles
+            const profileIds = [...new Set(reviews.map(r => r.profile_id))];
+            const { data: profiles } = await sc
+                .from('sc_profiles')
+                .select('id, professional_name, personal_name, slug')
+                .in('id', profileIds);
+
+            const profilesMap = {};
+            (profiles || []).forEach(p => { profilesMap[p.id] = p; });
+
+            renderList(reviews, profilesMap);
+        });
+
+        // ── Mobile menu ───────────────────────────────────────────
+        (function() {
+            const btn = document.getElementById('mobileMenuBtn');
+            const nav = document.getElementById('mobileNav');
+            if (!btn || !nav) return;
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                btn.classList.toggle('active');
+                nav.classList.toggle('active');
+            });
+            document.addEventListener('click', function(e) {
+                if (nav.classList.contains('active') && !nav.contains(e.target) && !btn.contains(e.target)) {
+                    btn.classList.remove('active');
+                    nav.classList.remove('active');
+                }
+            });
+            nav.querySelectorAll('.mobile-nav-item').forEach(function(item) {
+                item.addEventListener('click', function() {
+                    btn.classList.remove('active');
+                    nav.classList.remove('active');
+                });
+            });
+        })();
+    })();
+    </script>
+</body>
+</html>

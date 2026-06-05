@@ -795,3 +795,168 @@
     .info-label { font-size: 9px; }
     .info-val { font-size: 11px; text-align: right; width: auto; white-space: nowrap; }
 }
+
+/* ========== REVIEW UPDATE BLOCK ========== */
+.review-update-block {
+    margin-top: 14px;
+    padding: 12px 14px;
+    background: rgba(201,185,122,0.06);
+    border-left: 2px solid var(--accent, #c9b97a);
+    border-radius: 0 4px 4px 0;
+}
+.review-update-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-family: 'Source Code Pro', monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent, #c9b97a);
+    font-weight: 600;
+    margin-bottom: 7px;
+}
+.review-update-text {
+    font-family: 'IM Fell English', serif;
+    font-size: 0.9rem;
+    color: var(--navy, #1b2d3e);
+    line-height: 1.65;
+    margin: 0 0 6px;
+}
+.review-update-date {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.05em;
+    color: var(--muted, #5a7a8a);
+    display: block;
+}
+
+/* ========== REVIEW UPDATE LINK (author-only) ========== */
+.review-update-link {
+    display: inline-block;
+    margin-top: 10px;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    font-family: 'Source Code Pro', monospace;
+    font-size: 10px;
+    letter-spacing: 0.07em;
+    /* color: var(--accent, #c9b97a); */
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    transition: opacity 0.15s;
+}
+.review-update-link:hover { opacity: 0.7; }
+
+/* ========== MY REVIEWS PAGE — shared card layout ========== */
+.mr-page-hero {
+    background: var(--navy, #1b2d3e);
+    border-bottom: 1.5px solid #2c3f52;
+    padding: 52px max(24px, 6vw) 44px;
+    text-align: center;
+}
+.mr-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-family: 'Source Code Pro', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent, #c9b97a);
+    margin-bottom: 14px;
+}
+.mr-h1 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1.4rem, 3.5vw, 2.2rem);
+    font-weight: 700;
+    color: var(--cream, #e8e0cc);
+    letter-spacing: 0.04em;
+    margin: 0 auto 10px;
+    line-height: 1.25;
+}
+.mr-subtitle {
+    font-family: 'IM Fell English', serif;
+    font-size: 1rem;
+    color: rgba(232,224,204,.65);
+    max-width: 520px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+.mr-content {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 40px max(20px, 4vw) 60px;
+}
+.mr-count {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted, #5a7a8a);
+    margin-bottom: 24px;
+}
+.mr-review-group {
+    margin-bottom: 32px;
+}
+.mr-practitioner-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    background: var(--cream2, #f0ebe0);
+    border: 1px solid var(--border, #d6cebb);
+    margin-bottom: 0;
+    text-decoration: none;
+    color: var(--navy, #1b2d3e);
+    transition: border-color .15s;
+}
+.mr-practitioner-header:hover { border-color: var(--accent, #c9b97a); }
+.mr-practitioner-name {
+    font-family: 'Cinzel', serif;
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    color: var(--navy, #1b2d3e);
+}
+.mr-practitioner-arrow {
+    margin-left: auto;
+    font-family: 'Source Code Pro', monospace;
+    font-size: 11px;
+    color: var(--accent, #c9b97a);
+}
+.mr-review-group .review-card {
+    border-top: none;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+.mr-empty {
+    text-align: center;
+    padding: 60px 20px;
+    font-family: 'IM Fell English', serif;
+    font-size: 1rem;
+    color: var(--muted, #5a7a8a);
+    line-height: 1.7;
+}
+.mr-signin-prompt {
+    text-align: center;
+    padding: 60px 20px;
+}
+.mr-signin-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--navy, #1b2d3e);
+    color: var(--cream, #e8e0cc);
+    border: 1.5px solid #2c3f52;
+    padding: 13px 28px;
+    font-family: 'Source Code Pro', monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    text-decoration: none;
+    margin-top: 16px;
+    transition: border-color .18s;
+}
+.mr-signin-btn:hover { border-color: var(--accent, #c9b97a); }

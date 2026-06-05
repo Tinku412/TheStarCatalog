@@ -5,6 +5,7 @@ const SUPABASE_URL = 'https://uapjfrxjjpotmvpuidsq.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVhcGpmcnhqanBvdG12cHVpZHNxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjAxMjcxMzAsImV4cCI6MjA3NTcwMzEzMH0.NAFy5Iqs6xm39R42yxBHpjxdBmT66cB7l9LcpULUGoI';
 
 let supabaseClient;
+let currentUserId = null; // set after auth resolves; used to show update links on own reviews
 
 // ============================================
 // URL ROUTING — id, ?slug=, or /spellcasters/{slug}
@@ -60,11 +61,14 @@ window.addEventListener('DOMContentLoaded', async function() {
     try {
         if (typeof scAuth !== 'undefined') {
             scAuth.init(supabaseClient, {
-                onSignIn:  () => applyUserStateToBtns(),
-                onSignOut: () => applyUserStateToBtns()
+                onSignIn:  () => { applyUserStateToBtns(); resolveCurrentUser(); },
+                onSignOut: () => { applyUserStateToBtns(); currentUserId = null; }
             }).catch(() => {});
         }
     } catch (_) { /* auth is optional */ }
+
+    // Resolve current user for update-link injection (non-blocking)
+    resolveCurrentUser();
 });
 
 // ============================================
@@ -524,6 +528,34 @@ function showError(message) {
     -- Enable Google OAuth via Dashboard → Authentication → Providers → Google
 */
 
+// ============================================
+// RESOLVE CURRENT USER — adds update links to own review cards
+// ============================================
+async function resolveCurrentUser() {
+    try {
+        const { data: { user } } = await supabaseClient.auth.getUser();
+        currentUserId = user?.id || null;
+        if (currentUserId) addUpdateLinksForCurrentUser();
+    } catch (_) { /* auth unavailable — no update links shown */ }
+}
+
+function addUpdateLinksForCurrentUser() {
+    document.querySelectorAll(`.review-card[data-reviewer-id="${currentUserId}"]`).forEach(card => {
+        if (!card.querySelector('.review-update-link')) {
+            card.appendChild(createUpdateLinkBtn(card.dataset.reviewId, card));
+        }
+    });
+}
+
+function createUpdateLinkBtn(reviewId, cardEl) {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'review-update-link';
+    btn.textContent = 'Want to share an update?';
+    btn.addEventListener('click', () => openUpdateModal(reviewId, cardEl));
+    return btn;
+}
+
 async function initializeAuth() {
     supabaseClient.auth.onAuthStateChange(async (event, session) => {
         if (event === 'SIGNED_IN' && localStorage.getItem('reviewPending') === 'true') {
@@ -709,6 +741,8 @@ async function trackEvent(profileId, eventType) {
 function buildReviewCard(r) {
     const div = document.createElement('div');
     div.className = 'review-card';
+    div.dataset.reviewId    = r.id;
+    div.dataset.reviewerId  = r.reviewer_id || '';
 
     const filledStars = '★'.repeat(r.rating);
     const emptyStars  = '☆'.repeat(5 - r.rating);
@@ -752,12 +786,18 @@ function buildReviewCard(r) {
         </div>
     ` : '';
 
+    const metaPills = [
+        r.purchase_date ? `<span class="review-meta-pill">Purchased: <strong>${escHtml(r.purchase_date)}</strong></span>` : '',
+        r.hire_again    ? `<span class="review-meta-pill">Hire again: <strong>${escHtml(r.hire_again)}</strong></span>` : '',
+        r.result_time   ? `<span class="review-meta-pill">Results: <strong>${escHtml(r.result_time)}</strong></span>` : '',
+    ].filter(Boolean).join('');
+
     div.innerHTML = `
         <div class="review-card-header">
             ${avatarHtml}
             <div class="reviewer-meta">
                 <span class="reviewer-name">${escHtml(r.reviewer_name)}</span>
-                <span class="review-date">${date}</span>
+                <span class="review-date">Reviewed on ${date}</span>
             </div>
             <div class="review-overall-rating">
                 <div class="review-stars" title="${r.rating} out of 5">${filledStars}<span style="opacity:0.35;">${emptyStars}</span></div>
@@ -765,19 +805,44 @@ function buildReviewCard(r) {
             </div>
         </div>
         <p class="review-text">${escHtml(r.review_text)}</p>
-        ${subRatingsHtml}        
+        ${subRatingsHtml}
         ${r.services_purchased ? `<div class="review-services-purchased"><span class="review-services-label">Services Purchased:</span> <span class="review-services-tags">${escHtml(r.services_purchased).split(',').map(s => `<span class="review-service-tag">${s.trim()}</span>`).join('')}</span></div>` : ''}
-        ${(r.hire_again || r.result_time) ? `<div class="review-meta-pills">${r.hire_again ? `<span class="review-meta-pill">Hire again: <strong>${escHtml(r.hire_again)}</strong></span>` : ''}${r.result_time ? `<span class="review-meta-pill">Results: <strong>${escHtml(r.result_time)}</strong></span>` : ''}</div>` : ''}
-        
+        ${metaPills ? `<div class="review-meta-pills">${metaPills}</div>` : ''}
         ${imagesHtml}
-        `;
+    `;
 
-    // Horizontal divider after the card content
-    // const hr = document.createElement('hr');
-    // hr.className = 'review-divider';
-    // div.appendChild(hr);
+    // Append review update block if one exists
+    if (r.review_update) {
+        div.appendChild(buildUpdateBlock(r.review_update, r.review_updated_at));
+    }
+
+    // Append "Want to share an update?" link for the current signed-in reviewer
+    if (currentUserId && r.reviewer_id === currentUserId) {
+        div.appendChild(createUpdateLinkBtn(r.id, div));
+    }
+
 
     return div;
+}
+
+function buildUpdateBlock(text, updatedAt) {
+    const block = document.createElement('div');
+    block.className = 'review-update-block';
+    const updDate = updatedAt
+        ? new Date(updatedAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
+        : '';
+    block.innerHTML = `
+        <div class="review-update-label">
+            <svg width="11" height="11" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                <path d="M2 10l1-3L10 1l2 2-7 7-3 1z" stroke="currentColor" stroke-width="1.3" fill="none"/>
+                <line x1="8" y1="3" x2="11" y2="6" stroke="currentColor" stroke-width="1.3"/>
+            </svg>
+            Reviewer's Update
+        </div>
+        <p class="review-update-text">${escHtml(text)}</p>
+        ${updDate ? `<span class="review-update-date">Updated on ${updDate}</span>` : ''}
+    `;
+    return block;
 }
 
 function escHtml(str) {
@@ -810,6 +875,75 @@ async function handleWriteReview() {
         openSignInModal();
     } else {
         openReviewModal();
+    }
+}
+
+// ============================================
+// REVIEW UPDATE MODAL
+// ============================================
+let _updateReviewId  = null;
+let _updateCardEl    = null;
+
+function openUpdateModal(reviewId, cardEl) {
+    _updateReviewId = reviewId;
+    _updateCardEl   = cardEl;
+    const ta = document.getElementById('updateText');
+    if (ta) ta.value = '';
+    document.getElementById('updateModal')?.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    setTimeout(() => ta?.focus(), 80);
+}
+function closeUpdateModal() {
+    document.getElementById('updateModal')?.classList.remove('active');
+    document.body.style.overflow = '';
+    _updateReviewId = null;
+    _updateCardEl   = null;
+}
+
+async function handleUpdateSubmit(e) {
+    e.preventDefault();
+    const text = (document.getElementById('updateText')?.value || '').trim();
+    if (!text) { showNotification('Please write your update before submitting.', 'error'); return; }
+
+    const submitBtn = document.getElementById('updateSubmitBtn');
+    if (submitBtn) { submitBtn.textContent = 'Submitting…'; submitBtn.disabled = true; }
+
+    try {
+        const { data: { user } } = await supabaseClient.auth.getUser();
+        if (!user) { closeUpdateModal(); openSignInModal(); return; }
+
+        const { data, error } = await supabaseClient
+            .from('sc_reviews')
+            .update({ review_update: text, review_updated_at: new Date().toISOString() })
+            .eq('id', _updateReviewId)
+            .eq('reviewer_id', user.id)
+            .select()
+            .single();
+
+        if (error) throw error;
+
+        // Sync local cache
+        const idx = allReviews.findIndex(r => r.id === _updateReviewId);
+        if (idx >= 0) {
+            allReviews[idx].review_update     = text;
+            allReviews[idx].review_updated_at = data.review_updated_at;
+        }
+
+        // Update card DOM in-place
+        if (_updateCardEl) {
+            _updateCardEl.querySelector('.review-update-block')?.remove();
+            _updateCardEl.querySelector('.review-update-link')?.remove();
+            _updateCardEl.appendChild(buildUpdateBlock(text, data.review_updated_at));
+            _updateCardEl.appendChild(createUpdateLinkBtn(data.id, _updateCardEl));
+        }
+
+        closeUpdateModal();
+        showNotification('Update submitted — thank you!', 'success');
+    } catch (err) {
+        console.error('Update submission error:', err);
+        showNotification('Failed to submit update. Please try again.', 'error');
+    } finally {
+        if (submitBtn) { submitBtn.textContent = 'Submit Update'; submitBtn.disabled = false; }
     }
 }
 
@@ -860,6 +994,7 @@ async function handleReviewSubmit(e) {
     const servicesPurchased = (document.getElementById('reviewServicesPurchased')?.value || '').trim();
     const hireAgain         = document.querySelector('input[name="hireAgain"]:checked')?.value || null;
     const resultTime        = document.querySelector('input[name="resultTime"]:checked')?.value || null;
+    const purchaseDate      = document.querySelector('input[name="purchaseDate"]:checked')?.value || null;
     if (!reviewText) {
         showNotification('Please write your review before submitting.', 'error');
         return;
@@ -909,6 +1044,7 @@ async function handleReviewSubmit(e) {
             services_purchased:    servicesPurchased || null,
             hire_again:            hireAgain,
             result_time:           resultTime,
+            purchase_date:         purchaseDate,
             image_urls:            JSON.stringify(imageUrls)
         })
         .select()
@@ -946,7 +1082,7 @@ async function handleReviewSubmit(e) {
     updateStarDisplay(0);
     Object.keys(subRatings).forEach(k => { subRatings[k] = 0; });
     Object.values(SUB_RATING_IDS).forEach(id => updateSubStarDisplay(id, 0));
-    document.querySelectorAll('input[name="hireAgain"], input[name="resultTime"]').forEach(r => r.checked = false);
+    document.querySelectorAll('input[name="hireAgain"], input[name="resultTime"], input[name="purchaseDate"]').forEach(r => r.checked = false);
     document.getElementById('reviewForm')?.reset();
     document.getElementById('imagePreviews').innerHTML = '';
     const ord = document.getElementById('overallRatingDisplay');
@@ -1063,11 +1199,19 @@ function initializeReviewInteractions() {
         }
     });
 
+    // Update modal
+    document.getElementById('closeUpdate')?.addEventListener('click', closeUpdateModal);
+    document.getElementById('updateModal')?.addEventListener('click', e => {
+        if (e.target === e.currentTarget) closeUpdateModal();
+    });
+    document.getElementById('updateForm')?.addEventListener('submit', handleUpdateSubmit);
+
     // Close modals on Escape key
     document.addEventListener('keydown', e => {
         if (e.key === 'Escape') {
             closeReviewModalFn();
             closeSignInModalFn();
+            closeUpdateModal();
             document.getElementById('contactModal')?.classList.remove('active');
             document.body.style.overflow = '';
         }
