@@ -13,7 +13,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <base href="/">
-    <title>Profile |The Star Catalog</title>
+
+    <!-- PRIMARY SEO — defaults; updated dynamically by updateProfileSEO() once data loads -->
+    <title>Spell Caster Profile — Reviews &amp; Ratings | The Star Catalog</title>
+    <meta name="description" content="Read verified community reviews for this spell caster on The Star Catalog. See ratings, specialties, and honest feedback from real clients.">
+    <meta name="keywords" content="spell caster reviews, spiritual practitioner reviews, witch reviews, psychic reviews, spell casting services, verified reviews, The Star Catalog">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+    <meta name="author" content="The Star Catalog">
+    <link rel="canonical" id="seoCanonical" href="https://thestarcatalog.com/spellcasters.html">
+
+    <!-- OPEN GRAPH -->
+    <meta property="og:type"        content="profile">
+    <meta property="og:site_name"   content="The Star Catalog">
+    <meta property="og:url"         id="ogUrl"   content="https://thestarcatalog.com/spellcasters.html">
+    <meta property="og:title"       id="ogTitle" content="Spell Caster Profile — Reviews &amp; Ratings | The Star Catalog">
+    <meta property="og:description" id="ogDesc"  content="Read verified community reviews for this spell caster on The Star Catalog. See ratings, specialties, and honest feedback from real clients.">
+    <meta property="og:image"       id="ogImage" content="https://thestarcatalog.com/svgviewer-png-output.png">
+    <meta property="og:image:alt"   id="ogImageAlt" content="Spell caster profile photo">
+
+    <!-- TWITTER CARD -->
+    <meta name="twitter:card"        content="summary_large_image">
+    <meta name="twitter:site"        content="@thestarcatalog">
+    <meta name="twitter:title"       id="twitterTitle" content="Spell Caster Profile — Reviews &amp; Ratings | The Star Catalog">
+    <meta name="twitter:description" id="twitterDesc"  content="Read verified community reviews for this spell caster on The Star Catalog.">
+    <meta name="twitter:image"       id="twitterImage" content="https://thestarcatalog.com/svgviewer-png-output.png">
+
+    <!-- JSON-LD: Person + Breadcrumb — updated dynamically once profile data loads -->
+    <script type="application/ld+json" id="profileSchema">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Spell Caster",
+      "description": "A spiritual practitioner listed on The Star Catalog community directory.",
+      "url": "https://thestarcatalog.com/spellcasters.html",
+      "memberOf": {
+        "@type": "WebSite",
+        "name": "The Star Catalog",
+        "url": "https://thestarcatalog.com/"
+      },
+      "breadcrumb": {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home",          "item": "https://thestarcatalog.com/" },
+          { "@type": "ListItem", "position": 2, "name": "Spell Casters", "item": "https://thestarcatalog.com/spellcasters.html" },
+          { "@type": "ListItem", "position": 3, "name": "Profile",       "item": "https://thestarcatalog.com/spellcasters.html" }
+        ]
+      }
+    }
+    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Cinzel:wght@400;600;700&family=Source+Code+Pro:wght@400;500&display=swap" rel="stylesheet">
@@ -357,42 +405,42 @@
                             <div class="sub-rating-row">
                                 <span class="sub-rating-label">Communication</span>
                                 <div class="sub-star-input" id="subStarCommunication" data-key="communication" role="group" aria-label="Communication Rating">
-                                    <button type="button" class="star-btn" data-value="1">?</button>
-                                    <button type="button" class="star-btn" data-value="2">?</button>
-                                    <button type="button" class="star-btn" data-value="3">?</button>
-                                    <button type="button" class="star-btn" data-value="4">?</button>
-                                    <button type="button" class="star-btn" data-value="5">?</button>
+                                    <button type="button" class="star-btn" data-value="1">★</button>
+                                    <button type="button" class="star-btn" data-value="2">★</button>
+                                    <button type="button" class="star-btn" data-value="3">★</button>
+                                    <button type="button" class="star-btn" data-value="4">★</button>
+                                    <button type="button" class="star-btn" data-value="5">★</button>
                                 </div>
                             </div>
                             <div class="sub-rating-row">
                                 <span class="sub-rating-label">Accuracy</span>
                                 <div class="sub-star-input" id="subStarAccuracy" data-key="accuracy" role="group" aria-label="Accuracy Rating">
-                                    <button type="button" class="star-btn" data-value="1">?</button>
-                                    <button type="button" class="star-btn" data-value="2">?</button>
-                                    <button type="button" class="star-btn" data-value="3">?</button>
-                                    <button type="button" class="star-btn" data-value="4">?</button>
-                                    <button type="button" class="star-btn" data-value="5">?</button>
+                                    <button type="button" class="star-btn" data-value="1">★</button>
+                                    <button type="button" class="star-btn" data-value="2">★</button>
+                                    <button type="button" class="star-btn" data-value="3">★</button>
+                                    <button type="button" class="star-btn" data-value="4">★</button>
+                                    <button type="button" class="star-btn" data-value="5">★</button>
                                 </div>
                             </div>
                             <div class="sub-rating-row">
                                 <span class="sub-rating-label">Value for Money</span>
                                 <div class="sub-star-input" id="subStarValue" data-key="value" role="group" aria-label="Value Rating">
-                                    <button type="button" class="star-btn" data-value="1">?</button>
-                                    <button type="button" class="star-btn" data-value="2">?</button>
-                                    <button type="button" class="star-btn" data-value="3">?</button>
-                                    <button type="button" class="star-btn" data-value="4">?</button>
-                                    <button type="button" class="star-btn" data-value="5">?</button>
+                                    <button type="button" class="star-btn" data-value="1">★</button>
+                                    <button type="button" class="star-btn" data-value="2">★</button>
+                                    <button type="button" class="star-btn" data-value="3">★</button>
+                                    <button type="button" class="star-btn" data-value="4">★</button>
+                                    <button type="button" class="star-btn" data-value="5">★</button>
                                 </div>
                             </div>
                         </div>
                         <div class="overall-rating-display" id="overallRatingDisplay" style="display:none;">
                             Overall: <span id="overallRatingValue" style="color:#c9b97a;font-weight:700;"></span> / 5
                             <div class="star-input" id="starInput" style="display:inline-flex;margin-left:8px;">
-                                <button type="button" class="star-btn" data-value="1" title="1 star">?</button>
-                                <button type="button" class="star-btn" data-value="2" title="2 stars">?</button>
-                                <button type="button" class="star-btn" data-value="3" title="3 stars">?</button>
-                                <button type="button" class="star-btn" data-value="4" title="4 stars">?</button>
-                                <button type="button" class="star-btn" data-value="5" title="5 stars">?</button>
+                                <button type="button" class="star-btn" data-value="1" title="1 star">★</button>
+                                <button type="button" class="star-btn" data-value="2" title="2 stars">★</button>
+                                <button type="button" class="star-btn" data-value="3" title="3 stars">★</button>
+                                <button type="button" class="star-btn" data-value="4" title="4 stars">★</button>
+                                <button type="button" class="star-btn" data-value="5" title="5 stars">★</button>
                             </div>
                         </div>
                         <div class="star-hint" id="starHint" style="margin-top:6px;"></div>
@@ -426,7 +474,7 @@
                         <label class="review-label">How long did results take? <span style="color:var(--muted);font-weight:400;"></span></label>
                         <div class="review-radio-group">
                             <label class="review-radio-option">
-                                <input type="radio" name="resultTime" value="1–2 weeks"> 1–2 weeks
+                                <input type="radio" name="resultTime" value="1 month"> 1 month
                             </label>
                             <label class="review-radio-option">
                                 <input type="radio" name="resultTime" value="1–3 months"> 1–3 months
@@ -438,7 +486,7 @@
                                 <input type="radio" name="resultTime" value="Still waiting"> Still waiting
                             </label>
                             <label class="review-radio-option">
-                                <input type="radio" name="resultTime" value="N/A |I only got a reading"> N/A |I only got a reading
+                                <input type="radio" name="resultTime" value="N/A - I only got a reading"> N/A - I only got a reading
                             </label>
                         </div>
                     </div>
@@ -534,17 +582,184 @@
             });
         })();
 
-        // -- Sync breadcrumb name from profile.js data --
-        const breadcrumbNameEl = document.getElementById('breadcrumbName');
-        const profileNameEl    = document.getElementById('profileName');
+        // -- Dynamic SEO updater --
+        // Called by profile.js (or the MutationObserver below) once profile data is ready.
+        // Accepts a plain object with the same shape as the Supabase practitioner row.
+        window.updateProfileSEO = (function() {
+            var SITE = 'https://thestarcatalog.com';
+            var DEFAULT_IMG = SITE + '/svgviewer-png-output.png';
 
-        if (profileNameEl && breadcrumbNameEl) {
-            new MutationObserver(function() {
-                if (profileNameEl.textContent && profileNameEl.textContent !== 'Loading...') {
-                    breadcrumbNameEl.textContent = profileNameEl.textContent;
+            // Resolve the canonical URL for this profile
+            function canonicalUrl(slug) {
+                if (slug) return SITE + '/spellcasters/' + encodeURIComponent(slug);
+                var loc = window.location;
+                if (loc.pathname.startsWith('/spellcasters/')) return SITE + loc.pathname;
+                return SITE + loc.pathname + loc.search;
+            }
+
+            // Build a ≤160-char description from profile fields
+            function buildDesc(name, type, specialties, rating, reviewCount) {
+                var d = 'Read verified reviews for ' + name;
+                if (type && type !== '—') d += ', a ' + type;
+                if (specialties && specialties.length) d += '. Specialties: ' + specialties.slice(0, 4).join(', ') + '.';
+                if (rating && reviewCount > 0) {
+                    d += ' Rated ' + rating + '/5 across ' + reviewCount + ' review' + (reviewCount !== 1 ? 's' : '') + '.';
                 }
+                d += ' Honest community reviews on The Star Catalog.';
+                return d.length > 160 ? d.substring(0, 157) + '\u2026' : d;
+            }
+
+            function setMeta(selector, attr, val) {
+                var el = document.querySelector(selector) || document.getElementById(selector.replace('#',''));
+                if (el) el[attr] = val;
+            }
+
+            return function(p) {
+                var name        = p.professional_name || p.personal_name || 'Spell Caster';
+                var type        = p.professional_identity || '';
+                var oneLiner    = p.one_liner || '';
+                var specialties = Array.isArray(p.specialties) ? p.specialties : [];
+                var rating      = p.average_rating ? parseFloat(p.average_rating).toFixed(1) : null;
+                var reviewCount = p.review_count || 0;
+                var imgUrl      = p.profile_picture_url || DEFAULT_IMG;
+                var pageUrl     = canonicalUrl(p.slug);
+
+                var title = name + ' \u2014 ' + (type || 'Spell Caster') + ' Reviews | The Star Catalog';
+                var desc  = buildDesc(name, type, specialties, rating, reviewCount);
+
+                // <title>
+                document.title = title;
+
+                // canonical
+                var canonical = document.getElementById('seoCanonical');
+                if (canonical) canonical.href = pageUrl;
+
+                // meta description
+                setMeta('meta[name="description"]', 'content', desc);
+
+                // meta keywords — build from name + type + top specialties
+                var kw = [name, type].concat(specialties.slice(0, 6)).concat(['spell caster reviews', 'The Star Catalog']).filter(Boolean).join(', ');
+                var metaKw = document.querySelector('meta[name="keywords"]');
+                if (metaKw) metaKw.content = kw;
+
+                // Open Graph
+                setMeta('#ogUrl',   'content', pageUrl);
+                setMeta('#ogTitle', 'content', title);
+                setMeta('#ogDesc',  'content', desc);
+                setMeta('#ogImage', 'content', imgUrl);
+                setMeta('#ogImageAlt', 'content', name + (type ? ' \u2014 ' + type : '') + ' on The Star Catalog');
+
+                // Twitter Card
+                setMeta('#twitterTitle', 'content', title);
+                setMeta('#twitterDesc',  'content', desc);
+                setMeta('#twitterImage', 'content', imgUrl);
+
+                // JSON-LD
+                var schema = {
+                    '@context': 'https://schema.org',
+                    '@type': 'Person',
+                    'name': name,
+                    'url': pageUrl,
+                    'description': oneLiner || (name + ' is a ' + (type || 'spell caster') + ' listed on The Star Catalog.'),
+                    'image': imgUrl,
+                    'memberOf': { '@type': 'WebSite', 'name': 'The Star Catalog', 'url': SITE + '/' }
+                };
+                if (specialties.length) schema['knowsAbout'] = specialties;
+                if (p.location) schema['workLocation'] = p.location;
+                if (rating && reviewCount > 0) {
+                    schema['aggregateRating'] = {
+                        '@type': 'AggregateRating',
+                        'ratingValue': rating,
+                        'reviewCount': reviewCount,
+                        'bestRating': '5',
+                        'worstRating': '1'
+                    };
+                }
+                schema['breadcrumb'] = {
+                    '@type': 'BreadcrumbList',
+                    'itemListElement': [
+                        { '@type': 'ListItem', 'position': 1, 'name': 'Home',          'item': SITE + '/' },
+                        { '@type': 'ListItem', 'position': 2, 'name': 'Spell Casters', 'item': SITE + '/spellcasters.html' },
+                        { '@type': 'ListItem', 'position': 3, 'name': name,             'item': pageUrl }
+                    ]
+                };
+                var schemaEl = document.getElementById('profileSchema');
+                if (schemaEl) schemaEl.textContent = JSON.stringify(schema, null, 2);
+
+                // Profile image alt text
+                var profileImg = document.getElementById('profileImage');
+                if (profileImg) profileImg.alt = name + (type ? ' \u2014 ' + type + ', spell caster on The Star Catalog' : ', spell caster on The Star Catalog');
+            };
+        })();
+
+        // -- MutationObserver fallback: scrape DOM data if profile.js doesn't call updateProfileSEO() directly --
+        (function() {
+            var nameEl = document.getElementById('profileName');
+            if (!nameEl) return;
+            var _seoDone = false;
+
+            new MutationObserver(function() {
+                if (_seoDone) return;
+                var name = nameEl.textContent.trim();
+                if (!name || name === 'Loading...') return;
+                _seoDone = true;
+
+                var type       = (document.getElementById('detailIdentity') || {}).textContent || '';
+                var oneLiner   = (document.getElementById('profileTagline') || {}).textContent || '';
+                var imgEl      = document.getElementById('profileImage');
+                var imgSrc     = imgEl && imgEl.src && !imgEl.src.endsWith('/') ? imgEl.src : '';
+
+                // Extract rating & review count from visible header rating element
+                var rating = null, reviewCount = 0;
+                var ratingEl = document.getElementById('headerRating');
+                if (ratingEl && ratingEl.style.display !== 'none') {
+                    var rm = ratingEl.textContent.match(/(\d+\.?\d*)/);
+                    var vm = ratingEl.textContent.match(/(\d+)\s+review/);
+                    if (rm) rating = rm[1];
+                    if (vm) reviewCount = parseInt(vm[1], 10);
+                }
+
+                // Extract specialty tags
+                var specialties = [];
+                var tagsEl = document.getElementById('specialtiesTags');
+                if (tagsEl) {
+                    tagsEl.querySelectorAll('[data-specialty], .specialty-tag').forEach(function(t) {
+                        var s = t.dataset.specialty || t.textContent.trim();
+                        if (s) specialties.push(s);
+                    });
+                }
+
+                // Derive slug from URL
+                var slug = null;
+                var pathParts = window.location.pathname.split('/');
+                if (pathParts[1] === 'spellcasters' && pathParts[2]) slug = decodeURIComponent(pathParts[2]);
+
+                if (typeof window.updateProfileSEO === 'function') {
+                    window.updateProfileSEO({
+                        professional_name: name,
+                        professional_identity: type !== '\u2014' ? type : '',
+                        one_liner: oneLiner,
+                        profile_picture_url: imgSrc,
+                        average_rating: rating,
+                        review_count: reviewCount,
+                        specialties: specialties,
+                        slug: slug
+                    });
+                }
+            }).observe(nameEl, { childList: true, characterData: true, subtree: true });
+        })();
+
+        // -- Sync breadcrumb name from profile.js data --
+        (function() {
+            var breadcrumbNameEl = document.getElementById('breadcrumbName');
+            var profileNameEl    = document.getElementById('profileName');
+            if (!profileNameEl || !breadcrumbNameEl) return;
+
+            new MutationObserver(function() {
+                var name = profileNameEl.textContent;
+                if (name && name !== 'Loading...') breadcrumbNameEl.textContent = name;
             }).observe(profileNameEl, { childList: true, characterData: true, subtree: true });
-        }
+        })();
     </script>
 </body>
 </html>
