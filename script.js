@@ -59,7 +59,7 @@ async function loadProfiles() {
         }
 
         if (!profiles?.length) {
-            cardsContainer.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--muted);font-family:\'Source Code Pro\',monospace;font-size:13px;">No practitioners found.</div>';
+            cardsContainer.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--muted);font-family:\'Source Code Pro\',monospace;font-size:13px;">No spellcasters found.</div>';
             return;
         }
 
@@ -67,7 +67,7 @@ async function loadProfiles() {
         applyFiltersAndSort();
 
         const countEl = document.getElementById('profileCount');
-        if (countEl) countEl.textContent = `${profiles.length} practitioners`;
+        if (countEl) countEl.textContent = `${profiles.length} spellcasters`;
 
     } catch (err) {
         console.error('loadProfiles error:', err);
@@ -169,7 +169,7 @@ function applyUserStateToCards() {
 // ============================================
 function getCardProfileName(card) {
     const el = card.querySelector('.featured-card-name') || card.querySelector('.card-name');
-    return el ? el.textContent.trim() : 'this practitioner';
+    return el ? el.textContent.trim() : 'this spellcaster';
 }
 
 // ============================================
@@ -193,9 +193,9 @@ function initializeCardInteractions() {
             const { data: { user } } = await supabaseClient.auth.getUser();
             if (!user) {
                 if (typeof scAuth !== 'undefined') {
-                    scAuth.openSignInModal('Sign in to recommend practitioners.');
+                    scAuth.openSignInModal('Sign in to recommend spellcasters.');
                 } else {
-                    showNotification('Sign in to recommend practitioners.', 'info');
+                    showNotification('Sign in to recommend spellcasters.', 'info');
                 }
                 return;
             }
@@ -247,9 +247,9 @@ function initializeCardInteractions() {
             const { data: { user } } = await supabaseClient.auth.getUser();
             if (!user) {
                 if (typeof scAuth !== 'undefined') {
-                    scAuth.openSignInModal('Sign in to save practitioners.');
+                    scAuth.openSignInModal('Sign in to save spellcasters.');
                 } else {
-                    showNotification('Sign in to save practitioners.', 'info');
+                    showNotification('Sign in to save spellcasters.', 'info');
                 }
                 return;
             }
@@ -333,7 +333,7 @@ function deliveryOrder(deliveryStr) {
 function applyFiltersAndSort() {
     if (!allProfiles.length) return;
 
-    const fpPractType  = document.getElementById('fpPractitionerType');
+    const fpPractType  = document.getElementById('fpspellcasterType');
     const fpSpec       = document.getElementById('fpSpecialty');
     const fpSvcType    = document.getElementById('fpServiceType');
     const fpDel        = document.getElementById('fpDelivery');
@@ -375,7 +375,7 @@ function applyFiltersAndSort() {
     container.innerHTML = '';
 
     if (!filtered.length) {
-        container.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:60px 20px;font-family:\'Source Code Pro\',monospace;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);">No practitioners match your filters.</div>';
+        container.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:60px 20px;font-family:\'Source Code Pro\',monospace;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);">No spellcasters match your filters.</div>';
     } else {
         filtered.forEach(p => container.appendChild(createProfileCard(p)));
         initializeCardInteractions();
@@ -385,13 +385,13 @@ function applyFiltersAndSort() {
     const countEl = document.getElementById('profileCount');
     if (countEl) {
         countEl.textContent = filtered.length === allProfiles.length
-            ? `${allProfiles.length} practitioners`
-            : `${filtered.length} of ${allProfiles.length} practitioners`;
+            ? `${allProfiles.length} spellcasters`
+            : `${filtered.length} of ${allProfiles.length} spellcasters`;
     }
 }
 
 function initializeFilters() {
-    ['fpPractitionerType', 'fpSpecialty', 'fpServiceType', 'fpDelivery', 'fpSort'].forEach(id => {
+    ['fpspellcasterType', 'fpSpecialty', 'fpServiceType', 'fpDelivery', 'fpSort'].forEach(id => {
         document.getElementById(id)?.addEventListener('change', applyFiltersAndSort);
     });
     // Search input — filter on every keystroke with a tiny debounce
@@ -401,7 +401,7 @@ function initializeFilters() {
         searchTimer = setTimeout(applyFiltersAndSort, 220);
     });
     document.getElementById('fpClear')?.addEventListener('click', () => {
-        ['fpPractitionerType', 'fpSpecialty', 'fpServiceType', 'fpDelivery'].forEach(id => {
+        ['fpspellcasterType', 'fpSpecialty', 'fpServiceType', 'fpDelivery'].forEach(id => {
             const el = document.getElementById(id);
             if (el) el.value = '';
         });

@@ -120,7 +120,7 @@ async function loadProfile(identifier, bySlug = false) {
                     if (editBtn) {
                         editBtn.style.display = 'inline-flex';
                         editBtn.addEventListener('click', () => {
-                            window.location.href = '/submit-practitioner.html?edit=' + encodeURIComponent(profile.id);
+                            window.location.href = '/submit-spellcaster.html?edit=' + encodeURIComponent(profile.id);
                         });
                     }
                 }
@@ -373,7 +373,7 @@ function initializeProfileInteractions() {
             const { data: { user } } = await supabaseClient.auth.getUser();
             if (!user) {
                 if (typeof scAuth !== 'undefined') {
-                    scAuth.openSignInModal('Sign in to upvote practitioners.');
+                    scAuth.openSignInModal('Sign in to upvote spellcasters.');
                 } else {
                     showNotification('Sign in to upvote.', 'info');
                 }
@@ -423,7 +423,7 @@ function initializeProfileInteractions() {
             const { data: { user } } = await supabaseClient.auth.getUser();
             if (!user) {
                 if (typeof scAuth !== 'undefined') {
-                    scAuth.openSignInModal('Sign in to save practitioners.');
+                    scAuth.openSignInModal('Sign in to save spellcasters.');
                 } else {
                     showNotification('Sign in to save.', 'info');
                 }
@@ -1262,7 +1262,7 @@ function initializeReviewInteractions() {
 // ============================================
 async function handleShareProfile() {
     const profileId   = document.body.dataset.profileId;
-    const profileName = document.getElementById('profileName')?.textContent || 'this practitioner';
+    const profileName = document.getElementById('profileName')?.textContent || 'this spellcaster';
     const url         = window.location.href;
 
     trackEvent(profileId, 'share_click');

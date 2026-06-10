@@ -95,7 +95,7 @@ async function loadSavedProfiles({ silent = false } = {}) {
     isLoadingSaved = true;
 
     if (!silent && !savedProfilesLoaded) {
-        container.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:60px 20px;font-family:'Source Code Pro',monospace;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);">Loading your saved practitioners…</div>`;
+        container.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:60px 20px;font-family:'Source Code Pro',monospace;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);">Loading your saved spellcasters…</div>`;
     }
 
     try {
@@ -225,7 +225,7 @@ function createSavedCard(profile) {
 
 function getCardProfileName(card) {
     const el = card.querySelector('.featured-card-name') || card.querySelector('.card-name');
-    return el ? el.textContent.trim() : 'this practitioner';
+    return el ? el.textContent.trim() : 'this spellcaster';
 }
 
 function applyUserStateToCards() {
@@ -254,9 +254,9 @@ function initializeCardInteractions() {
             const { data: { user } } = await supabaseClient.auth.getUser();
             if (!user) {
                 if (typeof scAuth !== 'undefined') {
-                    scAuth.openSignInModal('Sign in to recommend practitioners.');
+                    scAuth.openSignInModal('Sign in to recommend spellcasters.');
                 } else {
-                    showNotification('Sign in to recommend practitioners.', 'info');
+                    showNotification('Sign in to recommend spellcasters.', 'info');
                 }
                 return;
             }
@@ -337,8 +337,8 @@ function showEmptyState(container, heading) {
             <svg width="48" height="56" viewBox="0 0 12 14" fill="none" style="opacity:0.2;margin-bottom:20px;" aria-hidden="true">
                 <path d="M1 1h10v12l-5-3.5L1 13V1z" stroke="var(--navy)" stroke-width="0.8" fill="none"/>
             </svg>
-            <p style="font-family:'Cinzel',serif;font-size:15px;color:var(--navy);margin:0 0 8px;">No saved practitioners yet</p>
-            <p style="font-family:'Source Code Pro',monospace;font-size:12px;color:var(--muted);max-width:340px;line-height:1.7;margin:0 0 24px;">Browse the directory and click the bookmark icon on any practitioner to save them here.</p>
+            <p style="font-family:'Cinzel',serif;font-size:15px;color:var(--navy);margin:0 0 8px;">No saved spellcasters yet</p>
+            <p style="font-family:'Source Code Pro',monospace;font-size:12px;color:var(--muted);max-width:340px;line-height:1.7;margin:0 0 24px;">Browse the directory and click the bookmark icon on any spellcaster to save them here.</p>
             <a href="spellcasters.html" style="display:inline-block;padding:10px 22px;background:var(--navy);color:var(--cream);font-family:'Source Code Pro',monospace;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;border-radius:3px;">Browse Directory</a>
         </div>
     `;
@@ -358,7 +358,7 @@ function showSignInPrompt() {
                 <path d="M1 1h10v12l-5-3.5L1 13V1z" stroke="var(--accent)" stroke-width="0.9" fill="none"/>
             </svg>
             <h3 style="font-family:'Cinzel',serif;font-size:17px;color:var(--navy);margin:0 0 10px;font-weight:600;">Sign In to View Your Saved Profiles</h3>
-            <p style="font-family:'Source Code Pro',monospace;font-size:12px;color:var(--muted);max-width:380px;line-height:1.7;margin:0 0 28px;">Save practitioners you want to come back to. Sign in with Google to access your saved list across devices.</p>
+            <p style="font-family:'Source Code Pro',monospace;font-size:12px;color:var(--muted);max-width:380px;line-height:1.7;margin:0 0 28px;">Save spellcasters you want to come back to. Sign in with Google to access your saved list across devices.</p>
             <button class="google-signin-btn" id="savedSignInBtn">
                 <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
                     <path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.875 2.684-6.615z" fill="#4285F4"/>

@@ -188,7 +188,7 @@ const scAuth = {
                     <button class="modal-close" id="authModalClose">×</button>
                 </div>
                 <div class="modal-body">
-                    <p class="auth-modal-msg" style="font-size:13.5px;color:var(--muted);line-height:1.7;margin-bottom:1.4rem;">Sign in to recommend, save, and review practitioners in the directory.</p>
+                    <p class="auth-modal-msg" style="font-size:13.5px;color:var(--muted);line-height:1.7;margin-bottom:1.4rem;">Sign in to recommend, save, and review spellcasters in the directory.</p>
                     <button class="google-signin-btn" id="authGoogleBtn">
                         <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
                             <path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.875 2.684-6.615z" fill="#4285F4"/>
@@ -218,7 +218,7 @@ const scAuth = {
     // ── Toggle upvote (one per user per profile) ──
     async toggleUpvote(profileId, currentDisplayCount) {
         if (!this.currentUser) {
-            this.openSignInModal('Sign in to recommend practitioners.');
+            this.openSignInModal('Sign in to recommend spellcasters.');
             return null;
         }
 
@@ -250,7 +250,7 @@ const scAuth = {
     // ── Toggle save ──
     async toggleSave(profileId) {
         if (!this.currentUser) {
-            this.openSignInModal('Sign in to save practitioners.');
+            this.openSignInModal('Sign in to save spellcasters.');
             return null;
         }
 

@@ -222,7 +222,7 @@ async function loadEditMode(profileId) {
     })(20);
 
     // ── Step 2 fields ─────────────────────────────────────────────────────────
-    // Practitioner type — handle "Other" case
+    // spellcaster type — handle "Other" case
     const typeSelect = form.elements['professionalIdentity'];
     if (typeSelect && p.professional_identity) {
         // Try setting directly
@@ -231,7 +231,7 @@ async function loadEditMode(profileId) {
         if (!typeSelect.value) {
             typeSelect.value = 'Other';
             setField('professionalIdentityOther', p.professional_identity);
-            const wrap = document.getElementById('practitionerTypeOtherWrap');
+            const wrap = document.getElementById('spellcasterTypeOtherWrap');
             if (wrap) wrap.style.display = '';
         }
     }
@@ -284,7 +284,7 @@ async function handleFormSubmit(e) {
     e.preventDefault();
 
     const submitBtn  = document.querySelector('.submit-btn');
-    const origText   = submitBtn?.textContent || 'Submit Practitioner';
+    const origText   = submitBtn?.textContent || 'Submit spellcaster';
     if (submitBtn) { submitBtn.textContent = 'Submitting…'; submitBtn.disabled = true; }
 
     try {
@@ -299,7 +299,7 @@ async function handleFormSubmit(e) {
         if (customSpecText) selectedSpecs.push(customSpecText);
         const specialties = selectedSpecs.join(', ');
 
-        // ── Practitioner type — handle "Other (please specify)" ───────────────
+        // ── spellcaster type — handle "Other (please specify)" ───────────────
         let professionalIdentity = formData.get('professionalIdentity') || '';
         if (professionalIdentity === 'Other (please specify)') {
             professionalIdentity = (formData.get('professionalIdentityOther') || '').trim() || 'Other';
@@ -390,7 +390,7 @@ async function handleFormSubmit(e) {
 
             // Redirect back to the profile page after a short delay
             setTimeout(() => {
-                window.location.href = '/submit-practitioner.html?edit=' + encodeURIComponent(editProfileId) + '&saved=1';
+                window.location.href = '/submit-spellcaster.html?edit=' + encodeURIComponent(editProfileId) + '&saved=1';
             }, 1800);
 
         } else {
@@ -401,12 +401,12 @@ async function handleFormSubmit(e) {
             const inserted = await insertProfileWithUniqueSlug(profileData, baseSlug);
             console.log('[submit] Profile created with slug:', inserted?.slug);
 
-            showNotification('Practitioner submitted successfully! It will appear once reviewed. Thank you!', 'success');
+            showNotification('spellcaster submitted successfully! It will appear once reviewed. Thank you!', 'success');
 
             setTimeout(() => {
                 e.target.reset();
                 if (window.specialtiesSelectInstance) window.specialtiesSelectInstance.clear();
-                const otherWrap  = document.getElementById('practitionerTypeOtherWrap');
+                const otherWrap  = document.getElementById('spellcasterTypeOtherWrap');
                 if (otherWrap)  otherWrap.style.display  = 'none';
                 const customWrap = document.getElementById('specialtyCustomTextWrap');
                 if (customWrap) customWrap.style.display = 'none';
