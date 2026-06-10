@@ -51,7 +51,7 @@
             <a href="my-reviews.html" class="active">My Reviews</a>
             <span id="navAuthArea" class="nav-auth-area"></span>
         </nav>
-        <a class="nav-cta" href="submit-practitioner.html" style="text-decoration:none;">Submit Practitioner</a>
+        <a class="nav-cta" href="submit-spellcaster.html" style="text-decoration:none;">Submit spellcaster</a>
         <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
             <span></span><span></span><span></span>
         </button>
@@ -65,7 +65,7 @@
         <a href="contact.html" class="mobile-nav-item">Contact</a>
         <a href="saved.html" class="mobile-nav-item">Saved Profiles</a>
         <a href="my-reviews.html" class="mobile-nav-item">My Reviews</a>
-        <a href="submit-practitioner.html" class="mobile-nav-item">Submit Practitioner</a>
+        <a href="submit-spellcaster.html" class="mobile-nav-item">Submit spellcaster</a>
     </div>
 
     <!-- Hero -->
@@ -316,7 +316,7 @@
                 list.innerHTML = `
                     <div class="mr-empty">
                         <p>You haven't written any reviews yet.</p>
-                        <p style="margin-top:10px;"><a href="spellcasters.html" style="color:var(--accent);">Browse practitioners</a> and share your experience with the community.</p>
+                        <p style="margin-top:10px;"><a href="spellcasters.html" style="color:var(--accent);">Browse spellcasters</a> and share your experience with the community.</p>
                     </div>`;
                 return;
             }
@@ -328,7 +328,7 @@
 
             reviews.forEach(function(r) {
                 const profile = profilesMap[r.profile_id] || {};
-                const practName = profile.professional_name || profile.personal_name || 'Unknown Practitioner';
+                const practName = profile.professional_name || profile.personal_name || 'Unknown spellcaster';
                 const practSlug = profile.slug;
                 const practHref = practSlug ? ('/spellcasters/' + encodeURIComponent(practSlug)) : ('/profile.html?id=' + encodeURIComponent(r.profile_id));
 
@@ -337,13 +337,13 @@
 
                 const header = document.createElement('a');
                 header.href = practHref;
-                header.className = 'mr-practitioner-header';
+                header.className = 'mr-spellcaster-header';
                 header.innerHTML = `
                     <svg width="12" height="12" viewBox="0 0 14 14" fill="none" aria-hidden="true" style="flex-shrink:0;color:var(--accent);">
                         <polygon points="7,1 8.5,5.5 13,5.5 9.5,8.5 11,13 7,10 3,13 4.5,8.5 1,5.5 5.5,5.5" stroke="currentColor" stroke-width="1" fill="none"/>
                     </svg>
-                    <span class="mr-practitioner-name">${esc(practName)}</span>
-                    <span class="mr-practitioner-arrow">View profile →</span>
+                    <span class="mr-spellcaster-name">${esc(practName)}</span>
+                    <span class="mr-spellcaster-arrow">View profile →</span>
                 `;
                 group.appendChild(header);
                 group.appendChild(buildReviewCard(r));

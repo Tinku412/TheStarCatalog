@@ -812,12 +812,12 @@
     font-size: 9.5px;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--accent, #c9b97a);
+    color: #8b6e00;
     font-weight: 600;
     margin-bottom: 7px;
 }
 .review-update-text {
-    font-family: 'IM Fell English', serif;
+    /* font-family: 'IM Fell English', serif; */
     font-size: 0.9rem;
     color: var(--navy, #1b2d3e);
     line-height: 1.65;

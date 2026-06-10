@@ -1794,7 +1794,7 @@ body { width: 100%; max-width: 100vw; overflow-x: hidden; }
 }
 .review-text {
   font-family: 'Source Code Pro', monospace;
-  font-size: 13.5px;
+  /* font-size: 13.5px; */
   line-height: 1.8;
   color: var(--text);
   margin-bottom: 10px;
