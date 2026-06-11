@@ -1,5 +1,5 @@
 // ============================================================
-// THE STAR CATALOG — Shared Auth Module  (auth.js)
+// Witch Weekly — Shared Auth Module  (auth.js)
 // ============================================================
 //
 // Supabase SQL — run once to enable upvotes & saves:
