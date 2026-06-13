@@ -7,6 +7,17 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 let supabaseClient;
 let currentUserId = null; // set after auth resolves; used to show update links on own reviews
 
+function userCanEditProfile(user, profile) {
+    if (!user || !profile) return false;
+    return user.id === profile.owner_user_id || user.id === profile.caster_user_id;
+}
+
+function userCanViewProfile(user, profile) {
+    if (!profile) return false;
+    if (profile.status === 'approved' && profile.is_active !== false) return true;
+    return userCanEditProfile(user, profile);
+}
+
 // ============================================
 // URL ROUTING — id, ?slug=, or /spellcasters/{slug}
 // ============================================
@@ -104,6 +115,12 @@ async function loadProfile(identifier, bySlug = false) {
             return false;
         }
 
+        const { data: { user } } = await supabaseClient.auth.getUser().catch(() => ({ data: { user: null } }));
+        if (!userCanViewProfile(user, profile)) {
+            showError('Profile not found. It may still be pending approval, or the link may be incorrect.');
+            return false;
+        }
+
         populateProfile(profile);
 
         if (profile.slug) {
@@ -112,10 +129,10 @@ async function loadProfile(identifier, bySlug = false) {
             } catch (_) { /* safe to ignore on local file:// */ }
         }
 
-        // Show Edit button if the logged-in user owns this profile
-        if (profile.owner_user_id) {
+        // Show Edit button for owner_user_id or caster_user_id
+        if (profile.owner_user_id || profile.caster_user_id) {
             supabaseClient.auth.getUser().then(({ data: { user } }) => {
-                if (user && user.id === profile.owner_user_id) {
+                if (userCanEditProfile(user, profile)) {
                     const editBtn = document.getElementById('editProfileBtn');
                     if (editBtn) {
                         editBtn.style.display = 'inline-flex';

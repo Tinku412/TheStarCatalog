@@ -43,12 +43,10 @@ async function loadProfiles() {
     cardsContainer.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;font-family:\'Source Code Pro\',monospace;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);">Loading profiles…</div>';
 
     try {
-        // Query all active profiles — no auth required, no status filter
-        // (profiles submitted via admin are is_active=true; use Supabase dashboard
-        //  to set is_active=false for any you want to hide)
         const { data: profiles, error } = await supabaseClient
             .from('sc_profiles')
             .select('*')
+            .eq('status', 'approved')
             .eq('is_active', true)
             .order('created_at', { ascending: false });
 

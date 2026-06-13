@@ -516,7 +516,7 @@
             </div>
             <div class="logo-text">
                 <span class="logo-main">Witch Weekly</span>
-                <span class="logo-sub">Est. MMXXVII — Seeker's Guide</span>
+                <span class="logo-sub">Est. MMXXVI — Seeker's Guide</span>
             </div>
         </a>
         <nav class="site-nav">
@@ -1327,6 +1327,7 @@
                     const { data, error } = await supabaseClient
                         .from('sc_profiles')
                         .select('id, professional_name, personal_name, professional_identity, profile_picture_url, average_rating, slug, specialties')
+                        .eq('status', 'approved')
                         .eq('is_active', true)
                         .or(filter)
                         .order('average_rating', { ascending: false, nullsFirst: false })
@@ -1352,6 +1353,7 @@
                     const { data, error } = await supabaseClient
                         .from('sc_profiles')
                         .select('id, professional_name, personal_name, professional_identity, profile_picture_url, average_rating, review_count, slug, specialties')
+                        .eq('status', 'approved')
                         .eq('is_active', true)
                         .gt('review_count', 0)
                         .not('average_rating', 'is', null)
@@ -1366,6 +1368,7 @@
                         const { data: fallback, error: fbErr } = await supabaseClient
                             .from('sc_profiles')
                             .select('id, professional_name, personal_name, professional_identity, profile_picture_url, average_rating, review_count, slug, specialties')
+                            .eq('status', 'approved')
                             .eq('is_active', true)
                             .order('average_rating', { ascending: false, nullsFirst: false })
                             .limit(4);
@@ -1393,6 +1396,7 @@
                     const { data, error } = await supabaseClient
                         .from('sc_profiles')
                         .select('id, professional_name, personal_name, professional_identity, profile_picture_url, average_rating, slug, specialties')
+                        .eq('status', 'approved')
                         .eq('is_active', true)
                         .order('created_at', { ascending: false })
                         .limit(4);

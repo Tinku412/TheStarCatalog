@@ -119,7 +119,8 @@ async function loadSavedProfiles({ silent = false } = {}) {
         const { data: profiles, error: profilesError } = await supabaseClient
             .from('sc_profiles')
             .select('*')
-            .in('id', profileIds);
+            .in('id', profileIds)
+            .eq('status', 'approved');
 
         if (profilesError) throw profilesError;
 

@@ -4,7 +4,15 @@
 const SUPABASE_URL      = 'https://uapjfrxjjpotmvpuidsq.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVhcGpmcnhqanBvdG12cHVpZHNxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjAxMjcxMzAsImV4cCI6MjA3NTcwMzEzMH0.NAFy5Iqs6xm39R42yxBHpjxdBmT66cB7l9LcpULUGoI';
 
+/** Default site owner — auto-assigned on new community submissions */
+const DEFAULT_OWNER_USER_ID = 'a6316b86-f6dd-4fee-9449-b125eafd97e8';
+
 let supabaseClient;
+
+function userCanEditProfile(user, profile) {
+    if (!user || !profile) return false;
+    return user.id === profile.owner_user_id || user.id === profile.caster_user_id;
+}
 
 // ─ Edit mode state ────────────────────────────────────────────────────────────
 let editProfileId   = null;   // set when ?edit=<id> is in the URL
@@ -162,8 +170,7 @@ async function loadEditMode(profileId) {
 
     const p = profiles[0];
 
-    // Verify the logged-in user is the owner
-    if (p.owner_user_id && p.owner_user_id !== user.id) {
+    if (!userCanEditProfile(user, p)) {
         showNotification('You are not authorised to edit this profile.', 'error');
         return;
     }
@@ -395,8 +402,10 @@ async function handleFormSubmit(e) {
 
         } else {
             // New submission — INSERT with auto-generated unique slug
-            profileData.status    = 'pending';
-            profileData.is_active = true;
+            profileData.status        = 'pending';
+            profileData.is_active     = false;
+            profileData.owner_user_id = DEFAULT_OWNER_USER_ID;
+            // caster_user_id left null — set manually in Supabase when needed
 
             const inserted = await insertProfileWithUniqueSlug(profileData, baseSlug);
             console.log('[submit] Profile created with slug:', inserted?.slug);

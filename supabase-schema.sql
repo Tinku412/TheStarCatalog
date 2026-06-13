@@ -43,7 +43,8 @@ CREATE TABLE IF NOT EXISTS SC_profiles (
     status VARCHAR(50) DEFAULT 'pending', -- pending, approved, rejected
     slug TEXT UNIQUE, -- URL-friendly identifier, e.g. 'la-bruja-next-door'
     accepts_emergency TEXT DEFAULT NULL, -- 'Yes' or 'No'
-    owner_user_id UUID DEFAULT NULL,     -- Supabase auth user ID of the practitioner (set manually)
+    owner_user_id UUID DEFAULT NULL,     -- Site admin / default owner (auto-set on community submit)
+    caster_user_id UUID DEFAULT NULL,    -- Practitioner auth user (set manually; also gets edit access)
 
     -- Metadata
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
@@ -72,7 +73,8 @@ CREATE INDEX IF NOT EXISTS idx_sc_profiles_slug ON SC_profiles(slug);
 -- ALTER TABLE sc_profiles ADD COLUMN IF NOT EXISTS average_rating NUMERIC(3,2) DEFAULT NULL;
 -- ALTER TABLE sc_profiles ADD COLUMN IF NOT EXISTS review_count INTEGER DEFAULT 0;
 -- ALTER TABLE sc_profiles ADD COLUMN IF NOT EXISTS owner_user_id UUID DEFAULT NULL;
---   (Then set the owner: UPDATE sc_profiles SET owner_user_id = '<supabase-auth-uid>' WHERE id = '<profile-id>';)
+-- ALTER TABLE sc_profiles ADD COLUMN IF NOT EXISTS caster_user_id UUID DEFAULT NULL;
+--   (Set caster: UPDATE sc_profiles SET caster_user_id = '<supabase-auth-uid>' WHERE id = '<profile-id>';)
 
 -- ── Trigger to auto-update average_rating & review_count on sc_profiles ─────
 -- Run this once to keep aggregate stats in sync automatically:
@@ -106,31 +108,31 @@ CREATE POLICY "Public profiles are viewable by everyone"
     ON SC_profiles FOR SELECT 
     USING (status = 'approved' AND is_active = true);
 
--- Allow a profile owner to read their own profile (even when pending)
+-- Allow a profile owner or assigned caster to read their own profile (even when pending)
 CREATE POLICY "Owner can read own profile"
     ON SC_profiles FOR SELECT
-    USING (auth.uid() = owner_user_id);
+    USING (auth.uid() = owner_user_id OR auth.uid() = caster_user_id);
 
 -- Allow authenticated users to insert (for community submissions)
 CREATE POLICY "Authenticated users can insert profiles" 
     ON SC_profiles FOR INSERT 
     WITH CHECK (true);
 
--- Allow the profile owner (owner_user_id) to update their own profile only
+-- Allow owner_user_id or caster_user_id to update the profile
 CREATE POLICY "Owner can update own profile"
     ON SC_profiles FOR UPDATE
-    USING (auth.uid() = owner_user_id)
-    WITH CHECK (auth.uid() = owner_user_id);
+    USING (auth.uid() = owner_user_id OR auth.uid() = caster_user_id)
+    WITH CHECK (auth.uid() = owner_user_id OR auth.uid() = caster_user_id);
 
 -- ── For existing databases — run these to replace the old broad UPDATE policy:
 -- DROP POLICY IF EXISTS "Users can update profiles" ON sc_profiles;
 -- CREATE POLICY "Owner can update own profile"
 --     ON sc_profiles FOR UPDATE
---     USING (auth.uid() = owner_user_id)
---     WITH CHECK (auth.uid() = owner_user_id);
+--     USING (auth.uid() = owner_user_id OR auth.uid() = caster_user_id)
+--     WITH CHECK (auth.uid() = owner_user_id OR auth.uid() = caster_user_id);
 -- CREATE POLICY "Owner can read own profile"
 --     ON sc_profiles FOR SELECT
---     USING (auth.uid() = owner_user_id);
+--     USING (auth.uid() = owner_user_id OR auth.uid() = caster_user_id);
 
 -- ============================================
 -- FUNCTION: Update updated_at timestamp

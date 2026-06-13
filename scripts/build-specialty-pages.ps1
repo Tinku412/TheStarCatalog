@@ -45,6 +45,7 @@ $JS_SHARED = @'
                 const { data, error } = await sc
                     .from('sc_profiles')
                     .select('id, professional_name, personal_name, professional_identity, profile_picture_url, average_rating, review_count, upvotes, minimum_price, one_liner, slug, specialties')
+                    .eq('status', 'approved')
                     .eq('is_active', true)
                     .or(filter)
                     .order('average_rating', { ascending: false, nullsFirst: false });
