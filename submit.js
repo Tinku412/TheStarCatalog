@@ -139,7 +139,11 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('_editProfileId').value = editId;
         // Show a saved confirmation if redirected back after saving
         if (params.get('saved') === '1') {
-            setTimeout(() => showNotification('Profile saved successfully!', 'success'), 300);
+            setTimeout(() => showSubmitStatusBanner('Your changes have been saved successfully.', 'success'), 300);
+            if (window.history.replaceState) {
+                const clean = window.location.pathname + '?edit=' + encodeURIComponent(editId);
+                window.history.replaceState(null, '', clean);
+            }
         }
         loadEditMode(editId);
     }
@@ -152,7 +156,7 @@ async function loadEditMode(profileId) {
     // Verify auth — only the owner should edit
     const { data: { user } } = await supabaseClient.auth.getUser();
     if (!user) {
-        showNotification('You must be signed in to edit a profile.', 'error');
+        showSubmitStatusBanner('Please sign in to edit this profile.', 'error');
         return;
     }
 
@@ -164,14 +168,14 @@ async function loadEditMode(profileId) {
         .limit(1);
 
     if (error || !profiles || profiles.length === 0) {
-        showNotification('Profile not found or you do not have permission to edit it.', 'error');
+        showSubmitStatusBanner('We could not find this profile, or you may not have permission to edit it.', 'error');
         return;
     }
 
     const p = profiles[0];
 
     if (!userCanEditProfile(user, p)) {
-        showNotification('You are not authorised to edit this profile.', 'error');
+        showSubmitStatusBanner('You are not authorised to edit this profile. Only the assigned owner or caster can make changes.', 'error');
         return;
     }
 
@@ -285,6 +289,74 @@ async function loadEditMode(profileId) {
 }
 
 // ============================================
+// USER-FACING MESSAGES & FORM RESET
+// ============================================
+function friendlySubmitError(err) {
+    const msg  = String(err?.message || err || '').toLowerCase();
+    const code = String(err?.code || '');
+
+    if (code === '23505' || msg.includes('duplicate') || msg.includes('unique')) {
+        return 'That email is already used by another profile. Please use a different contact email.';
+    }
+    if (code === '42501' || msg.includes('permission') || msg.includes('policy') || msg.includes('row-level security')) {
+        return 'You do not have permission to save this profile. Please sign in with the correct account.';
+    }
+    if (msg.includes('network') || msg.includes('fetch') || msg.includes('failed to fetch')) {
+        return 'Connection problem. Please check your internet connection and try again.';
+    }
+    if (msg.includes('slug column is missing')) {
+        return err.message;
+    }
+    return 'Something went wrong while saving. Please review your details and try again.';
+}
+
+function showSubmitStatusBanner(message, type) {
+    const banner = document.getElementById('submitStatusBanner');
+    if (banner) {
+        banner.textContent = message;
+        banner.className = 'submit-status-banner ' + type;
+        banner.style.display = 'block';
+        banner.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        return;
+    }
+    showNotification(message, type);
+}
+
+function resetSubmitForm() {
+    const form = document.getElementById('submitForm');
+    if (form) form.reset();
+
+    if (window.specialtiesSelectInstance) window.specialtiesSelectInstance.clear();
+
+    const otherWrap = document.getElementById('spellcasterTypeOtherWrap');
+    if (otherWrap) otherWrap.style.display = 'none';
+
+    const customWrap = document.getElementById('specialtyCustomTextWrap');
+    if (customWrap) customWrap.style.display = 'none';
+
+    const customInput = document.getElementById('specialtyCustomTextInput');
+    if (customInput) customInput.value = '';
+
+    const picPreview = document.getElementById('picPreview');
+    if (picPreview) { picPreview.src = ''; picPreview.style.display = 'none'; }
+
+    const picInput = document.getElementById('profilePicInput') || document.querySelector('input[name="profilePic"]');
+    if (picInput) picInput.value = '';
+
+    const rowsWrap = document.getElementById('offeringRows');
+    if (rowsWrap) {
+        rowsWrap.innerHTML = '';
+        rowsWrap.appendChild(buildOfferingRow());
+    }
+
+    if (typeof window.resetSubmitWizard === 'function') {
+        window.resetSubmitWizard();
+    } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+}
+
+// ============================================
 // FORM SUBMISSION
 // ============================================
 async function handleFormSubmit(e) {
@@ -292,6 +364,8 @@ async function handleFormSubmit(e) {
 
     const submitBtn  = document.querySelector('.submit-btn');
     const origText   = submitBtn?.textContent || 'Submit spellcaster';
+    const statusBanner = document.getElementById('submitStatusBanner');
+    if (statusBanner) statusBanner.style.display = 'none';
     if (submitBtn) { submitBtn.textContent = 'Submitting…'; submitBtn.disabled = true; }
 
     try {
@@ -328,7 +402,7 @@ async function handleFormSubmit(e) {
                            formData.get('storeLink') || formData.get('instagramLink') ||
                            formData.get('redditLink');
         if (!hasContact) {
-            showNotification('Please provide at least one contact method.', 'error');
+            showSubmitStatusBanner('Please add at least one contact method — email, website, Etsy, Instagram, or Reddit.', 'error');
             if (submitBtn) { submitBtn.textContent = origText; submitBtn.disabled = false; }
             return;
         }
@@ -347,7 +421,7 @@ async function handleFormSubmit(e) {
         // ── Slug (only required for new profiles — kept unchanged on edit) ──────
         const baseSlug = slugFromFormData(formData);
         if (!baseSlug && !editProfileId) {
-            showNotification('Please enter a Professional / Practice Name so we can create a profile URL.', 'error');
+            showSubmitStatusBanner('Please enter a Professional / Practice Name so we can create a profile page URL.', 'error');
             if (submitBtn) { submitBtn.textContent = origText; submitBtn.disabled = false; }
             return;
         }
@@ -392,13 +466,9 @@ async function handleFormSubmit(e) {
 
             if (updateErr) throw updateErr;
 
-            showNotification('Profile updated successfully!', 'success');
+            showSubmitStatusBanner('Your changes have been saved successfully.', 'success');
             if (submitBtn) { submitBtn.textContent = '✦ Save Changes'; submitBtn.disabled = false; }
-
-            // Redirect back to the profile page after a short delay
-            setTimeout(() => {
-                window.location.href = '/submit-spellcaster.html?edit=' + encodeURIComponent(editProfileId) + '&saved=1';
-            }, 1800);
+            if (typeof window.resetSubmitWizard === 'function') window.resetSubmitWizard();
 
         } else {
             // New submission — INSERT with auto-generated unique slug
@@ -410,24 +480,18 @@ async function handleFormSubmit(e) {
             const inserted = await insertProfileWithUniqueSlug(profileData, baseSlug);
             console.log('[submit] Profile created with slug:', inserted?.slug);
 
-            showNotification('spellcaster submitted successfully! It will appear once reviewed. Thank you!', 'success');
+            showSubmitStatusBanner(
+                'Thank you! Your spellcaster has been submitted. It will appear on the site once it has been reviewed and approved.',
+                'success'
+            );
 
-            setTimeout(() => {
-                e.target.reset();
-                if (window.specialtiesSelectInstance) window.specialtiesSelectInstance.clear();
-                const otherWrap  = document.getElementById('spellcasterTypeOtherWrap');
-                if (otherWrap)  otherWrap.style.display  = 'none';
-                const customWrap = document.getElementById('specialtyCustomTextWrap');
-                if (customWrap) customWrap.style.display = 'none';
-                const picPreview = document.getElementById('picPreview');
-                if (picPreview) { picPreview.src = ''; picPreview.style.display = 'none'; }
-                if (submitBtn)  { submitBtn.textContent = origText; submitBtn.disabled = false; }
-            }, 2500);
+            resetSubmitForm();
+            if (submitBtn) { submitBtn.textContent = origText; submitBtn.disabled = false; }
         }
 
     } catch (err) {
         console.error('Submission error:', err);
-        showNotification('Error submitting: ' + err.message, 'error');
+        showSubmitStatusBanner(friendlySubmitError(err), 'error');
         if (submitBtn) { submitBtn.textContent = origText; submitBtn.disabled = false; }
     }
 }

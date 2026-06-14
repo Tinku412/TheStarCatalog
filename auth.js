@@ -97,7 +97,85 @@ const scAuth = {
     // ── Update nav to show user badge or Sign In button ──
     updateNavAuthState(user) {
         const authArea = document.getElementById('navAuthArea');
-        if (!authArea) return;
+
+        if (authArea) {
+            if (user) {
+                const firstName = (user.user_metadata?.full_name || '').split(' ')[0] || 'Account';
+                const avatar    = user.user_metadata?.avatar_url || '';
+                const initial   = firstName[0].toUpperCase();
+
+                authArea.innerHTML = `
+                    <div class="nav-user-badge" id="navUserBadge">
+                        ${avatar
+                            ? `<img src="${avatar}" alt="${firstName}" class="nav-avatar">`
+                            : `<div class="nav-avatar-placeholder">${initial}</div>`}
+                        <span class="nav-user-name">${firstName}</span>
+                        <svg class="nav-chevron" width="8" height="5" viewBox="0 0 10 6" fill="none">
+                            <polyline points="1,1 5,5 9,1" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                        </svg>
+                        <div class="nav-user-dropdown" id="navUserDropdown">
+                            <a href="saved.html" class="nav-dropdown-item">
+                                <svg width="11" height="11" viewBox="0 0 12 14" fill="none">
+                                    <path d="M1 1h10v12l-5-3.5L1 13V1z" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                </svg>
+                                Saved Profiles
+                            </a>
+                            <button class="nav-dropdown-item" id="navSignOutBtn">
+                                <svg width="11" height="11" viewBox="0 0 14 14" fill="none">
+                                    <path d="M5 7h7M9 4l3 3-3 3" stroke="currentColor" stroke-width="1.3"/>
+                                    <path d="M8 2H2v10h6" stroke="currentColor" stroke-width="1.3" fill="none"/>
+                                </svg>
+                                Sign Out
+                            </button>
+                        </div>
+                    </div>
+                `;
+
+                document.getElementById('navSignOutBtn')?.addEventListener('click', () => {
+                    this._supabase.auth.signOut();
+                });
+                document.getElementById('navUserBadge')?.addEventListener('click', e => {
+                    e.stopPropagation();
+                    document.getElementById('navUserDropdown')?.classList.toggle('visible');
+                });
+                document.addEventListener('click', () => {
+                    document.getElementById('navUserDropdown')?.classList.remove('visible');
+                });
+
+            } else {
+                authArea.innerHTML = `
+                    <button class="nav-sign-in-btn" id="navSignInBtn">
+                        <svg width="9" height="9" viewBox="0 0 14 14" fill="none">
+                            <circle cx="7" cy="5" r="3" stroke="currentColor" stroke-width="1.3" fill="none"/>
+                            <path d="M1 13c0-3.3 2.7-6 6-6s6 2.7 6 6" stroke="currentColor" stroke-width="1.3" fill="none"/>
+                        </svg>
+                        Sign In
+                    </button>
+                `;
+                document.getElementById('navSignInBtn')?.addEventListener('click', () => this.openSignInModal());
+            }
+        }
+
+        this.updateMobileNavAuthState(user);
+    },
+
+    closeMobileMenu() {
+        document.getElementById('mobileMenuBtn')?.classList.remove('active');
+        document.getElementById('mobileNav')?.classList.remove('active');
+    },
+
+    // ── Mobile nav sign-in / sign-out (hamburger menu) ──
+    updateMobileNavAuthState(user) {
+        const mobileNav = document.getElementById('mobileNav');
+        if (!mobileNav) return;
+
+        let authArea = document.getElementById('mobileAuthArea');
+        if (!authArea) {
+            authArea = document.createElement('div');
+            authArea.id = 'mobileAuthArea';
+            authArea.className = 'mobile-nav-auth';
+            mobileNav.appendChild(authArea);
+        }
 
         if (user) {
             const firstName = (user.user_metadata?.full_name || '').split(' ')[0] || 'Account';
@@ -105,54 +183,29 @@ const scAuth = {
             const initial   = firstName[0].toUpperCase();
 
             authArea.innerHTML = `
-                <div class="nav-user-badge" id="navUserBadge">
+                <div class="mobile-nav-user">
                     ${avatar
-                        ? `<img src="${avatar}" alt="${firstName}" class="nav-avatar">`
-                        : `<div class="nav-avatar-placeholder">${initial}</div>`}
-                    <span class="nav-user-name">${firstName}</span>
-                    <svg class="nav-chevron" width="8" height="5" viewBox="0 0 10 6" fill="none">
-                        <polyline points="1,1 5,5 9,1" stroke="currentColor" stroke-width="1.5" fill="none"/>
-                    </svg>
-                    <div class="nav-user-dropdown" id="navUserDropdown">
-                        <a href="saved.html" class="nav-dropdown-item">
-                            <svg width="11" height="11" viewBox="0 0 12 14" fill="none">
-                                <path d="M1 1h10v12l-5-3.5L1 13V1z" stroke="currentColor" stroke-width="1.5" fill="none"/>
-                            </svg>
-                            Saved Profiles
-                        </a>
-                        <button class="nav-dropdown-item" id="navSignOutBtn">
-                            <svg width="11" height="11" viewBox="0 0 14 14" fill="none">
-                                <path d="M5 7h7M9 4l3 3-3 3" stroke="currentColor" stroke-width="1.3"/>
-                                <path d="M8 2H2v10h6" stroke="currentColor" stroke-width="1.3" fill="none"/>
-                            </svg>
-                            Sign Out
-                        </button>
-                    </div>
+                        ? `<img src="${avatar}" alt="" class="mobile-nav-avatar">`
+                        : `<span class="mobile-nav-avatar-placeholder">${initial}</span>`}
+                    <span class="mobile-nav-user-name">Signed in as ${firstName}</span>
                 </div>
+                
+                <a href="my-reviews.html" class="mobile-nav-item mobile-nav-auth-link">My Reviews</a>
+                <button type="button" class="mobile-nav-item mobile-nav-signout" id="mobileSignOutBtn">Sign Out</button>
             `;
 
-            document.getElementById('navSignOutBtn')?.addEventListener('click', () => {
-                this._supabase.auth.signOut();
+            document.getElementById('mobileSignOutBtn')?.addEventListener('click', () => {
+                this.closeMobileMenu();
+                this._supabase?.auth.signOut();
             });
-            document.getElementById('navUserBadge')?.addEventListener('click', e => {
-                e.stopPropagation();
-                document.getElementById('navUserDropdown')?.classList.toggle('visible');
-            });
-            document.addEventListener('click', () => {
-                document.getElementById('navUserDropdown')?.classList.remove('visible');
-            });
-
         } else {
             authArea.innerHTML = `
-                <button class="nav-sign-in-btn" id="navSignInBtn">
-                    <svg width="9" height="9" viewBox="0 0 14 14" fill="none">
-                        <circle cx="7" cy="5" r="3" stroke="currentColor" stroke-width="1.3" fill="none"/>
-                        <path d="M1 13c0-3.3 2.7-6 6-6s6 2.7 6 6" stroke="currentColor" stroke-width="1.3" fill="none"/>
-                    </svg>
-                    Sign In
-                </button>
+                <button type="button" class="mobile-nav-item mobile-nav-signin" id="mobileSignInBtn">Sign In</button>
             `;
-            document.getElementById('navSignInBtn')?.addEventListener('click', () => this.openSignInModal());
+            document.getElementById('mobileSignInBtn')?.addEventListener('click', () => {
+                this.closeMobileMenu();
+                this.openSignInModal();
+            });
         }
     },
 

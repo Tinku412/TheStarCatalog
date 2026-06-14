@@ -227,6 +227,8 @@ function populateProfile(profile) {
     
     
     // Quick details
+    const personalNameEl = document.getElementById('detailPersonalName');
+    if (personalNameEl) personalNameEl.textContent = profile.personal_name || '—';
     document.getElementById('detailIdentity').textContent  = profile.professional_identity || '—';
     document.getElementById('detailExperience').textContent = profile.experience || '—';
     document.getElementById('detailProof').textContent     = profile.provides_proof ? 'Yes' : 'No';

@@ -1238,7 +1238,22 @@
         // Email updates signup
         const SUPABASE_URL = 'https://uapjfrxjjpotmvpuidsq.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVhcGpmcnhqanBvdG12cHVpZHNxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjAxMjcxMzAsImV4cCI6MjA3NTcwMzEzMH0.NAFy5Iqs6xm39R42yxBHpjxdBmT66cB7l9LcpULUGoI';
-        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        function landingEmailMessage(error) {
+            if (!error) return { type: 'error', text: '' };
+            const code = String(error.code || '');
+            const msg  = String(error.message || '').toLowerCase();
+            if (code === '23505' || msg.includes('duplicate') || msg.includes('unique')) {
+                return { type: 'success', text: 'This email is already on our list — you are all set.' };
+            }
+            if (code === '42501' || msg.includes('permission') || msg.includes('policy') || msg.includes('row-level security')) {
+                return { type: 'error', text: 'Sign-ups are temporarily unavailable. Please try again later.' };
+            }
+            if (msg.includes('invalid') || msg.includes('check constraint')) {
+                return { type: 'error', text: 'Please enter a valid email address.' };
+            }
+            return { type: 'error', text: 'We could not save your email right now. Please try again in a moment.' };
+        }
 
         const emailForm = document.getElementById('landingEmailForm');
         const emailInput = document.getElementById('landingEmailInput');
@@ -1248,34 +1263,66 @@
         if (emailForm && emailInput && emailBtn && emailFeedback) {
             emailForm.addEventListener('submit', async function (e) {
                 e.preventDefault();
-                const email = emailInput.value.trim().toLowerCase();
-                if (!email) return;
 
-                emailBtn.disabled = true;
-                emailBtn.textContent = 'Submitting...';
+                const email = emailInput.value.trim().toLowerCase();
+                const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
                 emailFeedback.className = 'landing-email-feedback';
                 emailFeedback.textContent = '';
 
-                const { error } = await supabaseClient
-                    .from('sc_landing_email_signups')
-                    .insert({ email });
-
-                if (error) {
-                    const msg = (error.message || '').toLowerCase().includes('duplicate')
-                        ? 'You are already subscribed.'
-                        : 'Could not save right now. Please try again.';
+                if (!email) {
                     emailFeedback.className = 'landing-email-feedback error';
-                    emailFeedback.textContent = msg;
-                } else {
-                    emailFeedback.className = 'landing-email-feedback success';
-                    emailFeedback.textContent = 'Thanks! You are subscribed.';
-                    emailForm.reset();
+                    emailFeedback.textContent = 'Please enter your email address.';
+                    emailInput.focus();
+                    return;
+                }
+                if (!validEmail) {
+                    emailFeedback.className = 'landing-email-feedback error';
+                    emailFeedback.textContent = 'Please enter a valid email address.';
+                    emailInput.focus();
+                    return;
                 }
 
-                emailBtn.disabled = false;
-                emailBtn.textContent = 'Sign Up';
+                if (typeof supabase === 'undefined') {
+                    emailFeedback.className = 'landing-email-feedback error';
+                    emailFeedback.textContent = 'Something went wrong loading the sign-up form. Please refresh the page and try again.';
+                    return;
+                }
+
+                emailBtn.disabled = true;
+                emailBtn.textContent = 'Submitting…';
+
+                try {
+                    const { createClient } = supabase;
+                    const emailClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+                    const { error } = await emailClient
+                        .from('sc_landing_email_signups')
+                        .insert({ email: email, source: 'landing_page' });
+
+                    if (error) {
+                        const feedback = landingEmailMessage(error);
+                        emailFeedback.className = 'landing-email-feedback ' + feedback.type;
+                        emailFeedback.textContent = feedback.text;
+                        if (feedback.type === 'success') emailForm.reset();
+                    } else {
+                        emailFeedback.className = 'landing-email-feedback success';
+                        emailFeedback.textContent = 'You are subscribed! We will email you when there are important updates.';
+                        emailForm.reset();
+                    }
+                } catch (err) {
+                    console.error('Email signup error:', err);
+                    emailFeedback.className = 'landing-email-feedback error';
+                    emailFeedback.textContent = 'We could not save your email right now. Please check your connection and try again.';
+                } finally {
+                    emailBtn.disabled = false;
+                    emailBtn.textContent = 'Sign Up';
+                }
             });
         }
+
+        const { createClient } = supabase;
+        const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
         // -- Featured spellcasters Sections ------------------------------
         (async function loadFeaturedspellcasters() {

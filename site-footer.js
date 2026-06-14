@@ -7,6 +7,46 @@
  *   road-opener-spell-casters.html, obsession-spell-casters.html, revenge-spell-casters.html,
  *   beauty-spell-casters.html
  */
+
+/* Scrolling ticker below site header */
+(function () {
+    if (document.getElementById('siteTicker') || document.body.dataset.noTicker === 'true') return;
+
+    const header = document.querySelector('header.site-header');
+    if (!header) return;
+
+    const items = [
+        'Community-reviewed spellcasters — real reviews from real clients',
+        'New practitioners added regularly — browse the directory',
+        'Know a legit spellcaster? Submit them to help the community',
+        'Read verified reviews before you hire — protect yourself from scams',
+        'Love • Money • Protection • Reconciliation & more specialties live',
+        'Sign in with Google to save profiles, recommend & write reviews',
+        'Every review is tied to a verified Google account',
+        'No paid rankings — community trust only',
+    ];
+
+    function buildItemsHtml() {
+        return items.map(function (text) {
+            return '<span class="site-ticker-item">' + text + '</span><span class="site-ticker-sep" aria-hidden="true">✦</span>';
+        }).join('');
+    }
+
+    const ticker = document.createElement('div');
+    ticker.id = 'siteTicker';
+    ticker.className = 'site-ticker';
+    ticker.setAttribute('aria-label', 'Site updates');
+    ticker.innerHTML =
+        '<div class="site-ticker-viewport">' +
+            '<div class="site-ticker-track">' +
+                '<div class="site-ticker-group">' + buildItemsHtml() + '</div>' +
+                '<div class="site-ticker-group" aria-hidden="true">' + buildItemsHtml() + '</div>' +
+            '</div>' +
+        '</div>';
+
+    header.insertAdjacentElement('afterend', ticker);
+})();
+
 (function () {
     const el = document.getElementById('siteFooter');
     if (!el) return;
