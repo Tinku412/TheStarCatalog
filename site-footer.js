@@ -64,6 +64,52 @@
                     <span style="font-family:'Cinzel',serif;font-size:12px;color:var(--cream);letter-spacing:0.1em;">WitchWeekly</span>
                 </div>
                 <p class="footer-logo-desc">A community-run directory of spell casters and spiritual spellcasters. Real reviews from real people — built to protect seekers from fraud.</p>
+                <div class="footer-social">
+                    <a href="https://www.instagram.com/witchweeklyreviews" target="_blank" rel="noopener" aria-label="Instagram" class="footer-social-link">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                            <circle cx="12" cy="12" r="4.5" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                            <circle cx="17.5" cy="6.5" r="1" fill="currentColor"/>
+                        </svg>
+                    </a>
+                    <a href="https://www.reddit.com/r/WitchWeekly/" target="_blank" rel="noopener" aria-label="Reddit" class="footer-social-link">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                            <circle cx="8.5" cy="13" r="1.2" fill="currentColor"/>
+                            <circle cx="15.5" cy="13" r="1.2" fill="currentColor"/>
+                            <path d="M8.5 16.5c1 1 5.5 1 7 0" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" fill="none"/>
+                            <circle cx="18.5" cy="8" r="1.5" stroke="currentColor" stroke-width="1.3" fill="none"/>
+                            <path d="M15 6.5c1-2 4.5-1 4 2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" fill="none"/>
+                            <path d="M5.5 8.5C6.5 6 11 5.5 12 8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" fill="none"/>
+                        </svg>
+                    </a>
+                    <a href="https://www.facebook.com/" target="_blank" rel="noopener" aria-label="Facebook" class="footer-social-link">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                            <rect x="2" y="2" width="20" height="20" rx="4" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                            <path d="M15 8h-2a1 1 0 0 0-1 1v2h3l-.5 3H12v6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                        </svg>
+                    </a>
+                    <a href="https://www.linkedin.com/" target="_blank" rel="noopener" aria-label="LinkedIn" class="footer-social-link">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                            <rect x="2" y="2" width="20" height="20" rx="3" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                            <path d="M7 10v7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                            <circle cx="7" cy="7.5" r="1" fill="currentColor"/>
+                            <path d="M11 17v-4a2 2 0 0 1 4 0v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                            <path d="M11 10v7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                        </svg>
+                    </a>
+                    <a href="https://x.com/" target="_blank" rel="noopener" aria-label="X / Twitter" class="footer-social-link">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                            <path d="M4 4l16 16M20 4 4 20" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                        </svg>
+                    </a>
+                    <a href="https://www.tumblr.com/" target="_blank" rel="noopener" aria-label="Tumblr" class="footer-social-link">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                            <path d="M10 4v11a3 3 0 0 0 3 3h2.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                            <path d="M7 9h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                        </svg>
+                    </a>
+                </div>
             </div>
             <div class="footer-col">
                 <div class="footer-col-title">Quick Links</div>

@@ -146,6 +146,9 @@ async function loadProfile(identifier, bySlug = false) {
 
         await incrementViews(profile.id, profile.views || 0);
 
+        // Load similar casters asynchronously (non-blocking)
+        loadSimilarCasters(profile).catch(() => {});
+
         if (container) container.style.opacity = '1';
         return true;
 
@@ -1375,4 +1378,82 @@ async function handleContactSubmit(e) {
     } finally {
         if (submitBtn) { submitBtn.textContent = 'Send Inquiry'; submitBtn.disabled = false; }
     }
+}
+
+// ============================================
+// SIMILAR CASTERS
+// ============================================
+function buildSimilarCard(c) {
+    const href    = c.slug
+        ? 'profile.html?slug=' + encodeURIComponent(c.slug)
+        : 'profile.html?id=' + c.id;
+    const name    = (c.professional_name || 'Unknown').replace(/"/g, '&quot;');
+    const imgSrc  = c.profile_picture_url || 'placeholder.jpg';
+    const desc    = c.one_liner
+        ? (c.one_liner.length > 90 ? c.one_liner.substring(0, 90) + '\u2026' : c.one_liner)
+        : '';
+
+    const avgRating   = c.average_rating ? parseFloat(c.average_rating).toFixed(1) : null;
+    const reviewCount = c.review_count   || 0;
+    let ratingDisplay;
+    if (reviewCount > 0 && avgRating) {
+        ratingDisplay = avgRating + ' (' + reviewCount + ' review' + (reviewCount === 1 ? '' : 's') + ')';
+    } else if (reviewCount > 0) {
+        ratingDisplay = reviewCount + ' review' + (reviewCount === 1 ? '' : 's');
+    } else {
+        ratingDisplay = 'Be the first to review';
+    }
+
+    const priceLabel = c.minimum_price
+        ? (String(c.minimum_price).toUpperCase().startsWith('FROM') ? c.minimum_price : 'FROM ' + c.minimum_price)
+        : '';
+
+    const starIcon = '<svg width="9" height="9" viewBox="0 0 12 12" fill="none"><polygon points="6,1 7.5,4.5 11,5 8.5,7.5 9.5,11 6,9 2.5,11 3.5,7.5 1,5 4.5,4.5" fill="currentColor"/></svg>';
+
+    return '<a href="' + href + '" class="profile-card featured-card similar-caster-card">' +
+                '<div class="card-image-wrap">' +
+                    '<img class="featured-card-img" src="' + imgSrc + '" alt="' + name + '" loading="lazy">' +
+                    '<div class="card-profession">' + (c.professional_identity || '') + '</div>' +
+                '</div>' +
+                '<div class="featured-card-body">' +
+                    '<div class="featured-card-top-row">' +
+                        '<div class="featured-card-name">' + name + '</div>' +
+                    '</div>' +
+                    (desc ? '<div class="featured-card-tagline">' + desc + '</div>' : '') +
+                    '<div class="featured-card-footer">' +
+                        '<div class="featured-card-rating">' +
+                            '<span class="featured-card-stars">' + starIcon + '</span>' +
+                            '<span class="featured-card-rating-val' + (reviewCount === 0 ? ' rating-val-compact' : '') + '">' + ratingDisplay + '</span>' +
+                        '</div>' +
+                        '<div class="featured-card-price">' + (priceLabel || '&mdash;') + '</div>' +
+                    '</div>' +
+                '</div>' +
+           '</a>';
+}
+
+async function loadSimilarCasters(profile) {
+    const section = document.getElementById('similarCastersSection');
+    const row     = document.getElementById('similarCastersRow');
+    const title   = document.getElementById('similarCastersTitle');
+    if (!section || !row || !supabaseClient) return;
+
+    const type = (profile.professional_identity || '').trim();
+    if (!type) return;
+
+    const { data, error } = await supabaseClient
+        .from('sc_profiles')
+        .select('id, slug, professional_name, professional_identity, profile_picture_url, one_liner, upvotes, minimum_price, average_rating, review_count')
+        .eq('status', 'approved')
+        .eq('is_active', true)
+        .ilike('professional_identity', type)
+        .neq('id', profile.id)
+        .order('upvotes', { ascending: false })
+        .limit(5);
+
+    if (error || !data || data.length === 0) return;
+
+    if (title) title.textContent = 'More ' + type + 's Like This';
+
+    row.innerHTML = data.map(buildSimilarCard).join('');
+    section.style.display = '';
 }
