@@ -9,8 +9,8 @@ compatibility_date = "2024-01-01"
 [vars]
 R2_BUCKET     = "profilepics"
 R2_ENDPOINT   = "https://d07c6c2a0d90a903fe5bb5641d5a29b2.r2.cloudflarestorage.com"
-R2_PUBLIC_URL = "https://pub-6e6ab7879b5c4222bd4ca6c6239b6e36.r2.dev"
-ALLOWED_ORIGIN = "https://thestarcatalog.com,http://localhost:9000,http://localhost:3000,http://localhost:5500,http://127.0.0.1:9000,http://127.0.0.1:5500"
+R2_PUBLIC_URL = "https://cdn.thestarcatalog.com"
+ALLOWED_ORIGIN = "https://thestarcatalog.com,https://witchweekly.com,http://localhost:9000,http://localhost:3000,http://localhost:5500,http://127.0.0.1:9000,http://127.0.0.1:5500"
 
 # Secret variables — set these via Wrangler CLI (never commit secrets to source control):
 #   wrangler secret put R2_ACCESS_KEY_ID
