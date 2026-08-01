@@ -351,7 +351,7 @@ function showEmptyState(container, heading) {
 function showSignInPrompt() {
     const container = document.getElementById('savedContainer');
     const heading   = document.getElementById('savedHeading');
-    if (heading) heading.textContent = 'Saved';
+    if (heading) heading.textContent = 'Saved Spellcasters';
     if (!container) return;
     container.innerHTML = `
         <div style="grid-column:1/-1;display:flex;flex-direction:column;align-items:center;padding:80px 20px;text-align:center;max-width:100%;box-sizing:border-box;">
@@ -359,7 +359,7 @@ function showSignInPrompt() {
                 <path d="M1 1h10v12l-5-3.5L1 13V1z" stroke="var(--accent)" stroke-width="0.9" fill="none"/>
             </svg>
             <h3 style="font-family:'Cinzel',serif;font-size:17px;color:var(--navy);margin:0 0 10px;font-weight:600;">Sign In to View Your Saved Profiles</h3>
-            <p style="font-family:'Source Code Pro',monospace;font-size:12px;color:var(--muted);max-width:380px;line-height:1.7;margin:0 0 28px;">Save spellcasters you want to come back to. Sign in with Google to access your saved list across devices.</p>
+            <p style="font-family:'Source Code Pro',monospace;font-size:12px;color:var(--muted);max-width:380px;line-height:1.7;margin:0 0 28px;"></p>
             <button class="google-signin-btn" id="savedSignInBtn">
                 <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
                     <path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.875 2.684-6.615z" fill="#4285F4"/>

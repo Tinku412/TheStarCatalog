@@ -871,7 +871,7 @@ a.mobile-nav-item { color: rgba(232,224,204,0.7); }
 }
 .footer-top {
   display: grid;
-  grid-template-columns: 1.6fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1.6fr 1fr 1fr 1fr 1fr 1fr;
   border-bottom: 1px solid #2c3f52;
 }
 .footer-col {

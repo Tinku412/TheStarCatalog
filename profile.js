@@ -1452,7 +1452,7 @@ async function loadSimilarCasters(profile) {
 
     if (error || !data || data.length === 0) return;
 
-    if (title) title.textContent = 'More ' + type + 's Like This';
+    if (title) title.textContent = 'More Like This';
 
     row.innerHTML = data.map(buildSimilarCard).join('');
     section.style.display = '';

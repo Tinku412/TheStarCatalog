@@ -261,7 +261,7 @@
         }
         .trust-badge svg { color: var(--accent); flex-shrink: 0; }
         .landing-centered {
-            max-width: 920px;
+            /* max-width: 920px; */
             margin: 0 auto;
             text-align: center;
         }
@@ -562,7 +562,7 @@
             </h1>
 
             <p class="landing-hero-desc" style="max-width:600px;margin:18px auto 0;">
-                The only community-driven spell caster directory built to protect seekers. Read verified reviews on spell casting services, compare spellcasters, and find the right one — before you spend a single dollar.
+                Read reviews on spell casters & find the right one for you.
             </p>
 
             <div class="landing-cta-row" style="justify-content:center;margin-top:28px;">
@@ -589,7 +589,7 @@
                     Highest community ratings
                 </div>
                 <h2 id="topRatedHeading" class="landing-h2" style="text-align:center;margin-bottom:4px;">Top Rated Spell Casters</h2>
-                <p style="font-family:'Source Code Pro',monospace;font-size:11px;color:var(--muted);letter-spacing:0.05em;text-align:center;">Ranked by verified reviews from real clients across all spell casting services</p>
+                <!-- <p style="font-family:'Source Code Pro',monospace;font-size:11px;color:var(--muted);letter-spacing:0.05em;text-align:center;">Ranked by verified reviews from real clients across all spell casting services</p> -->
             </div>
             <a href="spellcasters.html" class="landing-btn-secondary featured-view-more" aria-label="Browse all top rated spell casters">Browse All</a>
         </div>
@@ -877,13 +877,13 @@
                 </div>
                 <h2 class="landing-h2">We got scammed. More than once.</h2>
                 <p class="landing-desc">
-                    We were going through a really hard time. We wanted help — the kind of help you can't always find at a doctor or a therapist. So we started looking for spell casters. And we got taken for a ride.
+                    We were going through a really hard time. We wanted help, so we started looking for spell casters.. and got taken for a ride.
                 </p>
                 <ul class="why-list">
                     <li>Some of us paid hundreds of dollars to people who vanished the moment the money hit</li>
                     <li>"reviews" on their pages that were clearly made up</li>
                     <li>There was no way to check if anyone else had a bad experience with them</li>
-                    <li>There was nowhere to warn others — so the same people kept scamming</li>
+                    <li>There was nowhere to warn others - so the same people kept scamming</li>
                 </ul>
                 <p class="landing-desc" style="margin-bottom:24px;">
                     That's when we decided its enough. Together, we can stop the fakes.
@@ -892,7 +892,7 @@
                     <a href="spellcasters.html" class="landing-btn-primary">Check the Directory</a>
                     <a href="about.html" class="landing-btn-secondary">Read the Full Story</a>
                 </div>
-                <div class="trust-badges">
+                <!-- <div class="trust-badges">
                     <div class="trust-badge">
                         <svg width="11" height="11" viewBox="0 0 14 14" fill="none">
                             <circle cx="7" cy="7" r="5.5" stroke="currentColor" stroke-width="1.3"/>
@@ -914,14 +914,8 @@
                         </svg>
                         Community-run
                     </div>
-                    <!-- <div class="trust-badge">
-                        <svg width="11" height="11" viewBox="0 0 14 14" fill="none">
-                            <circle cx="7" cy="7" r="5.5" stroke="currentColor" stroke-width="1.3"/>
-                            <path d="M4.5 7l2 2 3-3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
-                        </svg>
-                        Open access
-                    </div> -->
-                </div>
+                    
+                </div> -->
             </div>
 
             <div class="why-visual">
@@ -1340,11 +1334,13 @@
             }
 
             function buildFeaturedCard(p) {
-                const name    = p.professional_name || p.personal_name || 'spellcaster';
-                const type    = p.professional_identity || '';
-                const rating  = p.average_rating || null;
-                const imgSrc  = p.profile_picture_url || null;
-                const altText = type ? `${name}  ${type} spell caster profile` : `${name} spell caster profile`;
+                const name        = p.professional_name || p.personal_name || 'spellcaster';
+                const type        = p.professional_identity || '';
+                const reviewCount = p.review_count || 0;
+                // Only show stars when there are real reviews — ignore stale average_rating alone
+                const rating      = (reviewCount > 0 && p.average_rating) ? p.average_rating : null;
+                const imgSrc      = p.profile_picture_url || null;
+                const altText     = type ? `${name}  ${type} spell caster profile` : `${name} spell caster profile`;
 
                 const card = document.createElement('a');
                 card.className = 'featured-card';
@@ -1374,7 +1370,7 @@
                     const filter = keywords.map(k => `specialties.ilike.%${k}%`).join(',');
                     const { data, error } = await supabaseClient
                         .from('sc_profiles')
-                        .select('id, professional_name, personal_name, professional_identity, profile_picture_url, average_rating, slug, specialties')
+                        .select('id, professional_name, personal_name, professional_identity, profile_picture_url, average_rating, review_count, slug, specialties')
                         .eq('status', 'approved')
                         .eq('is_active', true)
                         .or(filter)
@@ -1412,13 +1408,13 @@
                     if (error) throw error;
 
                     if (!data || data.length === 0) {
-                        // Fallback: show highest-rated even without reviews filter
+                        // Fallback: newest approved profiles (no fake ratings — cards hide stars when review_count is 0)
                         const { data: fallback, error: fbErr } = await supabaseClient
                             .from('sc_profiles')
                             .select('id, professional_name, personal_name, professional_identity, profile_picture_url, average_rating, review_count, slug, specialties')
                             .eq('status', 'approved')
                             .eq('is_active', true)
-                            .order('average_rating', { ascending: false, nullsFirst: false })
+                            .order('created_at', { ascending: false })
                             .limit(4);
 
                         if (fbErr || !fallback || fallback.length === 0) {
