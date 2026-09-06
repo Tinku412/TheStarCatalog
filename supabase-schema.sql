@@ -263,6 +263,7 @@ CREATE TABLE sc_reviews (
     hire_again         TEXT DEFAULT NULL,  -- 'Yes', 'No', or 'Maybe'
     result_time        TEXT DEFAULT NULL,  -- e.g. '1–2 weeks', '1–3 months', 'Still waiting', etc.
     image_urls         TEXT DEFAULT '[]',
+    is_admin_seeded    BOOLEAN NOT NULL DEFAULT false,  -- true when admin seeds under a display name (reviewer_id NULL)
     created_at         TIMESTAMPTZ DEFAULT NOW()
 );
 
@@ -270,10 +271,26 @@ CREATE TABLE sc_reviews (
 -- ALTER TABLE sc_reviews ADD COLUMN IF NOT EXISTS services_purchased TEXT DEFAULT NULL;
 -- ALTER TABLE sc_reviews ADD COLUMN IF NOT EXISTS hire_again TEXT DEFAULT NULL;
 -- ALTER TABLE sc_reviews ADD COLUMN IF NOT EXISTS result_time TEXT DEFAULT NULL;
+-- ALTER TABLE sc_reviews ADD COLUMN IF NOT EXISTS is_admin_seeded BOOLEAN NOT NULL DEFAULT false;
 
 ALTER TABLE sc_reviews ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "sc_reviews_public_read"  ON sc_reviews FOR SELECT USING (true);
-CREATE POLICY "sc_reviews_auth_insert"  ON sc_reviews FOR INSERT WITH CHECK (auth.uid() IS NOT NULL);
+-- Normal users: insert only as themselves (see also supabase-migration-admin-seed-reviews.sql)
+CREATE POLICY "sc_reviews_user_insert" ON sc_reviews
+  FOR INSERT TO authenticated
+  WITH CHECK (
+    auth.uid() IS NOT NULL
+    AND reviewer_id = auth.uid()
+    AND COALESCE(is_admin_seeded, false) = false
+  );
+-- Admin seed: custom reviewer_name, reviewer_id NULL (run migration for live DB)
+CREATE POLICY "sc_reviews_admin_seed_insert" ON sc_reviews
+  FOR INSERT TO authenticated
+  WITH CHECK (
+    auth.uid() IN ('a6316b86-f6dd-4fee-9449-b125eafd97e8')
+    AND reviewer_id IS NULL
+    AND is_admin_seeded = true
+  );
 
 CREATE INDEX IF NOT EXISTS idx_sc_reviews_profile_id ON sc_reviews(profile_id);
 CREATE INDEX IF NOT EXISTS idx_sc_reviews_created_at ON sc_reviews(created_at DESC);
@@ -299,6 +316,28 @@ CREATE INDEX IF NOT EXISTS idx_sc_analytics_event_type ON sc_analytics(event_typ
 CREATE INDEX IF NOT EXISTS idx_sc_analytics_created_at ON sc_analytics(created_at DESC);
 
 -- ============================================
+-- CONTACT INQUIRIES (sc_inquiries)
+-- Leads from the profile Contact form
+-- ============================================
+CREATE TABLE IF NOT EXISTS sc_inquiries (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    profile_id UUID NOT NULL,
+    full_name TEXT NOT NULL,
+    date_of_birth DATE,
+    email TEXT NOT NULL,
+    budget TEXT,
+    description TEXT NOT NULL,
+    created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+ALTER TABLE sc_inquiries ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "inq_insert" ON sc_inquiries FOR INSERT WITH CHECK (true);
+-- Admin read: see supabase-migration-leads-analytics-read.sql
+
+CREATE INDEX IF NOT EXISTS idx_sc_inquiries_created_at ON sc_inquiries(created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_sc_inquiries_profile_id ON sc_inquiries(profile_id);
+
+-- ============================================
 -- LANDING EMAIL SIGNUPS (sc_landing_email_signups)
 -- Collects emails for landing-page updates
 -- ============================================
@@ -322,6 +361,43 @@ CREATE POLICY "sc_landing_email_auth_read"
 CREATE INDEX IF NOT EXISTS idx_sc_landing_email_created_at ON sc_landing_email_signups(created_at DESC);
 
 -- ============================================
+-- FIND SPELLCASTER REQUESTS (sc_find_requests)
+-- Seeker intake form for matching help
+-- ============================================
+CREATE TABLE IF NOT EXISTS sc_find_requests (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    full_name TEXT NOT NULL,
+    service_type TEXT NOT NULL,
+    service_type_other TEXT DEFAULT NULL,
+    requirement_details TEXT NOT NULL,
+    budget TEXT DEFAULT NULL,
+    practitioner_type TEXT DEFAULT NULL,
+    practitioner_type_other TEXT DEFAULT NULL,
+    timing TEXT DEFAULT NULL,
+    contact_email TEXT NOT NULL,
+    contact_phone TEXT DEFAULT NULL,
+    preferred_contact TEXT DEFAULT NULL,
+    status TEXT NOT NULL DEFAULT 'new',
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    CONSTRAINT sc_find_requests_email_valid
+        CHECK (contact_email ~* '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$'),
+    CONSTRAINT sc_find_requests_status_valid
+        CHECK (status IN ('new', 'in_progress', 'matched', 'closed'))
+);
+
+ALTER TABLE sc_find_requests ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "sc_find_requests_anon_insert"
+    ON sc_find_requests FOR INSERT
+    WITH CHECK (true);
+CREATE POLICY "sc_find_requests_auth_read"
+    ON sc_find_requests FOR SELECT
+    TO authenticated
+    USING (true);
+
+CREATE INDEX IF NOT EXISTS idx_sc_find_requests_created_at ON sc_find_requests(created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_sc_find_requests_status ON sc_find_requests(status);
+
+-- ============================================
 -- NOTES FOR SETUP:
 -- ============================================
 -- 1. Run this SQL in Supabase SQL Editor
@@ -330,5 +406,6 @@ CREATE INDEX IF NOT EXISTS idx_sc_landing_email_created_at ON sc_landing_email_s
 -- 4. Enable Google OAuth via Dashboard → Authentication → Providers → Google
 -- 5. Update your Supabase credentials in the frontend JavaScript
 -- 6. Adjust RLS policies based on your authentication setup
+-- 7. Also run supabase-migration-find-spellcaster.sql if upgrading an existing DB
 -- ============================================
 

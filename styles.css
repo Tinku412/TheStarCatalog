@@ -6,9 +6,9 @@
 :root {
   --navy:    #1b2d3e;
   --navy2:   #243649;
-  --cream:   #e8e0cc;
-  --cream2:  #f0ead8;
-  --cream3:  #d5ccb4;
+  --cream:   #ffffeb;
+  --cream2:  #ffffeb;
+  --cream3:  #ffffeb;
   --accent:  #c9b97a;
   --muted:   #526778;   /* darkened from #7a8f9e for readability */
   --border:  #1b2d3e;
@@ -45,7 +45,7 @@ body {
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='4' height='4' fill='%23f0ead8'/%3E%3Crect x='0' y='0' width='1' height='1' fill='%23d5ccb4' opacity='0.22'/%3E%3Crect x='2' y='2' width='1' height='1' fill='%23d5ccb4' opacity='0.15'/%3E%3C/svg%3E");
+  /* background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='4' height='4' fill='%23f0ead8'/%3E%3Crect x='0' y='0' width='1' height='1' fill='%23d5ccb4' opacity='0.22'/%3E%3Crect x='2' y='2' width='1' height='1' fill='%23d5ccb4' opacity='0.15'/%3E%3C/svg%3E"); */
 }
 
 /* ========== HEADER ========== */
@@ -1613,14 +1613,23 @@ body { width: 100%; max-width: 100vw; overflow-x: hidden; }
 }
 
 .modal {
-  background: var(--cream2);
+  background: var(--cream);
   border: 1.5px solid var(--border);
-  max-width: 520px;
+  max-width: 560px;
   width: 100%;
   max-height: 90vh;
   overflow-y: auto;
   position: relative;
   box-shadow: 0 8px 40px rgba(27,45,62,0.35);
+}
+
+#reviewModal .modal {
+  max-width: 580px;
+  background: #fffdf4;
+}
+
+#reviewModal .modal-body {
+  padding: 1.5rem 1.75rem 1.75rem;
 }
 
 .modal-header {
@@ -1700,29 +1709,29 @@ body { width: 100%; max-width: 100vw; overflow-x: hidden; }
 .review-form {
   display: flex;
   flex-direction: column;
-  gap: 1.1rem;
+  gap: 1.35rem;
 }
 .review-label {
   display: block;
   font-family: 'Source Code Pro', monospace;
-  font-size: 10.5px;
-  letter-spacing: 0.2em;
+  font-size: 11.5px;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 7px;
+  color: var(--navy);
+  margin-bottom: 10px;
   font-weight: 700;
 }
 .review-textarea {
   width: 100%;
-  border: 1.5px solid var(--border);
-  padding: 10px 13px;
+  border: 1.5px solid var(--navy);
+  padding: 12px 14px;
   font-family: 'Source Code Pro', monospace;
   font-size: 13px;
-  background: var(--cream);
+  background: #fff;
   color: var(--navy);
   outline: none;
   resize: vertical;
-  min-height: 120px;
+  min-height: 130px;
   line-height: 1.7;
   transition: border-color 0.12s;
 }
@@ -1825,7 +1834,11 @@ body { width: 100%; max-width: 100vw; overflow-x: hidden; }
 /* ========================================================================
    SIMILAR CASTERS SECTION
    ======================================================================== */
-.similar-casters-section { padding-bottom: 1.6rem; }
+.similar-casters-section {
+  padding: 1.1rem 1.25rem 1.5rem;
+  margin-top: 0;
+  border-top: 1px solid var(--cream3);
+}
 .similar-casters-row {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
@@ -1850,9 +1863,9 @@ body { width: 100%; max-width: 100vw; overflow-x: hidden; }
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 1.2rem;
+  margin-bottom: 0.75rem;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 8px;
 }
 
 #reviewsList {
@@ -1865,15 +1878,15 @@ body { width: 100%; max-width: 100vw; overflow-x: hidden; }
 .write-review-btn {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
+  gap: 5px;
   font-family: 'Source Code Pro', monospace;
-  font-size: 10px;
-  letter-spacing: 0.16em;
+  font-size: 9.5px;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   background: var(--navy);
   color: var(--cream);
-  border: 1.5px solid var(--border);
-  padding: 9px 18px;
+  border: 1px solid var(--border);
+  padding: 6px 12px;
   cursor: pointer;
   transition: background 0.12s;
   flex-shrink: 0;
@@ -1882,18 +1895,18 @@ body { width: 100%; max-width: 100vw; overflow-x: hidden; }
 
 .no-reviews {
   font-family: 'Source Code Pro', monospace;
-  font-size: 13px;
+  font-size: 12px;
   color: var(--muted);
   font-style: italic;
-  padding: 0.5rem 0 1rem;
+  padding: 0.35rem 0 0.75rem;
 }
 
 /* Review card */
 .review-card {
-  border: 1.5px solid var(--cream3);
+  border: 1px solid var(--cream3);
   background: #ddd2a7;
-  padding: 1.2rem 1.4rem;
-  margin-bottom: 10px;
+  padding: 0.85rem 1rem;
+  margin-bottom: 8px;
   transition: border-color 0.12s;
   width: 100%;
   max-width: 100%;
@@ -1993,40 +2006,41 @@ body { width: 100%; max-width: 100vw; overflow-x: hidden; }
 
 /* ── Sub-ratings group (inside review modal) ── */
 .sub-ratings-group {
-  border: 1.5px solid var(--cream3);
-  background: var(--cream2);
-  padding: 12px 14px;
+  border: 1.5px solid var(--border);
+  background: var(--cream);
+  padding: 14px 16px;
   margin-bottom: 4px;
 }
 .sub-rating-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
-  padding: 7px 0;
-  border-bottom: 1px solid var(--cream3);
+  gap: 16px;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(201,185,122,0.35);
 }
 .sub-rating-row:last-child { border-bottom: none; }
 .sub-rating-label {
   font-family: 'Source Code Pro', monospace;
-  font-size: 11px;
+  font-size: 12px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--muted);
+  color: var(--navy);
+  font-weight: 600;
   flex-shrink: 0;
-  min-width: 120px;
+  min-width: 140px;
 }
 .sub-star-input {
   display: flex;
   align-items: center;
-  gap: 3px;
+  gap: 4px;
 }
 .sub-star-input .star-btn {
-  font-size: 18px;
-  padding: 2px;
+  font-size: 22px;
+  padding: 2px 3px;
   background: none;
   border: none;
-  /* color: rgba(201,185,122,0.3); */
+  color: rgba(27, 45, 62, 0.22);
   cursor: pointer;
   transition: color 0.1s, transform 0.1s;
   line-height: 1;
@@ -2611,56 +2625,74 @@ body { width: 100%; max-width: 100vw; overflow-x: hidden; }
     width: 100%;
     box-sizing: border-box;
     font-family: 'Source Code Pro', monospace;
-    font-size: 12px;
+    font-size: 13px;
     letter-spacing: 0.04em;
-    background: var(--cream2);
-    border: 1.5px solid var(--border);
+    background: #fff;
+    border: 1.5px solid var(--navy);
     color: var(--navy);
-    padding: 9px 12px;
+    padding: 11px 13px;
     outline: none;
     transition: border-color 0.15s;
-    margin-top: 4px;
+    margin-top: 0;
 }
-.review-input::placeholder { color: var(--muted); opacity: 0.7; }
+.review-input::placeholder { color: var(--muted); opacity: 0.75; }
 .review-input:focus { border-color: var(--accent); }
 
 .review-field-hint {
     display: block;
     font-family: 'Source Code Pro', monospace;
-    font-size: 10px;
-    letter-spacing: 0.06em;
+    font-size: 10.5px;
+    letter-spacing: 0.04em;
     color: var(--muted);
-    margin-top: 4px;
+    margin-top: 6px;
+}
+
+.review-label .req-star {
+    color: #b8960f;
+    font-weight: 700;
+}
+.review-label .opt-note {
+    color: var(--muted);
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: 10.5px;
 }
 
 .review-radio-group {
     display: flex;
     flex-wrap: wrap;
-    gap: 6px 14px;
-    margin-top: 8px;
+    gap: 8px;
+    margin-top: 4px;
 }
 .review-radio-option {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
     font-family: 'Source Code Pro', monospace;
-    font-size: 11.5px;
+    font-size: 12px;
     color: var(--navy);
     cursor: pointer;
-    padding: 5px 10px;
-    border: 1px solid var(--border);
+    padding: 9px 12px;
+    border: 1.5px solid var(--navy);
     background: var(--cream);
-    transition: border-color .15s, background .15s;
+    transition: border-color .15s, background .15s, color .15s;
+    min-height: 40px;
+}
+.review-radio-option:hover {
+    background: rgba(201,185,122,.1);
 }
 .review-radio-option:has(input:checked) {
     border-color: var(--accent);
-    background: rgba(201,185,122,.12);
+    background: rgba(201,185,122,.18);
+    font-weight: 600;
 }
 .review-radio-option input[type="radio"] {
-    accent-color: var(--accent);
-    width: 14px;
-    height: 14px;
+    accent-color: var(--navy);
+    width: 15px;
+    height: 15px;
     cursor: pointer;
+    flex-shrink: 0;
 }
 
 .review-meta-pills {

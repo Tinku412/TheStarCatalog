@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-R6Y2WCMPHF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-R6Y2WCMPHF');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Write a Review — Witch Weekly</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Cinzel:wght@400;600;700&family=Source+Code+Pro:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="admin.css">
+    <link rel="icon" href="svgviewer-png-output.png" type="image/png" />
+</head>
+<body>
+
+    <header class="site-header">
+        <a class="logo-wrap" href="index.html">
+            <div class="monogram">
+                <svg width="24" height="24" viewBox="0 0 26 26" fill="none">
+                    <polygon points="13,2 15,10 23,8 17,14 23,20 15,18 13,26 11,18 3,20 9,14 3,8 11,10" stroke="#c9b97a" stroke-width="1" fill="none"/>
+                    <circle cx="13" cy="13" r="3" fill="none" stroke="#c9b97a" stroke-width="1"/>
+                    <line x1="11.5" y1="13" x2="14.5" y2="13" stroke="#c9b97a" stroke-width="1"/>
+                    <line x1="13" y1="11.5" x2="13" y2="14.5" stroke="#c9b97a" stroke-width="1"/>
+                </svg>
+            </div>
+            <div class="logo-text">
+                <span class="logo-main">Witch Weekly</span>
+                <span class="logo-sub">Est. MMXXVI — Seeker's Guide</span>
+            </div>
+        </a>
+        <nav class="site-nav">
+            <a href="index.html">Browse</a>
+            <a href="write-a-review.html" class="nav-active">Write a Review</a>
+            <a href="saved.html">Saved</a>
+            <span id="navAuthArea" class="nav-auth-area"></span>
+        </nav>
+        <a class="nav-cta" href="submit-spellcaster.html" style="text-decoration:none;">Submit Spellcaster</a>
+        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </header>
+
+    <div class="mobile-nav" id="mobileNav">
+        <a href="index.html" class="mobile-nav-item">Browse Directory</a>
+        <a href="write-a-review.html" class="mobile-nav-item">Write a Review</a>
+        <a href="saved.html" class="mobile-nav-item">Saved Profiles</a>
+        <a href="submit-spellcaster.html" class="mobile-nav-item">Submit Spellcaster</a>
+    </div>
+
+    <main class="admin-main">
+        <div class="admin-container">
+
+            <div class="admin-page-header">
+                <div class="admin-eyebrow">
+                    <svg width="10" height="10" viewBox="0 0 14 14" fill="none">
+                        <polygon points="7,1 8.5,5.5 13,5.5 9.5,8.5 11,13 7,10 3,13 4.5,8.5 1,5.5 5.5,5.5" stroke="#c9b97a" stroke-width="1" fill="none"/>
+                    </svg>
+                    Community Reviews
+                </div>
+                <h2 class="admin-title">Write a Review</h2>
+                <p class="admin-subtitle">Share your experience with a spellcaster — it helps others in the community. Sign in to submit.</p>
+            </div>
+
+            <div id="reviewPageAuthBanner" class="seed-auth-banner" style="display:none;"></div>
+
+            <form class="profile-form write-review-page-form" id="writeReviewPageForm" autocomplete="off">
+
+                <section class="form-section">
+                    <div class="form-section-title">
+                        <span class="form-section-num">01</span>
+                        Choose a Spellcaster
+                    </div>
+                    <label class="form-label">
+                        <span class="label-text">Spellcaster <span style="color:#a18106;">*</span></span>
+                        <select name="profileId" id="wrProfileSelect" required>
+                            <option value="">Loading spellcasters…</option>
+                        </select>
+                        <span class="label-hint">Select who you worked with</span>
+                    </label>
+                </section>
+
+                <section class="form-section" id="wrDisplayNameSection" style="display:none;">
+                    <div class="form-section-title">
+                        <span class="form-section-num">02</span>
+                        Display Name
+                    </div>
+                    <label class="form-label">
+                        <span class="label-text">Name shown on the review</span>
+                        <input type="text" name="displayName" id="wrDisplayName" placeholder="Name shown publicly" autocomplete="off">
+                        <span class="label-hint">You can post this review under a different public name</span>
+                    </label>
+                </section>
+
+                <section class="form-section">
+                    <div class="form-section-title">
+                        <span class="form-section-num" id="wrSectionRateNum">02</span>
+                        Rate Your Experience
+                    </div>
+                    <div class="review-form" style="gap:0;">
+                        <div class="sub-ratings-group">
+                            <div class="sub-rating-row">
+                                <span class="sub-rating-label">Communication</span>
+                                <div class="sub-star-input" id="wrStarCommunication" data-key="communication" role="group" aria-label="Communication Rating">
+                                    <button type="button" class="star-btn" data-value="1">★</button>
+                                    <button type="button" class="star-btn" data-value="2">★</button>
+                                    <button type="button" class="star-btn" data-value="3">★</button>
+                                    <button type="button" class="star-btn" data-value="4">★</button>
+                                    <button type="button" class="star-btn" data-value="5">★</button>
+                                </div>
+                            </div>
+                            <div class="sub-rating-row">
+                                <span class="sub-rating-label">Accuracy</span>
+                                <div class="sub-star-input" id="wrStarAccuracy" data-key="accuracy" role="group" aria-label="Accuracy Rating">
+                                    <button type="button" class="star-btn" data-value="1">★</button>
+                                    <button type="button" class="star-btn" data-value="2">★</button>
+                                    <button type="button" class="star-btn" data-value="3">★</button>
+                                    <button type="button" class="star-btn" data-value="4">★</button>
+                                    <button type="button" class="star-btn" data-value="5">★</button>
+                                </div>
+                            </div>
+                            <div class="sub-rating-row">
+                                <span class="sub-rating-label">Value for Money</span>
+                                <div class="sub-star-input" id="wrStarValue" data-key="value" role="group" aria-label="Value Rating">
+                                    <button type="button" class="star-btn" data-value="1">★</button>
+                                    <button type="button" class="star-btn" data-value="2">★</button>
+                                    <button type="button" class="star-btn" data-value="3">★</button>
+                                    <button type="button" class="star-btn" data-value="4">★</button>
+                                    <button type="button" class="star-btn" data-value="5">★</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="overall-rating-display" id="wrOverallDisplay" style="display:none;margin-top:10px;">
+                            Overall: <span id="wrOverallValue" style="color:#c9b97a;font-weight:700;"></span> / 5
+                        </div>
+                        <div class="star-hint" id="wrStarHint" style="margin-top:6px;"></div>
+                    </div>
+                </section>
+
+                <section class="form-section">
+                    <div class="form-section-title">
+                        <span class="form-section-num" id="wrSectionDetailsNum">03</span>
+                        Review Details
+                    </div>
+
+                    <label class="form-label">
+                        <span class="label-text">Services Purchased</span>
+                        <input type="text" class="review-input" id="wrServicesPurchased" placeholder="e.g. Love Binding Spell, Protection Ritual, Tarot Reading" autocomplete="off" style="margin-top:0;">
+                        <span class="label-hint">Comma-separated list of services you purchased</span>
+                    </label>
+
+                    <div style="margin-top:1.1rem;">
+                        <label class="review-label">Date purchased? <span style="color:var(--muted);font-weight:400;">(optional)</span></label>
+                        <div class="review-radio-group">
+                            <label class="review-radio-option">
+                                <input type="radio" name="wrPurchaseDate" value="< 1 week ago"> &lt; 1 week ago
+                            </label>
+                            <label class="review-radio-option">
+                                <input type="radio" name="wrPurchaseDate" value="< 1 month ago"> &lt; 1 month ago
+                            </label>
+                            <label class="review-radio-option">
+                                <input type="radio" name="wrPurchaseDate" value="2–3 months ago"> 2–3 months ago
+                            </label>
+                            <label class="review-radio-option">
+                                <input type="radio" name="wrPurchaseDate" value="3–6 months ago"> 3–6 months ago
+                            </label>
+                            <label class="review-radio-option">
+                                <input type="radio" name="wrPurchaseDate" value="> 6 months ago"> &gt; 6 months ago
+                            </label>
+                        </div>
+                    </div>
+
+                    <div style="margin-top:1.1rem;">
+                        <label class="review-label">Would you hire again?</label>
+                        <div class="review-radio-group">
+                            <label class="review-radio-option">
+                                <input type="radio" name="wrHireAgain" value="Yes"> Yes
+                            </label>
+                            <label class="review-radio-option">
+                                <input type="radio" name="wrHireAgain" value="No"> No
+                            </label>
+                            <label class="review-radio-option">
+                                <input type="radio" name="wrHireAgain" value="Maybe"> Maybe
+                            </label>
+                        </div>
+                    </div>
+
+                    <div style="margin-top:1.1rem;">
+                        <label class="review-label">How long did results take?</label>
+                        <div class="review-radio-group">
+                            <label class="review-radio-option">
+                                <input type="radio" name="wrResultTime" value="1 month"> 1 month
+                            </label>
+                            <label class="review-radio-option">
+                                <input type="radio" name="wrResultTime" value="1–3 months"> 1–3 months
+                            </label>
+                            <label class="review-radio-option">
+                                <input type="radio" name="wrResultTime" value="3–6 months"> 3–6 months
+                            </label>
+                            <label class="review-radio-option">
+                                <input type="radio" name="wrResultTime" value="Still waiting"> Still waiting
+                            </label>
+                            <label class="review-radio-option">
+                                <input type="radio" name="wrResultTime" value="N/A - I only got a reading"> N/A - I only got a reading
+                            </label>
+                        </div>
+                    </div>
+
+                    <label class="form-label" style="margin-top:1.1rem;">
+                        <span class="label-text">Your Review <span style="color:#a18106;">*</span></span>
+                        <textarea class="review-textarea" id="wrReviewText" rows="5" placeholder="Describe your experience with this spellcaster — what service did you use, how was the communication, did the results meet your expectations?" required style="margin-top:0;"></textarea>
+                    </label>
+
+                    <div style="margin-top:1.1rem;">
+                        <label class="review-label">Proof / Screenshots <span style="color:var(--muted);font-weight:400;">(optional · max 2 images)</span></label>
+                        <div class="image-upload-zone" id="wrImageUploadZone">
+                            <input type="file" id="wrReviewImages" accept="image/*" multiple>
+                            <label for="wrReviewImages" class="image-upload-label">
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="margin-right:6px;vertical-align:middle;">
+                                    <rect x="1" y="4" width="14" height="10" rx="1" stroke="currentColor" stroke-width="1.2"/>
+                                    <path d="M5 4V3a3 3 0 0 1 6 0v1" stroke="currentColor" stroke-width="1.2"/>
+                                    <line x1="8" y1="8" x2="8" y2="11" stroke="currentColor" stroke-width="1.2"/>
+                                    <line x1="6.5" y1="9.5" x2="9.5" y2="9.5" stroke="currentColor" stroke-width="1.2"/>
+                                </svg>
+                                Click to upload images
+                            </label>
+                            <div class="image-previews" id="wrImagePreviews"></div>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="form-actions">
+                    <button type="reset" class="reset-btn" id="wrResetBtn">Reset Form</button>
+                    <button type="submit" class="submit-btn" id="wrSubmitBtn">Submit Review</button>
+                </div>
+
+            </form>
+        </div>
+    </main>
+
+    <footer class="site-footer" id="siteFooter" role="contentinfo"></footer>
+    <script src="site-footer.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="r2-upload.js"></script>
+    <script src="auth.js"></script>
+    <script src="write-review.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var btn = document.getElementById('mobileMenuBtn');
+            var nav = document.getElementById('mobileNav');
+            if (btn && nav) {
+                btn.addEventListener('click', function () {
+                    btn.classList.toggle('open');
+                    nav.classList.toggle('open');
+                });
+            }
+        });
+    </script>
+</body>
+</html>

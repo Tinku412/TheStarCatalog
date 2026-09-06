@@ -115,7 +115,8 @@
                 <div class="footer-col-title">Quick Links</div>
                 <ul class="footer-links">
                     <li><a href="index.html">Home</a></li>
-                    <li><a href="spellcasters.html">Browse Spell Casters</a></li>
+                    <li><a href="index.html">Browse Spell Casters</a></li>
+                    <li><a href="find-spellcaster.html">Find a Spellcaster</a></li>
                     <li><a href="about.html">About Us</a></li>
                     <li><a href="contact.html">Contact</a></li>
                     <li><a href="saved.html">Saved Profiles</a></li>
@@ -135,7 +136,8 @@
             <div class="footer-col">
                 <div class="footer-col-title">Directory</div>
                 <ul class="footer-links">
-                    <li><a href="spellcasters.html">All Spell Casters</a></li>
+                    <li><a href="index.html">All Spell Casters</a></li>
+                    <li><a href="find-spellcaster.html">Find a Spellcaster</a></li>
                     <li><a href="submit-spellcaster.html">Submit a spellcaster</a></li>
                     <li><a href="faq.html">FAQ</a></li>
                 </ul>

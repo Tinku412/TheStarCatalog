@@ -3,6 +3,7 @@
 /spellcasters/:slug  /profile.html?slug=:slug  200
 
 # Legacy URLs (renamed pages)
-/landing.html  /index.html  301
+/All-Spellcasters.html  /index.html  301
+/spellcasters.html  /index.html  301
 /career-spell-casters.html  /road-opener-spell-casters.html  301
 /cord-cutting-spell-casters.html  /cord-cutting-practitioners.html  301

@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-R6Y2WCMPHF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-R6Y2WCMPHF');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Find a Spellcaster — Witch Weekly</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Cinzel:wght@400;600;700&family=Source+Code+Pro:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="admin.css">
+    <link rel="icon" href="svgviewer-png-output.png" type="image/png" />
+    <style>
+        .other-input-wrap { display: none; margin-top: 8px; }
+        .other-input-wrap.visible { display: block; }
+        .find-success {
+            display: none;
+            border: 1.5px solid var(--border);
+            background: var(--cream);
+            padding: 1.4rem 1.5rem;
+            margin-bottom: 1.5rem;
+            font-family: 'Source Code Pro', monospace;
+            font-size: 13px;
+            color: var(--navy);
+            line-height: 1.6;
+        }
+        .find-success.visible { display: block; }
+        .find-success strong {
+            font-family: 'Cinzel', serif;
+            font-size: 1.05rem;
+            display: block;
+            margin-bottom: 6px;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="site-header">
+        <a class="logo-wrap" href="index.html">
+            <div class="monogram">
+                <svg width="24" height="24" viewBox="0 0 26 26" fill="none">
+                    <polygon points="13,2 15,10 23,8 17,14 23,20 15,18 13,26 11,18 3,20 9,14 3,8 11,10" stroke="#c9b97a" stroke-width="1" fill="none"/>
+                    <circle cx="13" cy="13" r="3" fill="none" stroke="#c9b97a" stroke-width="1"/>
+                    <line x1="11.5" y1="13" x2="14.5" y2="13" stroke="#c9b97a" stroke-width="1"/>
+                    <line x1="13" y1="11.5" x2="13" y2="14.5" stroke="#c9b97a" stroke-width="1"/>
+                </svg>
+            </div>
+            <div class="logo-text">
+                <span class="logo-main">Witch Weekly</span>
+                <span class="logo-sub">Est. MMXXVI — Seeker's Guide</span>
+            </div>
+        </a>
+        <nav class="site-nav">
+            <a href="index.html">Browse</a>
+            <a href="find-spellcaster.html" class="nav-active">Find Spellcaster</a>
+            <a href="write-a-review.html">Write a Review</a>
+            <a href="about.html">About</a>
+            <span id="navAuthArea" class="nav-auth-area"></span>
+        </nav>
+        <a class="nav-cta" href="submit-spellcaster.html" style="text-decoration:none;">Submit Spellcaster</a>
+        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </header>
+
+    <div class="mobile-nav" id="mobileNav">
+        <a href="index.html" class="mobile-nav-item">Browse Directory</a>
+        <a href="find-spellcaster.html" class="mobile-nav-item">Find Spellcaster</a>
+        <a href="write-a-review.html" class="mobile-nav-item">Write a Review</a>
+        <a href="about.html" class="mobile-nav-item">About</a>
+        <a href="submit-spellcaster.html" class="mobile-nav-item">Submit Spellcaster</a>
+    </div>
+
+    <main class="admin-main">
+        <div class="admin-container">
+
+            <div class="admin-page-header">
+                <div class="admin-eyebrow">
+                    <svg width="10" height="10" viewBox="0 0 14 14" fill="none">
+                        <polygon points="7,1 8.5,5.5 13,5.5 9.5,8.5 11,13 7,10 3,13 4.5,8.5 1,5.5 5.5,5.5" stroke="#c9b97a" stroke-width="1" fill="none"/>
+                    </svg>
+                    Matching Help
+                </div>
+                <h2 class="admin-title">Find a Spellcaster</h2>
+                <p class="admin-subtitle">Tell us what you need and we’ll help point you toward practitioners who may be a good fit.</p>
+            </div>
+
+            <div class="find-success" id="findSuccess">
+                <strong>Request received</strong>
+                Thank you. We’ve saved your details and will follow up using the contact information you provided.
+            </div>
+
+            <form class="profile-form" id="findSpellcasterForm" autocomplete="off">
+
+                <section class="form-section">
+                    <div class="form-section-title">
+                        <span class="form-section-num">01</span>
+                        About You
+                    </div>
+                    <label class="form-label">
+                        <span class="label-text">Name <span style="color:#a18106;">*</span></span>
+                        <input type="text" name="fullName" id="findFullName" placeholder="Your name" required>
+                    </label>
+                </section>
+
+                <section class="form-section">
+                    <div class="form-section-title">
+                        <span class="form-section-num">02</span>
+                        What You Need
+                    </div>
+                    <label class="form-label">
+                        <span class="label-text">Type of Service <span style="color:#a18106;">*</span></span>
+                        <select name="serviceType" id="findServiceType" required>
+                            <option value="">Select a service type</option>
+                            <optgroup label="Love &amp; Relationships">
+                                <option value="Love">Love</option>
+                                <option value="Bring Back Ex / Reconciliation">Bring Back Ex / Reconciliation</option>
+                                <option value="Marriage">Marriage</option>
+                                <option value="Commitment">Commitment</option>
+                                <option value="Obsession">Obsession</option>
+                                <option value="Binding">Binding</option>
+                                <option value="Break Up">Break Up</option>
+                                <option value="Divorce">Divorce</option>
+                                <option value="Lust &amp; Desire">Lust &amp; Desire</option>
+                            </optgroup>
+                            <optgroup label="Protection &amp; Removal">
+                                <option value="Protection">Protection</option>
+                                <option value="Curse / Hex Removal">Curse / Hex Removal</option>
+                                <option value="Evil Eye Removal">Evil Eye Removal</option>
+                                <option value="Cord Cutting">Cord Cutting</option>
+                                <option value="Spiritual Cleansing">Spiritual Cleansing</option>
+                                <option value="Banishment">Banishment</option>
+                            </optgroup>
+                            <optgroup label="Money &amp; Career">
+                                <option value="Money &amp; Prosperity">Money &amp; Prosperity</option>
+                                <option value="Wealth Attraction">Wealth Attraction</option>
+                                <option value="Business Success">Business Success</option>
+                                <option value="Career Advancement">Career Advancement</option>
+                                <option value="Job">Job</option>
+                                <option value="Luck &amp; Fortune">Luck &amp; Fortune</option>
+                            </optgroup>
+                            <optgroup label="Power, Justice &amp; Legal">
+                                <option value="Road Opener">Road Opener</option>
+                                <option value="Justice Spells">Justice</option>
+                                <option value="Court Case Spells">Court Case</option>
+                                <option value="Revenge Spells">Revenge</option>
+                                <option value="Enemy Work">Enemy Work</option>
+                            </optgroup>
+                            <optgroup label="Healing &amp; Readings">
+                                <option value="Healing">Healing</option>
+                                <option value="Fertility &amp; Pregnancy">Fertility &amp; Pregnancy</option>
+                                <option value="Divination / Readings Only">Divination / Readings Only</option>
+                                <option value="Spiritual Awakening">Spiritual Awakening</option>
+                            </optgroup>
+                            <optgroup label="Other">
+                                <option value="Other">Other (describe below)</option>
+                            </optgroup>
+                        </select>
+                    </label>
+                    <div class="other-input-wrap" id="serviceTypeOtherWrap">
+                        <label class="form-label">
+                            <span class="label-text">Describe the service type</span>
+                            <input type="text" name="serviceTypeOther" id="findServiceTypeOther" placeholder="e.g. Custom ritual, specific situation…">
+                        </label>
+                    </div>
+
+                    <label class="form-label" style="margin-top:1rem;">
+                        <span class="label-text">Requirement Details <span style="color:#a18106;">*</span></span>
+                        <textarea name="requirementDetails" id="findRequirementDetails" rows="5" placeholder="Share what you’re hoping for, any important context, and what kind of help would feel useful…" required></textarea>
+                    </label>
+                </section>
+
+                <section class="form-section">
+                    <div class="form-section-title">
+                        <span class="form-section-num">03</span>
+                        Preferences
+                    </div>
+                    <div class="form-grid two-columns">
+                        <label class="form-label">
+                            <span class="label-text">Budget <span style="color:var(--muted);font-weight:400;">(optional)</span></span>
+                            <select name="budget" id="findBudget">
+                                <option value="">Select a range</option>
+                                <option value="Under $50">Under $50</option>
+                                <option value="$50–$100">$50–$100</option>
+                                <option value="$100–$250">$100–$250</option>
+                                <option value="$250–$500">$250–$500</option>
+                                <option value="$500–$1,000">$500–$1,000</option>
+                                <option value="$1,000+">$1,000+</option>
+                                <option value="Flexible / Not sure">Flexible / Not sure</option>
+                                <option value="Prefer not to say">Prefer not to say</option>
+                            </select>
+                        </label>
+                        <label class="form-label">
+                            <span class="label-text">Timing <span style="color:#a18106;">*</span></span>
+                            <select name="timing" id="findTiming" required>
+                                <option value="">Select timing</option>
+                                <option value="ASAP">ASAP</option>
+                                <option value="Within a week">Within a week</option>
+                                <option value="Within 2–4 weeks">Within 2–4 weeks</option>
+                                <option value="Within 1–3 months">Within 1–3 months</option>
+                                <option value="Flexible / No rush">Flexible / No rush</option>
+                                <option value="Just exploring">Just exploring</option>
+                            </select>
+                        </label>
+                    </div>
+
+                    <label class="form-label">
+                        <span class="label-text">Practitioner Type Preference</span>
+                        <select name="practitionerType" id="findPractitionerType">
+                            <option value="">No preference</option>
+                            <optgroup label="Western Witchcraft">
+                                <option>Witch</option>
+                                <option>Wiccan</option>
+                                <option>Hedge Witch</option>
+                                <option>Kitchen Witch</option>
+                                <option>Green Witch</option>
+                                <option>Sea Witch</option>
+                            </optgroup>
+                            <optgroup label="Folk Magic &amp; Rootwork">
+                                <option>Hoodoo Rootworker</option>
+                                <option>Conjure Worker</option>
+                                <option>Granny Witch</option>
+                                <option>Herbalist</option>
+                            </optgroup>
+                            <optgroup label="African Diaspora / Latin Traditions">
+                                <option>Voodoo Priest (Louisiana)</option>
+                                <option>Vodou Priest (Haitian)</option>
+                                <option>Brujo / Bruja</option>
+                                <option>Curandera / Curandero</option>
+                                <option>Espiritista</option>
+                            </optgroup>
+                            <optgroup label="Psychic &amp; Divination">
+                                <option>Psychic Medium</option>
+                                <option>Clairvoyant</option>
+                                <option>Tarot Reader</option>
+                                <option>Astrologer (Western)</option>
+                                <option>Astrologer (Vedic / Jyotish)</option>
+                            </optgroup>
+                            <optgroup label="Energy &amp; Healing">
+                                <option>Energy Healer</option>
+                                <option>Reiki Practitioner</option>
+                                <option>Shaman</option>
+                            </optgroup>
+                            <optgroup label="Occult &amp; Dark Arts">
+                                <option>Demonologist</option>
+                                <option>Goetic Magician</option>
+                                <option>Necromancer</option>
+                                <option>Left-Hand Path Practitioner</option>
+                                <option>Dark Arts Practitioner</option>
+                            </optgroup>
+                            <optgroup label="Other">
+                                <option>Spell Caster (General)</option>
+                                <option>Spiritual Advisor / Coach</option>
+                                <option value="Other">Other (describe below)</option>
+                            </optgroup>
+                        </select>
+                    </label>
+                    <div class="other-input-wrap" id="practitionerTypeOtherWrap">
+                        <label class="form-label">
+                            <span class="label-text">Describe preferred practitioner type</span>
+                            <input type="text" name="practitionerTypeOther" id="findPractitionerTypeOther" placeholder="e.g. Tradition, style, or approach you prefer">
+                        </label>
+                    </div>
+                </section>
+
+                <section class="form-section">
+                    <div class="form-section-title">
+                        <span class="form-section-num">04</span>
+                        Contact Details
+                    </div>
+                    <div class="form-grid two-columns">
+                        <label class="form-label">
+                            <span class="label-text">Email <span style="color:#a18106;">*</span></span>
+                            <input type="email" name="contactEmail" id="findContactEmail" placeholder="you@example.com" required>
+                        </label>
+                        <label class="form-label">
+                            <span class="label-text">Phone <span style="color:var(--muted);font-weight:400;">(optional)</span></span>
+                            <input type="tel" name="contactPhone" id="findContactPhone" placeholder="+1 …">
+                        </label>
+                    </div>
+                    <label class="form-label">
+                        <span class="label-text">Preferred Contact Method</span>
+                        <select name="preferredContact" id="findPreferredContact">
+                            <option value="">Select preference</option>
+                            <option value="Email">Email</option>
+                            <option value="Phone">Phone</option>
+                            <option value="Either">Either is fine</option>
+                        </select>
+                    </label>
+                </section>
+
+                <div class="form-actions">
+                    <button type="reset" class="reset-btn" id="findResetBtn">Reset</button>
+                    <button type="submit" class="submit-btn" id="findSubmitBtn">Submit Request</button>
+                </div>
+
+            </form>
+        </div>
+    </main>
+
+    <footer class="site-footer" id="siteFooter" role="contentinfo"></footer>
+    <script src="site-footer.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="auth.js"></script>
+    <script src="find-spellcaster.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var btn = document.getElementById('mobileMenuBtn');
+            var nav = document.getElementById('mobileNav');
+            if (btn && nav) {
+                btn.addEventListener('click', function () {
+                    btn.classList.toggle('open');
+                    nav.classList.toggle('open');
+                });
+            }
+        });
+    </script>
+</body>
+</html>

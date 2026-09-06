@@ -1,0 +1,1425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-8RKJDCW3DF"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-8RKJDCW3DF');
+</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Spell Casters Directory | Witch Weekly</title>
+    <meta name="description" content="Browse every spell caster on Witch Weekly in one compact view — type, specialties, pricing, delivery time, ratings and reviews, all in a single table.">
+    <link rel="canonical" href="https://WitchWeekly.com/">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Source+Code+Pro:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="svgviewer-png-output.png" type="image/png" />
+    <style>
+        /* ============ COMPACT TABLE LAYOUT ============ */
+        /* Fixed header: html/body overflow-x:hidden breaks position:sticky */
+        body.ast-page {
+            padding-top: 62px;
+        }
+        body.ast-page .site-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            z-index: 100;
+        }
+        .ast-wrap {
+            display: flex;
+            align-items: flex-start;
+            width: 100%;
+            min-height: calc(100vh - 62px);
+        }
+        .ast-main {
+            flex: 1;
+            min-width: 0;
+            padding: 14px 16px 40px;
+            transition: margin-right .2s;
+        }
+        .ast-wrap.panel-open .ast-main {
+            margin-right: 400px;
+        }
+        .ast-count {
+            font-family: 'Source Code Pro', monospace;
+            font-size: 11px;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: var(--muted);
+            padding: 4px 2px 10px;
+        }
+        .ast-table-scroll { overflow-x: auto; border: 1.5px solid var(--border); background: var(--cream); }
+        table.ast-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: 'Source Code Pro', monospace;
+            font-size: 11.5px;
+            color: var(--text);
+        }
+        .ast-table thead th {
+            position: sticky;
+            top: 0;
+            z-index: 2;
+            background: var(--navy);
+            color: var(--cream);
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            text-align: left;
+            padding: 8px 8px;
+            white-space: nowrap;
+        }
+        .ast-table tbody tr {
+            border-bottom: 1px solid var(--cream3);
+            cursor: pointer;
+            transition: background .1s;
+        }
+        .ast-table tbody tr:hover { background: rgba(201,185,122,.12); }
+        .ast-table tbody tr.ast-row-active { background: rgba(201,185,122,.22); }
+        .ast-table td { padding: 8px 9px; vertical-align: middle; }
+
+        .ast-td-num { color: var(--muted); font-size: 10.5px; width: 26px; }
+        .ast-save-btn {
+            background: none; border: none; cursor: pointer; padding: 2px;
+            color: #957600; font-size: 25px; line-height: 1;
+        }
+        .ast-save-btn.saved { color: #957600; }
+        .ast-save-btn:hover { color: #957600; }
+
+        .ast-name-cell { display: flex; align-items: center; gap: 8px; min-width: 170px; }
+        .ast-avatar {
+            width: 30px; height: 30px; object-fit: cover; flex-shrink: 0;
+            border: 1px solid var(--border);
+        }
+        .ast-avatar-ph {
+            width: 30px; height: 30px; flex-shrink: 0; display: flex; align-items: center;
+            justify-content: center; border: 1px solid var(--border);
+            background: var(--cream2); color: var(--accent); font-size: 13px;
+        }
+        .ast-name-txt { min-width: 0; }
+        .ast-name {
+            font-family: 'Cinzel', serif; font-size: 12.5px; font-weight: 600; color: var(--navy);
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 180px;
+            display: flex; align-items: center; gap: 4px;
+        }
+        .ast-verified { color: var(--green); flex-shrink: 0; display: inline-flex; }
+        .ast-tagline {
+            font-size: 12px; font-style: italic; color: var(--muted);
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 180px;
+        }
+        .ast-chip {
+            display: inline-block; padding: 2px 7px; margin: 1px 3px 1px 0;
+            background: rgba(201,185,122,.18); border: 1px solid rgba(201,185,122,.45);
+            font-size: 10px; letter-spacing: .04em; color: var(--navy); white-space: nowrap;
+        }
+        table, th, td {
+  border: 1px solid #c9b97a66;
+}
+        .ast-td-clip { overflow: hidden; }
+        .ast-td-clip .ast-chip {
+            max-width: 100%; overflow: hidden; text-overflow: ellipsis; vertical-align: middle;
+        }
+        .ast-chip-type { background: var(--navy); color: var(--cream); border-color: var(--navy); }
+        .ast-td-rating { white-space: nowrap; }
+        .ast-star { color: var(--accent); }
+        .ast-rating-val { font-weight: 600; color: var(--navy); }
+        .ast-td-muted { color: #000000; white-space: nowrap; }
+        .ast-view-btn {
+            font-family: 'Source Code Pro', monospace; font-size: 10px; letter-spacing: .08em;
+            text-transform: uppercase; padding: 5px 10px; cursor: pointer;
+            border: 1.5px solid var(--border); background: transparent; color: var(--navy);
+            white-space: nowrap; transition: background .12s, color .12s;
+            text-decoration: none; display: inline-block;
+        }
+        .ast-view-btn:hover { background: var(--navy); color: var(--cream); }
+        .ast-review-btn {
+            font-family: 'Source Code Pro', monospace; font-size: 10px; letter-spacing: .08em;
+            text-transform: uppercase; padding: 5px 10px; cursor: pointer;
+            border: 1.5px solid var(--navy); background: #057056; color: var(--cream);
+            white-space: nowrap; transition: background .12s;
+            text-decoration: none; display: inline-block; margin-left: 4px;
+        }
+        .ast-review-btn:hover { background: var(--navy2); color: var(--cream); }
+        .ast-actions-cell { white-space: nowrap; }
+        .ast-loading, .ast-empty {
+            padding: 50px 20px; text-align: center;
+            font-family: 'Source Code Pro', monospace; font-size: 11px;
+            letter-spacing: .1em; text-transform: uppercase; color: var(--muted);
+        }
+
+        /* ============ DETAIL SIDE PANEL ============ */
+        .ast-panel {
+            width: 0;
+            flex-shrink: 0;
+            overflow: hidden;
+            background: var(--cream);
+            border-left: 1.5px solid var(--border);
+            transition: none;
+            pointer-events: none;
+        }
+        .ast-panel.open {
+            position: fixed;
+            top: 62px;
+            right: 0;
+            bottom: 0;
+            width: 400px;
+            height: calc(100vh - 62px);
+            max-height: calc(100vh - 62px);
+            z-index: 40;
+            pointer-events: auto;
+            box-shadow: -4px 0 24px rgba(27, 45, 62, 0.12);
+            display: flex;
+            flex-direction: column;
+        }
+        .ast-panel-inner {
+            position: relative;
+            width: 400px;
+            height: 100%;
+            max-height: 100%;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .ast-panel-close {
+            position: absolute; top: 8px; right: 10px; z-index: 5;
+            background: var(--navy); color: var(--cream); border: none; cursor: pointer;
+            width: 24px; height: 24px; font-size: 13px; line-height: 1;
+        }
+        .ast-panel-img-wrap {
+            position: relative; aspect-ratio: 16/10; flex-shrink: 0;
+            background: var(--cream3); border-bottom: 1.5px solid var(--border);
+        }
+        .ast-panel-img { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+        .ast-panel-img-ph { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: var(--accent); font-size: 40px; }
+        .ast-panel-body {
+            flex: 1;
+            min-height: 0;
+            display: flex;
+            flex-direction: column;
+            padding: 14px 16px 16px;
+            overflow: hidden;
+        }
+        .ast-panel-toprow { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; flex-shrink: 0; }
+        .ast-panel-name {
+            font-family: 'Cinzel', serif; font-size: 17px; font-weight: 700; color: var(--navy);
+            display: flex; align-items: center; gap: 6px; line-height: 1.25;
+        }
+        .ast-panel-meta { margin-top: 6px; font-family: 'Source Code Pro', monospace; font-size: 10.5px; color: var(--muted); display: flex; flex-wrap: wrap; gap: 5px 14px; flex-shrink: 0; }
+        .ast-panel-rating { font-size: 12px; color: var(--navy); font-weight: 600; margin-top: 7px; font-family: 'Source Code Pro', monospace; flex-shrink: 0; }
+        .ast-panel-actions { display: flex; gap: 6px; margin: 13px 0 4px; flex-wrap: wrap; flex-shrink: 0; }
+        .ast-pa-btn {
+            flex: 1; min-width: 0; display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+            font-family: 'Source Code Pro', monospace; font-size: 9.5px; letter-spacing: .08em;
+            text-transform: uppercase; padding: 8px 6px; cursor: pointer;
+            border: 1.5px solid var(--border); background: transparent; color: var(--navy);
+            transition: background .12s, color .12s, border-color .12s;
+        }
+        .ast-pa-btn svg { flex-shrink: 0; }
+        .ast-pa-btn:hover { background: var(--navy); color: var(--cream); border-color: var(--navy); }
+        .ast-pa-btn.primary { background: var(--accent); border-color: var(--accent); font-weight: 600; color: var(--navy); }
+        .ast-pa-btn.primary:hover { background: #d4c884; border-color: #d4c884; color: var(--navy); }
+        .ast-pa-btn.saved { background: var(--navy); color: var(--cream); border-color: var(--navy); }
+
+        .ast-tabs {
+            display: flex; border-bottom: 1.5px solid var(--border); margin-top: 14px;
+            flex-shrink: 0;
+        }
+        .ast-tab {
+            flex: 1; background: none; border: none; cursor: pointer; padding: 9px 2px;
+            font-family: 'Source Code Pro', monospace; font-size: 9.5px; letter-spacing: .08em;
+            text-transform: uppercase; color: var(--muted); border-bottom: 2px solid transparent;
+        }
+        .ast-tab.active { color: var(--navy); font-weight: 600; border-bottom-color: var(--accent); }
+        /* Fixed tab area height so switching sections never shifts the panel */
+        .ast-tabpanes {
+            flex: 1;
+            min-height: 0;
+            position: relative;
+            margin-top: 12px;
+            font-family: 'Source Code Pro', monospace;
+            font-size: 11.5px;
+            line-height: 1.65;
+            color: var(--text);
+            overflow: hidden;
+        }
+        .ast-tabpane {
+            display: none;
+            position: absolute;
+            inset: 0;
+            overflow-x: hidden;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            overscroll-behavior: contain;
+            padding-right: 2px;
+        }
+        .ast-tabpane.active { display: block; }
+
+        /* About — match profile sidebar/info layout */
+        .ast-about-text {
+            font-size: 0.78rem;
+            line-height: 1.6;
+            color: var(--text);
+            margin-bottom: 8px;
+        }
+        .ast-about-text p + p { margin-top: 0.65em; }
+        .ast-about-more {
+            display: inline-block;
+            margin: 0 0 12px;
+            font-family: 'Source Code Pro', monospace;
+            font-size: 10px;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            color: var(--navy);
+            text-decoration: underline;
+            text-underline-offset: 2px;
+        }
+        .ast-about-more:hover { color: var(--accent); }
+        .ast-about-tagline {
+            font-style: italic;
+            color: var(--muted);
+            font-size: 12px;
+            margin-bottom: 10px;
+            line-height: 1.45;
+        }
+        .ast-info-rows { display: flex; flex-direction: column; }
+        .ast-info-row {
+            display: flex; align-items: baseline; justify-content: space-between; gap: 8px;
+            padding: 5px 0; border-bottom: 1px solid var(--cream3);
+            font-family: 'Source Code Pro', monospace;
+        }
+        .ast-info-row:last-child { border-bottom: none; }
+        .ast-info-label {
+            font-size: 9px; letter-spacing: .1em; text-transform: uppercase;
+            color: var(--muted); flex-shrink: 0;
+        }
+        .ast-info-val {
+            font-size: 11px; color: var(--navy); font-weight: 500; text-align: right;
+            flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+        }
+
+        /* Services — match profile.html compact table */
+        .ast-svc-header {
+            display: flex; flex-direction: column; align-items: flex-start; gap: 2px; margin-bottom: 10px;
+        }
+        .ast-svc-title {
+            font-family: 'Source Code Pro', monospace; font-size: 11px; font-weight: 600;
+            letter-spacing: .18em; text-transform: uppercase; color: var(--navy);
+            display: flex; align-items: center; gap: 8px;
+        }
+        .ast-svc-title::before {
+            content: ''; display: block; width: 8px; height: 8px; background: var(--accent); flex-shrink: 0;
+        }
+        .ast-svc-count {
+            font-family: 'Source Code Pro', monospace; font-size: 11px; color: var(--muted);
+            padding-left: 16px;
+        }
+        .ast-svc-table {
+            width: 100%; border-collapse: collapse;
+            font-family: 'Source Code Pro', monospace; font-size: 11.5px; color: var(--navy); line-height: 1.35;
+        }
+        .ast-svc-table thead th {
+            background: transparent; color: var(--muted); font-size: 9.5px; font-weight: 600;
+            letter-spacing: .1em; text-transform: uppercase; text-align: left;
+            padding: 4px 8px 6px 0; border-bottom: 1px solid rgba(27,45,62,.18); white-space: nowrap;
+        }
+        .ast-svc-table td { padding: 6px 10px 6px 0; vertical-align: middle; }
+        .ast-svc-table .svc-col-num { width: 22px; color: var(--muted); }
+        .ast-svc-table .svc-col-name { text-transform: uppercase; font-weight: 600; letter-spacing: .02em; }
+        .ast-svc-table .svc-col-price { white-space: nowrap; font-weight: 500; }
+        .ast-svc-table .svc-col-action { width: 1%; white-space: nowrap; padding-right: 0; }
+        .ast-svc-request {
+            font-family: 'Source Code Pro', monospace; font-size: 10px; padding: 2px 7px;
+            border: 1px solid var(--navy); background: #e8e4d8; color: var(--navy); cursor: pointer;
+        }
+        .ast-svc-request:hover { background: var(--navy); color: var(--cream); }
+
+        .ast-review-section-head {
+            display: flex; align-items: center; justify-content: space-between; gap: 8px;
+            margin-bottom: 10px; flex-wrap: wrap;
+        }
+        .ast-write-review-btn {
+            display: inline-flex; align-items: center; gap: 5px;
+            font-family: 'Source Code Pro', monospace; font-size: 9.5px; letter-spacing: .1em;
+            text-transform: uppercase; padding: 6px 10px; cursor: pointer;
+            border: 1px solid var(--navy); background: var(--navy); color: var(--cream);
+            white-space: nowrap;
+        }
+        .ast-write-review-btn:hover { background: var(--navy2); }
+
+        .ast-review-card { border: 1px solid var(--cream3); padding: 9px 11px; margin-bottom: 9px; background: #ddd2a7; }
+        .ast-review-head { display: flex; align-items: center; gap: 7px; margin-bottom: 4px; }
+        .ast-review-avatar { width: 22px; height: 22px; border-radius: 50%; object-fit: cover; }
+        .ast-review-avatar-ph { width: 22px; height: 22px; border-radius: 50%; background: var(--navy); color: var(--cream); display: flex; align-items: center; justify-content: center; font-size: 10px; }
+        .ast-review-name { font-weight: 600; color: var(--navy); font-size: 10.5px; }
+        .ast-review-date { color: var(--muted); font-size: 9px; margin-left: auto; white-space: nowrap; }
+        .ast-review-stars { color: var(--accent); font-size: 10px; letter-spacing: 1px; }
+        .ast-review-text { font-size: 10.5px; margin-top: 3px; }
+        .ast-photos-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+        .ast-photos-grid img { width: 100%; aspect-ratio: 1/1; object-fit: cover; border: 1px solid var(--cream3); cursor: pointer; }
+        .ast-panel-fulllink {
+            display: block; text-align: center; margin-top: 12px; padding: 10px;
+            border: 1.5px solid var(--border); font-family: 'Source Code Pro', monospace;
+            font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase;
+            color: var(--navy); text-decoration: none; transition: background .12s, color .12s;
+            flex-shrink: 0;
+        }
+        .ast-panel-fulllink:hover { background: var(--navy); color: var(--cream); }
+        .ast-none-msg { color: var(--muted); font-style: italic; font-size: 10.5px; }
+
+        /* ============ INQUIRY MODAL ============ */
+        .ast-modal-overlay {
+            display: none; position: fixed; inset: 0; z-index: 300;
+            background: rgba(14,24,36,.65); align-items: center; justify-content: center; padding: 16px;
+        }
+        .ast-modal-overlay.active { display: flex; }
+        .ast-modal {
+            background: var(--cream2); border: 2px solid var(--border); width: 100%; max-width: 430px;
+            max-height: 90vh; overflow-y: auto; padding: 20px 22px; position: relative;
+        }
+        .ast-modal-title { font-family: 'Cinzel', serif; font-size: 15px; font-weight: 700; color: var(--navy); margin-bottom: 3px; }
+        .ast-modal-sub { font-family: 'Source Code Pro', monospace; font-size: 10px; color: var(--muted); margin-bottom: 14px; }
+        .ast-modal-close { position: absolute; top: 10px; right: 12px; background: none; border: none; font-size: 18px; cursor: pointer; color: var(--navy); }
+        .ast-form-field { margin-bottom: 11px; }
+        .ast-form-field label { display: block; font-family: 'Source Code Pro', monospace; font-size: 9.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+        .ast-form-field input, .ast-form-field textarea {
+            width: 100%; box-sizing: border-box; background: var(--cream); border: 1.5px solid var(--border);
+            padding: 8px 10px; font-family: 'Source Code Pro', monospace; font-size: 11px; color: var(--navy);
+        }
+        .ast-form-submit {
+            width: 100%; padding: 10px; background: var(--accent); border: 1.5px solid var(--accent);
+            font-family: 'Source Code Pro', monospace; font-size: 10.5px; font-weight: 600;
+            letter-spacing: .1em; text-transform: uppercase; color: var(--navy); cursor: pointer;
+        }
+        .ast-form-submit:hover { background: #d4c884; }
+        .ast-form-msg { font-family: 'Source Code Pro', monospace; font-size: 10.5px; margin-top: 9px; display: none; }
+        .ast-form-msg.success { display: block; color: #2f5540; }
+        .ast-form-msg.error { display: block; color: #a13f2f; }
+
+        /* ============ MOBILE CARD LIST ============ */
+        .ast-mobile-list { display: none; }
+        .ast-mcard {
+            display: flex; gap: 11px; padding: 11px; background: var(--cream);
+            border: 1.5px solid var(--border); margin-bottom: 10px; cursor: pointer; position: relative;
+        }
+        .ast-mcard-img { width: 74px; height: 74px; object-fit: cover; object-position: center top; flex-shrink: 0; border: 1px solid var(--border); }
+        .ast-mcard-img-ph { width: 74px; height: 74px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; border: 1px solid var(--border); background: var(--cream2); color: var(--accent); font-size: 24px; }
+        .ast-mcard-body { min-width: 0; flex: 1; font-family: 'Source Code Pro', monospace; }
+        .ast-mcard-name { font-family: 'Cinzel', serif; font-size: 14px; font-weight: 600; color: var(--navy); display: flex; align-items: center; gap: 5px; padding-right: 26px; }
+        .ast-mcard-sub { font-size: 10.5px; color: var(--muted); margin-top: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .ast-mcard-rating { font-size: 11.5px; margin-top: 3px; color: var(--navy); }
+        .ast-mcard-chips { margin-top: 5px; }
+        .ast-mcard-save {
+            position: absolute; top: 9px; right: 9px; background: none; border: none;
+            cursor: pointer; font-size: 20px; padding: 3px; line-height: 1; color: #957600;
+        }
+        .ast-mcard-save.saved { color: #957600; }
+
+        @media (max-width: 1000px) {
+            .ast-panel,
+            .ast-panel.open { display: none; }
+            .ast-wrap.panel-open .ast-main { margin-right: 0; }
+        }
+        @media (max-width: 768px) {
+            .ast-main { padding: 10px 10px 30px; }
+            .ast-table-scroll { display: none; }
+            .ast-mobile-list { display: block; }
+        }
+    </style>
+</head>
+<body class="ast-page">
+
+    <!-- Header -->
+    <header class="site-header">
+        <a class="logo-wrap" href="index.html">
+            <div class="monogram">
+                <svg width="24" height="24" viewBox="0 0 26 26" fill="none">
+                    <polygon points="13,2 15,10 23,8 17,14 23,20 15,18 13,26 11,18 3,20 9,14 3,8 11,10" stroke="#c9b97a" stroke-width="1" fill="none"/>
+                    <circle cx="13" cy="13" r="3" fill="none" stroke="#c9b97a" stroke-width="1"/>
+                    <line x1="11.5" y1="13" x2="14.5" y2="13" stroke="#c9b97a" stroke-width="1"/>
+                    <line x1="13" y1="11.5" x2="13" y2="14.5" stroke="#c9b97a" stroke-width="1"/>
+                </svg>
+            </div>
+            <div class="logo-text">
+                <span class="logo-main">Witch Weekly</span>
+                <span class="logo-sub">Est. MMXXVI — Seeker's Guide</span>
+            </div>
+        </a>
+        <nav class="site-nav">
+            <a href="index.html" class="active" aria-current="page">Browse</a>
+            <a href="about.html">About</a>
+            <a href="faq.html">FAQ</a>
+            <a href="saved.html">Saved</a>
+            <span id="navAuthArea" class="nav-auth-area"></span>
+        </nav>
+        <a class="nav-cta" href="submit-spellcaster.html" style="text-decoration:none;">Submit Spellcaster</a>
+        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </header>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav" id="mobileNav">
+        <a href="index.html" class="mobile-nav-item">Browse Directory</a>
+        <a href="about.html" class="mobile-nav-item">About</a>
+        <a href="faq.html" class="mobile-nav-item">FAQ</a>
+        <a href="contact.html" class="mobile-nav-item">Contact</a>
+        <a href="saved.html" class="mobile-nav-item">Saved Profiles</a>
+        <a href="submit-spellcaster.html" class="mobile-nav-item">Submit spellcaster</a>
+    </div>
+
+    <div class="ast-wrap">
+        <main class="ast-main" id="astMain">
+            <div class="ast-count" id="astCount">Loading…</div>
+
+            <!-- Desktop compact table -->
+            <div class="ast-table-scroll">
+                <table class="ast-table" aria-label="All spell casters">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th title="Save">★</th>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>Specialties</th>
+                            <th>Services</th>
+                            <th>Location</th>
+                            <th>Delivery</th>
+                            <th>Response</th>
+                            <th>Price</th>
+                            <th>Rating</th>
+                            <th>Reviews</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="astTbody">
+                        <tr><td colspan="13"><div class="ast-loading">Loading profiles…</div></td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Mobile card list -->
+            <div class="ast-mobile-list" id="astMobileList"></div>
+        </main>
+
+        <!-- Detail side panel -->
+        <aside class="ast-panel" id="astPanel" aria-label="Spellcaster details">
+            <div class="ast-panel-inner" id="astPanelInner"></div>
+        </aside>
+    </div>
+
+    <!-- Contact / Inquiry Modal -->
+    <div class="ast-modal-overlay" id="astContactModal" role="dialog" aria-modal="true">
+        <div class="ast-modal">
+            <button class="ast-modal-close" id="astContactClose" aria-label="Close">×</button>
+            <div class="ast-modal-title">Contact Spellcaster</div>
+            <div class="ast-modal-sub">Send your inquiry directly. The spellcaster will reach out to you.</div>
+            <form id="astInquiryForm" autocomplete="off">
+                <div class="ast-form-field">
+                    <label for="astInqName">Full Name *</label>
+                    <input type="text" id="astInqName" required placeholder="Your full name">
+                </div>
+                <div class="ast-form-field">
+                    <label for="astInqDob">Date of Birth</label>
+                    <input type="date" id="astInqDob">
+                </div>
+                <div class="ast-form-field">
+                    <label for="astInqEmail">Email *</label>
+                    <input type="email" id="astInqEmail" required placeholder="you@example.com">
+                </div>
+                <div class="ast-form-field">
+                    <label for="astInqBudget">Budget</label>
+                    <input type="text" id="astInqBudget" placeholder="e.g. $100">
+                </div>
+                <div class="ast-form-field">
+                    <label for="astInqDesc">What do you need help with? *</label>
+                    <textarea id="astInqDesc" rows="4" required placeholder="Describe your situation…"></textarea>
+                </div>
+                <button type="submit" class="ast-form-submit" id="astInqSubmit">Send Inquiry</button>
+                <div class="ast-form-msg" id="astInqMsg"></div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Review Modal (same structure as profile.html) -->
+    <div class="modal-overlay" id="astReviewModal" role="dialog" aria-modal="true" aria-labelledby="astReviewTitle">
+        <div class="modal">
+            <div class="modal-header">
+                <div class="modal-title" id="astReviewTitle">Write a Review</div>
+                <div class="modal-subtitle" id="astReviewSubtitle">Share your experience — this helps others in the community.</div>
+                <button class="modal-close" id="astCloseReview" aria-label="Close">×</button>
+            </div>
+            <div class="modal-body">
+                <form class="review-form" id="astReviewForm" autocomplete="off">
+                    <div>
+                        <label class="review-label">Rate Your Experience <span style="color:#c9b97a;">*</span></label>
+                        <div class="sub-ratings-group">
+                            <div class="sub-rating-row">
+                                <span class="sub-rating-label">Communication</span>
+                                <div class="sub-star-input" id="astSubStarCommunication" data-key="communication" role="group" aria-label="Communication Rating">
+                                    <button type="button" class="star-btn" data-value="1">★</button>
+                                    <button type="button" class="star-btn" data-value="2">★</button>
+                                    <button type="button" class="star-btn" data-value="3">★</button>
+                                    <button type="button" class="star-btn" data-value="4">★</button>
+                                    <button type="button" class="star-btn" data-value="5">★</button>
+                                </div>
+                            </div>
+                            <div class="sub-rating-row">
+                                <span class="sub-rating-label">Accuracy</span>
+                                <div class="sub-star-input" id="astSubStarAccuracy" data-key="accuracy" role="group" aria-label="Accuracy Rating">
+                                    <button type="button" class="star-btn" data-value="1">★</button>
+                                    <button type="button" class="star-btn" data-value="2">★</button>
+                                    <button type="button" class="star-btn" data-value="3">★</button>
+                                    <button type="button" class="star-btn" data-value="4">★</button>
+                                    <button type="button" class="star-btn" data-value="5">★</button>
+                                </div>
+                            </div>
+                            <div class="sub-rating-row">
+                                <span class="sub-rating-label">Value for Money</span>
+                                <div class="sub-star-input" id="astSubStarValue" data-key="value" role="group" aria-label="Value Rating">
+                                    <button type="button" class="star-btn" data-value="1">★</button>
+                                    <button type="button" class="star-btn" data-value="2">★</button>
+                                    <button type="button" class="star-btn" data-value="3">★</button>
+                                    <button type="button" class="star-btn" data-value="4">★</button>
+                                    <button type="button" class="star-btn" data-value="5">★</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="overall-rating-display" id="astOverallRatingDisplay" style="display:none;">
+                            Overall: <span id="astOverallRatingValue" style="color:#c9b97a;font-weight:700;"></span> / 5
+                        </div>
+                        <div class="star-hint" id="astStarHint" style="margin-top:6px;"></div>
+                    </div>
+
+                    <div>
+                        <label class="review-label" for="astReviewServicesPurchased">Services Purchased</label>
+                        <input type="text" class="review-input" id="astReviewServicesPurchased" placeholder="e.g. Love Binding Spell, Protection Ritual, Tarot Reading" autocomplete="off">
+                        <span class="review-field-hint">Comma-separated list of services you purchased</span>
+                    </div>
+
+                    <div>
+                        <label class="review-label">Date purchased? <span style="color:var(--muted);font-weight:400;">(optional)</span></label>
+                        <div class="review-radio-group">
+                            <label class="review-radio-option"><input type="radio" name="astPurchaseDate" value="< 1 week ago"> &lt; 1 week ago</label>
+                            <label class="review-radio-option"><input type="radio" name="astPurchaseDate" value="< 1 month ago"> &lt; 1 month ago</label>
+                            <label class="review-radio-option"><input type="radio" name="astPurchaseDate" value="2–3 months ago"> 2–3 months ago</label>
+                            <label class="review-radio-option"><input type="radio" name="astPurchaseDate" value="3–6 months ago"> 3–6 months ago</label>
+                            <label class="review-radio-option"><input type="radio" name="astPurchaseDate" value="> 6 months ago"> &gt; 6 months ago</label>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="review-label">Would you hire again?</label>
+                        <div class="review-radio-group">
+                            <label class="review-radio-option"><input type="radio" name="astHireAgain" value="Yes"> Yes</label>
+                            <label class="review-radio-option"><input type="radio" name="astHireAgain" value="No"> No</label>
+                            <label class="review-radio-option"><input type="radio" name="astHireAgain" value="Maybe"> Maybe</label>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="review-label">How long did results take?</label>
+                        <div class="review-radio-group">
+                            <label class="review-radio-option"><input type="radio" name="astResultTime" value="1 month"> 1 month</label>
+                            <label class="review-radio-option"><input type="radio" name="astResultTime" value="1–3 months"> 1–3 months</label>
+                            <label class="review-radio-option"><input type="radio" name="astResultTime" value="3–6 months"> 3–6 months</label>
+                            <label class="review-radio-option"><input type="radio" name="astResultTime" value="Still waiting"> Still waiting</label>
+                            <label class="review-radio-option"><input type="radio" name="astResultTime" value="N/A - I only got a reading"> N/A - I only got a reading</label>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="review-label" for="astReviewText">Your Review <span style="color:#c9b97a;">*</span></label>
+                        <textarea class="review-textarea" id="astReviewText" placeholder="Describe your experience with this spellcaster — what service did you use, how was the communication, did the results meet your expectations?" rows="5"></textarea>
+                    </div>
+
+                    <div>
+                        <label class="review-label">Proof / Screenshots <span style="color:var(--muted);font-weight:400;">(optional · max 2 images)</span></label>
+                        <div class="image-upload-zone" id="astImageUploadZone">
+                            <input type="file" id="astReviewImages" accept="image/*" multiple>
+                            <label for="astReviewImages" class="image-upload-label">Click to upload images</label>
+                            <div class="image-previews" id="astImagePreviews"></div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="modal-submit" id="astReviewSubmitBtn">Submit Review</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer" id="siteFooter" role="contentinfo"></footer>
+    <script src="site-footer.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="r2-upload.js"></script>
+    <script src="auth.js"></script>
+
+    <script>
+    (function () {
+        var SUPABASE_URL = 'https://uapjfrxjjpotmvpuidsq.supabase.co';
+        var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVhcGpmcnhqanBvdG12cHVpZHNxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjAxMjcxMzAsImV4cCI6MjA3NTcwMzEzMH0.NAFy5Iqs6xm39R42yxBHpjxdBmT66cB7l9LcpULUGoI';
+
+        var sc = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        var profiles = [];
+        var activeProfile = null;
+
+        // ── Mobile menu ──
+        (function() {
+            var btn = document.getElementById('mobileMenuBtn');
+            var nav = document.getElementById('mobileNav');
+            if (!btn || !nav) return;
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                btn.classList.toggle('active');
+                nav.classList.toggle('active');
+            });
+            document.addEventListener('click', function(e) {
+                if (nav.classList.contains('active') && !nav.contains(e.target) && !btn.contains(e.target)) {
+                    btn.classList.remove('active');
+                    nav.classList.remove('active');
+                }
+            });
+        })();
+
+        function esc(s) {
+            return String(s == null ? '' : s)
+                .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        }
+
+        function starsHtml(rating) {
+            var r = Math.round(parseFloat(rating) || 0);
+            var out = '';
+            for (var i = 1; i <= 5; i++) out += '<span style="opacity:' + (i <= r ? 1 : 0.25) + '">★</span>';
+            return '<span class="ast-review-stars">' + out + '</span>';
+        }
+
+        function chips(csv, max, cls) {
+            var items = String(csv || '').split(',').map(function(s){ return s.trim(); }).filter(Boolean);
+            if (!items.length) return '<span class="ast-td-muted">—</span>';
+            var shown = items.slice(0, max);
+            var html = shown.map(function(s){ return '<span class="ast-chip' + (cls ? ' ' + cls : '') + '">' + esc(s) + '</span>'; }).join('');
+            if (items.length > max) html += '<span class="ast-td-muted" style="font-size:9px;">+' + (items.length - max) + '</span>';
+            return html;
+        }
+
+        function profileHref(p) {
+            return p.slug
+                ? 'profile.html?slug=' + encodeURIComponent(p.slug)
+                : 'profile.html?id=' + encodeURIComponent(p.id);
+        }
+
+        function parseOfferings(p) {
+            var out = [];
+            String(p.offerings || '').split(/\n+/).forEach(function(line) {
+                line = line.trim();
+                if (!line) return;
+                var parts = line.split(/\s[-–—]\s/);
+                if (parts.length >= 2) {
+                    var name = parts.shift().trim();
+                    out.push({ name: name, price: parts.join(' - ').trim() });
+                } else {
+                    out.push({ name: line, price: '' });
+                }
+            });
+            if (!out.length) {
+                String(p.services_offered || '').split(',').forEach(function(s) {
+                    s = s.trim();
+                    if (s) out.push({ name: s, price: '' });
+                });
+            }
+            return out;
+        }
+
+        function formatPrice(priceText) {
+            var raw = String(priceText || '').trim();
+            if (!raw) return 'Price on request';
+            var cleaned = raw.replace(/usd/ig, '').trim();
+            if (cleaned.indexOf('$') >= 0) return cleaned;
+            return '$' + cleaned;
+        }
+
+        var ICON_CONTACT = '<svg width="12" height="12" viewBox="0 0 14 14" fill="none" aria-hidden="true"><rect x="1" y="3" width="12" height="8" rx="1" stroke="currentColor" stroke-width="1.2"/><polyline points="1,3 7,8 13,3" stroke="currentColor" stroke-width="1.2"/></svg>';
+        var ICON_SAVE = '<svg width="11" height="13" viewBox="0 0 12 14" fill="none" aria-hidden="true"><path d="M1 1h10v12l-5-3.5L1 13V1z" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>';
+        var ICON_SHARE = '<svg width="12" height="12" viewBox="0 0 14 14" fill="none" aria-hidden="true"><circle cx="11" cy="2.5" r="1.5" stroke="currentColor" stroke-width="1.2"/><circle cx="11" cy="11.5" r="1.5" stroke="currentColor" stroke-width="1.2"/><circle cx="3" cy="7" r="1.5" stroke="currentColor" stroke-width="1.2"/><line x1="4.4" y1="6.2" x2="9.6" y2="3.3" stroke="currentColor" stroke-width="1.2"/><line x1="4.4" y1="7.8" x2="9.6" y2="10.7" stroke="currentColor" stroke-width="1.2"/></svg>';
+        var ICON_REVIEW = '<svg width="11" height="11" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 10l1-3L10 1l2 2-7 7-3 1z" stroke="currentColor" stroke-width="1.3" fill="none"/><line x1="8" y1="3" x2="11" y2="6" stroke="currentColor" stroke-width="1.3"/></svg>';
+
+        function setPanelSaveLabel(btn, saved) {
+            if (!btn) return;
+            btn.classList.toggle('saved', saved);
+            btn.innerHTML = ICON_SAVE + '<span>' + (saved ? 'Saved' : 'Save') + '</span>';
+        }
+        function setPanelShareLabel(btn, text) {
+            if (!btn) return;
+            btn.innerHTML = ICON_SHARE + '<span>' + (text || 'Share') + '</span>';
+        }
+
+        var verifiedSvg = '<span class="ast-verified" title="Verified"><svg width="11" height="11" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" fill="currentColor"/><path d="M4.5 7l1.8 1.8L9.8 5.4" stroke="#fff" stroke-width="1.5" fill="none"/></svg></span>';
+
+        // ── Load profiles ──
+        async function loadProfiles() {
+            try {
+                var res = await sc.from('sc_profiles')
+                    .select('id, slug, professional_name, personal_name, one_liner, professional_identity, specialties, service_type, services_offered, offerings, location, delivery_time, response_time, minimum_price, average_rating, review_count, upvotes, profile_picture_url, is_verified, works_online, experience, active_since, languages, provides_proof, refund_policy, accepts_emergency, description, email, website, store_link, instagram_link, reddit_link')
+                    .eq('status', 'approved')
+                    .eq('is_active', true)
+                    .order('created_at', { ascending: false });
+
+                if (res.error) throw res.error;
+                profiles = res.data || [];
+                renderTable();
+                renderMobileList();
+                document.getElementById('astCount').textContent = profiles.length + ' spellcaster' + (profiles.length === 1 ? '' : 's');
+            } catch (e) {
+                document.getElementById('astTbody').innerHTML = '<tr><td colspan="13"><div class="ast-empty">Could not load profiles. Please try again.</div></td></tr>';
+                document.getElementById('astMobileList').innerHTML = '<div class="ast-empty">Could not load profiles. Please try again.</div>';
+                document.getElementById('astCount').textContent = '';
+            }
+        }
+
+        // ── Desktop table ──
+        function renderTable() {
+            var tbody = document.getElementById('astTbody');
+            if (!profiles.length) {
+                tbody.innerHTML = '<tr><td colspan="13"><div class="ast-empty">No spellcasters found.</div></td></tr>';
+                return;
+            }
+            tbody.innerHTML = profiles.map(function(p, i) {
+                var hasRating = (p.review_count || 0) > 0 && p.average_rating;
+                var rating = hasRating
+                    ? '<span class="ast-star">★</span> <span class="ast-rating-val">' + parseFloat(p.average_rating).toFixed(1) + '</span>'
+                    : '<span class="ast-td-muted">—</span>';
+                var saved = (typeof scAuth !== 'undefined') && scAuth.userSaves.has(p.id);
+                return '<tr data-pid="' + p.id + '">' +
+                    '<td class="ast-td-num">' + (i + 1) + '</td>' +
+                    '<td><button class="ast-save-btn' + (saved ? ' saved' : '') + '" data-save="' + p.id + '" title="Save">' + (saved ? '★' : '☆') + '</button></td>' +
+                    '<td><div class="ast-name-cell">' +
+                        (p.profile_picture_url
+                            ? '<img class="ast-avatar" src="' + esc(p.profile_picture_url) + '" alt="' + esc(p.professional_name) + '" loading="lazy">'
+                            : '<div class="ast-avatar-ph">✦</div>') +
+                        '<div class="ast-name-txt">' +
+                            '<div class="ast-name">' + esc(p.professional_name || '—') + (p.is_verified ? verifiedSvg : '') + '</div>' +
+                            (p.one_liner ? '<div class="ast-tagline">' + esc(p.one_liner) + '</div>' : '') +
+                        '</div>' +
+                    '</div></td>' +
+                    '<td>' + (p.professional_identity ? '<span class="ast-chip ast-chip-type">' + esc(p.professional_identity) + '</span>' : '<span class="ast-td-muted">—</span>') + '</td>' +
+                    '<td class="ast-td-clip" style="max-width:200px;">' + chips(p.specialties, 2) + '</td>' +
+                    '<td class="ast-td-clip" style="max-width:150px;">' + (p.service_type ? '<span class="ast-chip">' + esc(p.service_type) + '</span>' : '<span class="ast-td-muted">—</span>') + '</td>' +
+                    '<td class="ast-td-muted">' + esc(p.location || '—') + '</td>' +
+                    '<td class="ast-td-muted">' + esc(p.delivery_time || '—') + '</td>' +
+                    '<td class="ast-td-muted">' + esc(p.response_time || '—') + '</td>' +
+                    '<td class="ast-td-muted">' + esc(p.minimum_price || '—') + '</td>' +
+                    '<td class="ast-td-rating">' + rating + '</td>' +
+                    '<td class="ast-td-muted" style="text-align:center;">' + (p.review_count || 0) + '</td>' +
+                    '<td class="ast-actions-cell">' +    
+                        '<a class="ast-review-btn" href="' + writeReviewHref(p) + '" data-write-review>Write a Review</a>' +
+                    '</td>' +
+                '</tr>';
+            }).join('');
+
+            tbody.querySelectorAll('tr[data-pid]').forEach(function(tr) {
+                tr.addEventListener('click', function(e) {
+                    if (e.target.closest('.ast-save-btn') || e.target.closest('[data-write-review]')) return;
+                    openPanel(tr.dataset.pid, e.target.closest('.ast-view-btn') ? 'reviews' : 'about');
+                });
+            });
+            tbody.querySelectorAll('.ast-save-btn').forEach(bindSaveBtn);
+        }
+
+        function writeReviewHref(p) {
+            return p.slug
+                ? 'profile.html?slug=' + encodeURIComponent(p.slug) + '&writeReview=1'
+                : 'profile.html?id=' + encodeURIComponent(p.id) + '&writeReview=1';
+        }
+
+        // ── Mobile card list ──
+        function renderMobileList() {
+            var list = document.getElementById('astMobileList');
+            if (!profiles.length) {
+                list.innerHTML = '<div class="ast-empty">No spellcasters found.</div>';
+                return;
+            }
+            list.innerHTML = profiles.map(function(p) {
+                var hasRating = (p.review_count || 0) > 0 && p.average_rating;
+                var sub = [p.professional_identity, p.location].filter(Boolean).join(' · ');
+                var saved = (typeof scAuth !== 'undefined') && scAuth.userSaves.has(p.id);
+                return '<div class="ast-mcard" data-pid="' + p.id + '" data-href="' + profileHref(p) + '">' +
+                    (p.profile_picture_url
+                        ? '<img class="ast-mcard-img" src="' + esc(p.profile_picture_url) + '" alt="' + esc(p.professional_name) + '" loading="lazy">'
+                        : '<div class="ast-mcard-img-ph">✦</div>') +
+                    '<div class="ast-mcard-body">' +
+                        '<div class="ast-mcard-name">' + esc(p.professional_name || '—') + (p.is_verified ? verifiedSvg : '') + '</div>' +
+                        (sub ? '<div class="ast-mcard-sub">' + esc(sub) + '</div>' : '') +
+                        '<div class="ast-mcard-rating">' +
+                            (hasRating
+                                ? '<span class="ast-star">★</span> <strong>' + parseFloat(p.average_rating).toFixed(1) + '</strong> <span class="ast-td-muted">(' + p.review_count + ')</span>'
+                                : '<span class="ast-td-muted">No reviews yet</span>') +
+                            (p.minimum_price ? ' <span class="ast-td-muted" style="margin-left:8px;">' + esc(p.minimum_price) + '</span>' : '') +
+                        '</div>' +
+                        '<div class="ast-mcard-chips">' + chips(p.specialties, 2) + '</div>' +
+                    '</div>' +
+                    '<button class="ast-mcard-save' + (saved ? ' saved' : '') + '" data-save="' + p.id + '" title="Save">' + (saved ? '★' : '☆') + '</button>' +
+                '</div>';
+            }).join('');
+
+            list.querySelectorAll('.ast-mcard').forEach(function(card) {
+                card.addEventListener('click', function(e) {
+                    if (e.target.closest('[data-save]')) return;
+                    trackProfileCardClick(card.dataset.pid);
+                    window.location.href = card.dataset.href;
+                });
+            });
+            list.querySelectorAll('[data-save]').forEach(bindSaveBtn);
+        }
+
+        function bindSaveBtn(btn) {
+            btn.addEventListener('click', async function(e) {
+                e.stopPropagation();
+                var pid = btn.dataset.save;
+                var result = await scAuth.toggleSave(pid);
+                if (result) refreshSaveStates();
+            });
+        }
+
+        function refreshSaveStates() {
+            document.querySelectorAll('.ast-save-btn').forEach(function(b) {
+                var saved = scAuth.userSaves.has(b.dataset.save);
+                b.classList.toggle('saved', saved);
+                b.textContent = saved ? '★' : '☆';
+            });
+            document.querySelectorAll('.ast-mcard-save').forEach(function(b) {
+                var saved = scAuth.userSaves.has(b.dataset.save);
+                b.classList.toggle('saved', saved);
+                b.textContent = saved ? '★' : '☆';
+            });
+            var panelSave = document.getElementById('astPanelSave');
+            if (panelSave && activeProfile) {
+                var s = scAuth.userSaves.has(activeProfile.id);
+                setPanelSaveLabel(panelSave, s);
+            }
+        }
+
+        // ── Detail side panel ──
+        function trackProfileCardClick(profileId) {
+            if (!profileId || typeof sc === 'undefined' || !sc) return;
+            try { sc.from('sc_analytics').insert({ profile_id: profileId, event_type: 'profile_card_click' }).then(function(){}); } catch (_) {}
+        }
+
+        function openPanel(pid, tab) {
+            var p = profiles.find(function(x){ return x.id === pid; });
+            if (!p) return;
+
+            // On narrow screens the panel is hidden — navigate to the profile page instead
+            if (window.matchMedia('(max-width: 1000px)').matches) {
+                trackProfileCardClick(p.id);
+                window.location.href = profileHref(p);
+                return;
+            }
+
+            activeProfile = p;
+            trackProfileCardClick(p.id);
+            document.querySelectorAll('#astTbody tr').forEach(function(tr) {
+                tr.classList.toggle('ast-row-active', tr.dataset.pid === pid);
+            });
+
+            var hasRating = (p.review_count || 0) > 0 && p.average_rating;
+            var saved = (typeof scAuth !== 'undefined') && scAuth.userSaves.has(p.id);
+
+            var metaBits = [];
+            if (p.location) metaBits.push('◈ ' + esc(p.location));
+            if (p.works_online !== false) metaBits.push('◎ Online');
+            if (p.minimum_price) metaBits.push(esc(p.minimum_price));
+
+            var inner = document.getElementById('astPanelInner');
+            inner.innerHTML =
+                '<button class="ast-panel-close" id="astPanelClose" aria-label="Close">×</button>' +
+                '<div class="ast-panel-img-wrap">' +
+                    (p.profile_picture_url
+                        ? '<img class="ast-panel-img" src="' + esc(p.profile_picture_url) + '" alt="' + esc(p.professional_name) + '">'
+                        : '<div class="ast-panel-img-ph">✦</div>') +
+                '</div>' +
+                '<div class="ast-panel-body">' +
+                    '<div class="ast-panel-toprow">' +
+                        '<div class="ast-panel-name">' + esc(p.professional_name || '—') + (p.is_verified ? verifiedSvg : '') + '</div>' +
+                        (p.professional_identity ? '<span class="ast-chip ast-chip-type">' + esc(p.professional_identity) + '</span>' : '') +
+                    '</div>' +
+                    (hasRating
+                        ? '<div class="ast-panel-rating"><span class="ast-star">★</span> ' + parseFloat(p.average_rating).toFixed(1) + ' <span class="ast-td-muted" style="font-weight:400;">(' + p.review_count + ' review' + (p.review_count === 1 ? '' : 's') + ')</span></div>'
+                        : '<div class="ast-panel-rating ast-td-muted" style="font-weight:400;">No reviews yet</div>') +
+                    (metaBits.length ? '<div class="ast-panel-meta">' + metaBits.join('<span>·</span>') + '</div>' : '') +
+                    '<div class="ast-panel-actions">' +
+                        '<button class="ast-pa-btn primary" id="astPanelContact" type="button">' + ICON_CONTACT + '<span>Contact</span></button>' +
+                        '<button class="ast-pa-btn' + (saved ? ' saved' : '') + '" id="astPanelSave" type="button">' + ICON_SAVE + '<span>' + (saved ? 'Saved' : 'Save') + '</span></button>' +
+                        '<button class="ast-pa-btn" id="astPanelShare" type="button">' + ICON_SHARE + '<span>Share</span></button>' +
+                    '</div>' +
+                    '<div class="ast-tabs">' +
+                        '<button class="ast-tab" data-tab="about">About</button>' +
+                        '<button class="ast-tab" data-tab="services">Services</button>' +
+                        '<button class="ast-tab" data-tab="reviews">Reviews (' + (p.review_count || 0) + ')</button>' +
+                        '<button class="ast-tab" data-tab="photos">Photos</button>' +
+                    '</div>' +
+                    '<div class="ast-tabpanes">' +
+                        '<div class="ast-tabpane" data-pane="about" id="astPaneAbout"></div>' +
+                        '<div class="ast-tabpane" data-pane="services" id="astPaneServices"></div>' +
+                        '<div class="ast-tabpane" data-pane="reviews" id="astPaneReviews"><div class="ast-none-msg">Loading reviews…</div></div>' +
+                        '<div class="ast-tabpane" data-pane="photos" id="astPanePhotos"><div class="ast-none-msg">Loading photos…</div></div>' +
+                    '</div>' +
+                    '<a class="ast-panel-fulllink" href="' + profileHref(p) + '">View Full Profile →</a>' +
+                '</div>';
+
+            fillAboutPane(p);
+            fillServicesPane(p);
+            loadPanelReviews(p);
+
+            inner.querySelectorAll('.ast-tab').forEach(function(t) {
+                t.addEventListener('click', function() { switchTab(t.dataset.tab); });
+            });
+            document.getElementById('astPanelClose').addEventListener('click', closePanel);
+            document.getElementById('astPanelSave').addEventListener('click', async function() {
+                var result = await scAuth.toggleSave(p.id);
+                if (result) refreshSaveStates();
+            });
+            document.getElementById('astPanelShare').addEventListener('click', function() {
+                shareProfile(p);
+            });
+            document.getElementById('astPanelContact').addEventListener('click', function() {
+                openContactModal(p);
+            });
+
+            switchTab(tab || 'about');
+            document.getElementById('astPanel').classList.add('open');
+            document.querySelector('.ast-wrap')?.classList.add('panel-open');
+            var activePane = document.querySelector('.ast-tabpane.active');
+            if (activePane) activePane.scrollTop = 0;
+        }
+
+        function switchTab(name) {
+            var inner = document.getElementById('astPanelInner');
+            inner.querySelectorAll('.ast-tab').forEach(function(t) { t.classList.toggle('active', t.dataset.tab === name); });
+            inner.querySelectorAll('.ast-tabpane').forEach(function(pn) {
+                var on = pn.dataset.pane === name;
+                pn.classList.toggle('active', on);
+                if (on) pn.scrollTop = 0;
+            });
+        }
+
+        function closePanel() {
+            document.getElementById('astPanel').classList.remove('open');
+            document.querySelector('.ast-wrap')?.classList.remove('panel-open');
+            activeProfile = null;
+            document.querySelectorAll('#astTbody tr').forEach(function(tr) { tr.classList.remove('ast-row-active'); });
+        }
+
+        function fillAboutPane(p) {
+            var pane = document.getElementById('astPaneAbout');
+            var html = '';
+            if (p.one_liner) html += '<p class="ast-about-tagline">' + esc(p.one_liner) + '</p>';
+            if (p.description) {
+                var full = String(p.description).trim();
+                var LIMIT = 420;
+                var truncated = full.length > LIMIT;
+                var shown = truncated ? full.slice(0, LIMIT).replace(/\s+\S*$/, '') + '…' : full;
+                var paras = shown.split(/\n{2,}/).filter(function(par){ return par.trim(); }).slice(0, 2);
+                html += '<div class="ast-about-text">' + paras.map(function(par) {
+                    return '<p>' + esc(par.trim()).replace(/\n/g, '<br>') + '</p>';
+                }).join('') + '</div>';
+                if (truncated || String(p.description).split(/\n{2,}/).length > 2) {
+                    html += '<a class="ast-about-more" href="' + profileHref(p) + '">View full profile for complete details →</a>';
+                }
+            }
+            var kvs = [
+                ['Experience', p.experience],
+                ['Active Since', p.active_since],
+                ['Languages', p.languages || 'English'],
+                ['Works Online', p.works_online === false ? 'No' : 'Yes'],
+                ['Response Time', p.response_time || '—'],
+                ['Delivery', p.delivery_time || '—'],
+                ['Price Range', p.minimum_price || '—'],
+                ['Provides Proof', p.provides_proof ? 'Yes' : 'No'],
+                ['Refund Policy', p.refund_policy ? 'Yes' : 'No'],
+                ['Emergency', p.accepts_emergency || '—']
+            ];
+            html += '<div class="ast-info-rows">' + kvs.map(function(kv) {
+                return '<div class="ast-info-row"><span class="ast-info-label">' + kv[0] + '</span><span class="ast-info-val">' + esc(kv[1] || '—') + '</span></div>';
+            }).join('') + '</div>';
+            if (p.specialties) html += '<div style="margin-top:12px;">' + chips(p.specialties, 12) + '</div>';
+            pane.innerHTML = html || '<div class="ast-none-msg">No details available.</div>';
+        }
+
+        function fillServicesPane(p) {
+            var pane = document.getElementById('astPaneServices');
+            var offerings = parseOfferings(p);
+            if (!offerings.length && !p.service_type) {
+                pane.innerHTML = '<div class="ast-none-msg">No services listed yet.</div>';
+                return;
+            }
+            var html = '';
+            if (p.service_type) {
+                html += '<div class="ast-info-row" style="margin-bottom:10px;"><span class="ast-info-label">Primary Offering</span><span class="ast-info-val">' + esc(p.service_type) + '</span></div>';
+            }
+            if (offerings.length) {
+                html +=
+                    '<div class="ast-svc-header">' +
+                        '<div class="ast-svc-title">Services Offered</div>' +
+                        '<span class="ast-svc-count">(' + offerings.length + ')</span>' +
+                    '</div>' +
+                    '<table class="ast-svc-table">' +
+                        '<thead><tr>' +
+                            '<th class="svc-col-num">#</th>' +
+                            '<th class="svc-col-name">Service Name</th>' +
+                            '<th class="svc-col-price">Price</th>' +
+                            '<th class="svc-col-action"></th>' +
+                        '</tr></thead><tbody>' +
+                        offerings.map(function(o, idx) {
+                            return '<tr>' +
+                                '<td class="svc-col-num">' + (idx + 1) + '</td>' +
+                                '<td class="svc-col-name">' + esc(o.name || '—') + '</td>' +
+                                '<td class="svc-col-price">' + esc(formatPrice(o.price)) + '</td>' +
+                                '<td class="svc-col-action"><button type="button" class="ast-svc-request" data-svc-request>Request</button></td>' +
+                            '</tr>';
+                        }).join('') +
+                    '</tbody></table>';
+            }
+            pane.innerHTML = html;
+            pane.querySelectorAll('[data-svc-request]').forEach(function(btn) {
+                btn.addEventListener('click', function() { openContactModal(p); });
+            });
+        }
+
+        async function loadPanelReviews(p) {
+            var revPane = document.getElementById('astPaneReviews');
+            var phPane  = document.getElementById('astPanePhotos');
+            try {
+                var res = await sc.from('sc_reviews')
+                    .select('reviewer_name, reviewer_avatar, rating, review_text, image_urls, created_at')
+                    .eq('profile_id', p.id)
+                    .order('created_at', { ascending: false })
+                    .limit(5);
+                if (res.error) throw res.error;
+                var reviews = res.data || [];
+
+                if (activeProfile && activeProfile.id !== p.id) return; // panel switched meanwhile
+
+                if (!reviews.length) {
+                    revPane.innerHTML =
+                        '<div class="ast-review-section-head">' +
+                            '<span class="ast-none-msg" style="margin:0;">No reviews yet.</span>' +
+                            '<button type="button" class="ast-write-review-btn" id="astPanelWriteReview">' + ICON_REVIEW + ' Write a Review</button>' +
+                        '</div>';
+                } else {
+                    revPane.innerHTML =
+                        '<div class="ast-review-section-head">' +
+                            '<span style="font-family:\'Source Code Pro\',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);">Reviews</span>' +
+                            '<button type="button" class="ast-write-review-btn" id="astPanelWriteReview">' + ICON_REVIEW + ' Write a Review</button>' +
+                        '</div>' +
+                        reviews.map(function(r) {
+                        var d = r.created_at ? new Date(r.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '';
+                        var initial = (r.reviewer_name || 'A')[0].toUpperCase();
+                        return '<div class="ast-review-card">' +
+                            '<div class="ast-review-head">' +
+                                (r.reviewer_avatar
+                                    ? '<img class="ast-review-avatar" src="' + esc(r.reviewer_avatar) + '" alt="">'
+                                    : '<div class="ast-review-avatar-ph">' + esc(initial) + '</div>') +
+                                '<span class="ast-review-name">' + esc(r.reviewer_name || 'Anonymous') + '</span>' +
+                                '<span class="ast-review-date">' + esc(d) + '</span>' +
+                            '</div>' +
+                            starsHtml(r.rating) +
+                            '<div class="ast-review-text">' + esc(r.review_text || '') + '</div>' +
+                        '</div>';
+                    }).join('') +
+                    ((p.review_count || 0) > 5 ? '<a class="ast-panel-fulllink" href="' + profileHref(p) + '#reviews">View All ' + p.review_count + ' Reviews →</a>' : '');
+                }
+                document.getElementById('astPanelWriteReview')?.addEventListener('click', function() {
+                    openReviewModalForProfile(p);
+                });
+
+                // Photos: profile picture + review images
+                var photos = [];
+                if (p.profile_picture_url) photos.push(p.profile_picture_url);
+                reviews.forEach(function(r) {
+                    try {
+                        var arr = JSON.parse(r.image_urls || '[]');
+                        if (Array.isArray(arr)) photos = photos.concat(arr);
+                    } catch (_) {}
+                });
+                phPane.innerHTML = photos.length
+                    ? '<div class="ast-photos-grid">' + photos.map(function(u) {
+                        return '<a href="' + esc(u) + '" target="_blank" rel="noopener"><img src="' + esc(u) + '" alt="Photo" loading="lazy"></a>';
+                    }).join('') + '</div>'
+                    : '<div class="ast-none-msg">No photos yet.</div>';
+            } catch (e) {
+                revPane.innerHTML = '<div class="ast-none-msg">Could not load reviews.</div>';
+                phPane.innerHTML  = '<div class="ast-none-msg">Could not load photos.</div>';
+            }
+        }
+
+        // ── Share ──
+        function shareProfile(p) {
+            var url = new URL(profileHref(p), window.location.href).href;
+            try { sc.from('sc_analytics').insert({ profile_id: p.id, event_type: 'share_click' }).then(function(){}); } catch (_) {}
+            if (navigator.share) {
+                navigator.share({ title: p.professional_name, url: url }).catch(function(){});
+            } else {
+                navigator.clipboard.writeText(url).then(function() {
+                    var btn = document.getElementById('astPanelShare');
+                    if (btn) {
+                        setPanelShareLabel(btn, 'Copied');
+                        setTimeout(function(){ setPanelShareLabel(btn, 'Share'); }, 1500);
+                    }
+                }).catch(function(){});
+            }
+        }
+
+        // ── Contact modal ──
+        var contactProfileId = null;
+        function openContactModal(p) {
+            contactProfileId = p.id;
+            try { sc.from('sc_analytics').insert({ profile_id: p.id, event_type: 'contact_click' }).then(function(){}); } catch (_) {}
+            var msg = document.getElementById('astInqMsg');
+            msg.className = 'ast-form-msg';
+            document.getElementById('astInquiryForm').reset();
+            document.getElementById('astContactModal').classList.add('active');
+        }
+        document.getElementById('astContactClose').addEventListener('click', function() {
+            document.getElementById('astContactModal').classList.remove('active');
+        });
+        document.getElementById('astContactModal').addEventListener('click', function(e) {
+            if (e.target === this) this.classList.remove('active');
+        });
+        document.getElementById('astInquiryForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            var btn = document.getElementById('astInqSubmit');
+            var msg = document.getElementById('astInqMsg');
+            btn.disabled = true; btn.textContent = 'Sending…';
+            try {
+                var res = await sc.from('sc_inquiries').insert({
+                    profile_id:    contactProfileId,
+                    full_name:     document.getElementById('astInqName').value.trim(),
+                    date_of_birth: document.getElementById('astInqDob').value || null,
+                    email:         document.getElementById('astInqEmail').value.trim(),
+                    budget:        document.getElementById('astInqBudget').value.trim() || null,
+                    description:   document.getElementById('astInqDesc').value.trim()
+                });
+                if (res.error) throw res.error;
+                try { sc.from('sc_analytics').insert({ profile_id: contactProfileId, event_type: 'inquiry_submit' }).then(function(){}); } catch (_) {}
+                msg.className = 'ast-form-msg success';
+                msg.textContent = 'Your inquiry has been sent successfully!';
+                this.reset();
+                setTimeout(function() { document.getElementById('astContactModal').classList.remove('active'); }, 1400);
+            } catch (err) {
+                msg.className = 'ast-form-msg error';
+                msg.textContent = 'Failed to send inquiry. Please try again.';
+            } finally {
+                btn.disabled = false; btn.textContent = 'Send Inquiry';
+            }
+        });
+
+        // ── Review modal ──
+        var reviewTargetProfile = null;
+        var astSubRatings = { communication: 0, accuracy: 0, value: 0 };
+        var AST_STAR_IDS = {
+            communication: 'astSubStarCommunication',
+            accuracy: 'astSubStarAccuracy',
+            value: 'astSubStarValue'
+        };
+        var AST_STAR_LABELS = ['', 'Poor', 'Fair', 'Good', 'Very Good', 'Excellent'];
+
+        function updateAstSubStars(groupId, n) {
+            var group = document.getElementById(groupId);
+            if (!group) return;
+            group.querySelectorAll('.star-btn').forEach(function(btn, i) {
+                btn.classList.toggle('lit', i < n);
+            });
+        }
+        function recalcAstOverall() {
+            var vals = Object.keys(astSubRatings).map(function(k){ return astSubRatings[k]; }).filter(function(v){ return v > 0; });
+            var overall = document.getElementById('astOverallRatingDisplay');
+            var overallVal = document.getElementById('astOverallRatingValue');
+            var hint = document.getElementById('astStarHint');
+            if (!vals.length) {
+                if (overall) overall.style.display = 'none';
+                if (hint) hint.textContent = '';
+                return;
+            }
+            var avg = vals.reduce(function(a,b){ return a+b; }, 0) / vals.length;
+            if (overallVal) overallVal.textContent = (Math.round(avg * 10) / 10).toFixed(1);
+            if (overall) overall.style.display = 'flex';
+            if (hint) hint.textContent = AST_STAR_LABELS[Math.round(avg)] || '';
+        }
+        function resetAstReviewForm() {
+            astSubRatings = { communication: 0, accuracy: 0, value: 0 };
+            Object.keys(AST_STAR_IDS).forEach(function(k){ updateAstSubStars(AST_STAR_IDS[k], 0); });
+            var overall = document.getElementById('astOverallRatingDisplay');
+            var hint = document.getElementById('astStarHint');
+            if (overall) overall.style.display = 'none';
+            if (hint) hint.textContent = '';
+            document.querySelectorAll('input[name="astHireAgain"], input[name="astResultTime"], input[name="astPurchaseDate"]').forEach(function(r){ r.checked = false; });
+            document.getElementById('astReviewForm')?.reset();
+            var previews = document.getElementById('astImagePreviews');
+            if (previews) previews.innerHTML = '';
+        }
+        function closeAstReviewModal() {
+            document.getElementById('astReviewModal')?.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        async function openReviewModalForProfile(p) {
+            reviewTargetProfile = p;
+            var user = null;
+            try {
+                var res = await sc.auth.getUser();
+                user = res.data?.user || null;
+            } catch (_) {}
+            if (!user) {
+                if (typeof scAuth !== 'undefined') scAuth.openSignInModal('Sign in to write a review.');
+                return;
+            }
+            resetAstReviewForm();
+            var sub = document.getElementById('astReviewSubtitle');
+            if (sub) sub.textContent = 'Reviewing ' + (p.professional_name || 'this spellcaster') + ' — share your experience.';
+            document.getElementById('astReviewModal')?.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        Object.keys(AST_STAR_IDS).forEach(function(key) {
+            var group = document.getElementById(AST_STAR_IDS[key]);
+            if (!group) return;
+            group.querySelectorAll('.star-btn').forEach(function(btn) {
+                var val = parseInt(btn.dataset.value, 10);
+                btn.addEventListener('click', function() {
+                    astSubRatings[key] = val;
+                    updateAstSubStars(AST_STAR_IDS[key], val);
+                    recalcAstOverall();
+                });
+                btn.addEventListener('mouseenter', function() { updateAstSubStars(AST_STAR_IDS[key], val); });
+                btn.addEventListener('mouseleave', function() { updateAstSubStars(AST_STAR_IDS[key], astSubRatings[key]); });
+            });
+        });
+
+        document.getElementById('astCloseReview')?.addEventListener('click', closeAstReviewModal);
+        document.getElementById('astReviewModal')?.addEventListener('click', function(e) {
+            if (e.target === this) closeAstReviewModal();
+        });
+        document.getElementById('astReviewImages')?.addEventListener('change', function() {
+            var previews = document.getElementById('astImagePreviews');
+            if (!previews) return;
+            previews.innerHTML = '';
+            Array.from(this.files).slice(0, 2).forEach(function(file) {
+                var reader = new FileReader();
+                reader.onload = function(ev) {
+                    var img = document.createElement('img');
+                    img.src = ev.target.result;
+                    img.className = 'image-preview-item';
+                    previews.appendChild(img);
+                };
+                reader.readAsDataURL(file);
+            });
+        });
+
+        document.getElementById('astReviewForm')?.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            var submitBtn = document.getElementById('astReviewSubmitBtn');
+            if (!reviewTargetProfile) return;
+
+            if (Object.keys(astSubRatings).some(function(k){ return astSubRatings[k] === 0; })) {
+                alert('Please rate all categories before submitting.');
+                return;
+            }
+            var reviewText = (document.getElementById('astReviewText')?.value || '').trim();
+            if (!reviewText) {
+                alert('Please write your review before submitting.');
+                return;
+            }
+
+            if (submitBtn) { submitBtn.textContent = 'Submitting…'; submitBtn.disabled = true; }
+            try {
+                var authRes = await sc.auth.getUser();
+                var user = authRes.data?.user;
+                if (!user) {
+                    closeAstReviewModal();
+                    if (typeof scAuth !== 'undefined') scAuth.openSignInModal('Sign in to write a review.');
+                    return;
+                }
+
+                var rating = Math.round((astSubRatings.communication + astSubRatings.accuracy + astSubRatings.value) / 3);
+                var imageUrls = [];
+                var fileInput = document.getElementById('astReviewImages');
+                if (fileInput?.files?.length && typeof r2Upload === 'function') {
+                    var files = Array.from(fileInput.files).slice(0, 2);
+                    for (var i = 0; i < files.length; i++) {
+                        try {
+                            imageUrls.push(await r2Upload(files[i], 'review-images/' + reviewTargetProfile.id));
+                        } catch (upErr) {
+                            console.warn('Review image upload failed:', upErr);
+                        }
+                    }
+                }
+
+                var insertRes = await sc.from('sc_reviews').insert({
+                    profile_id: reviewTargetProfile.id,
+                    reviewer_id: user.id,
+                    reviewer_name: user.user_metadata?.full_name || (user.email || '').split('@')[0] || 'Anonymous',
+                    reviewer_email: user.email || null,
+                    reviewer_avatar: user.user_metadata?.avatar_url || null,
+                    rating: rating,
+                    rating_communication: astSubRatings.communication,
+                    rating_accuracy: astSubRatings.accuracy,
+                    rating_value: astSubRatings.value,
+                    review_text: reviewText,
+                    services_purchased: (document.getElementById('astReviewServicesPurchased')?.value || '').trim() || null,
+                    hire_again: document.querySelector('input[name="astHireAgain"]:checked')?.value || null,
+                    result_time: document.querySelector('input[name="astResultTime"]:checked')?.value || null,
+                    purchase_date: document.querySelector('input[name="astPurchaseDate"]:checked')?.value || null,
+                    image_urls: JSON.stringify(imageUrls),
+                    is_admin_seeded: false
+                });
+                if (insertRes.error) throw insertRes.error;
+
+                // Refresh profile stats
+                try {
+                    var all = await sc.from('sc_reviews').select('rating').eq('profile_id', reviewTargetProfile.id);
+                    var list = all.data || [];
+                    var cnt = list.length;
+                    var avg = cnt ? Math.round((list.reduce(function(s,r){ return s + r.rating; }, 0) / cnt) * 100) / 100 : null;
+                    await sc.from('sc_profiles').update({ average_rating: avg, review_count: cnt }).eq('id', reviewTargetProfile.id);
+                    reviewTargetProfile.average_rating = avg;
+                    reviewTargetProfile.review_count = cnt;
+                    var cached = profiles.find(function(x){ return x.id === reviewTargetProfile.id; });
+                    if (cached) { cached.average_rating = avg; cached.review_count = cnt; }
+                } catch (_) {}
+
+                closeAstReviewModal();
+                loadPanelReviews(reviewTargetProfile);
+                renderTable();
+                renderMobileList();
+            } catch (err) {
+                console.error('Review submit failed:', err);
+                alert('Failed to submit review. Please try again.');
+            } finally {
+                if (submitBtn) { submitBtn.textContent = 'Submit Review'; submitBtn.disabled = false; }
+            }
+        });
+
+        // ── Init ──
+        document.addEventListener('DOMContentLoaded', function() {
+            try {
+                if (typeof scAuth !== 'undefined') {
+                    scAuth.init(sc, { onSignIn: refreshSaveStates, onSignOut: refreshSaveStates }).catch(function(){});
+                }
+            } catch (_) {}
+            loadProfiles();
+        });
+    })();
+    </script>
+</body>
+</html>

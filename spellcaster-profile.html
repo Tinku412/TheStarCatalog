@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-8RKJDCW3DF"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-8RKJDCW3DF');
+</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Spell Caster Profile — Reviews &amp; Ratings | Witch Weekly</title>
+    <meta name="description" content="Read verified community reviews for this spell caster on Witch Weekly. See ratings, services, specialties, and honest feedback from real clients.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Source+Code+Pro:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="svgviewer-png-output.png" type="image/png" />
+    <style>
+        /* ============ TOP BAR ============ */
+        .spp-topbar {
+            display: flex; align-items: center; justify-content: space-between; gap: 10px;
+            padding: 9px 16px; border-bottom: 1.5px solid var(--border); background: var(--cream);
+            font-family: 'Source Code Pro', monospace; font-size: 10px;
+            letter-spacing: .06em; color: var(--muted); flex-wrap: wrap;
+        }
+        .spp-crumbs { display: flex; align-items: center; gap: 6px; min-width: 0; flex-wrap: wrap; }
+        .spp-crumbs a { color: var(--navy); text-decoration: none; }
+        .spp-crumbs a:hover { color: var(--accent); }
+        .spp-crumb-name { color: var(--navy); font-weight: 600; }
+        .spp-prevnext { display: flex; gap: 6px; flex-shrink: 0; }
+        .spp-pn-btn {
+            font-family: 'Source Code Pro', monospace; font-size: 9.5px; letter-spacing: .08em;
+            text-transform: uppercase; padding: 5px 11px; cursor: pointer;
+            border: 1.5px solid var(--border); background: transparent; color: var(--navy);
+        }
+        .spp-pn-btn:hover:not(:disabled) { background: var(--navy); color: var(--cream); }
+        .spp-pn-btn:disabled { opacity: .35; cursor: not-allowed; }
+
+        /* ============ 3-COLUMN LAYOUT ============ */
+        .spp-page {
+            width: 100%;
+            max-width: 100%;
+            overflow-x: hidden;
+            box-sizing: border-box;
+        }
+        .spp-layout {
+            display: grid;
+            grid-template-columns: 270px minmax(0, 1fr) 300px;
+            gap: 14px;
+            padding: 14px 16px 20px;
+            align-items: start;
+            margin: 0 auto;
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
+        }
+        .spp-col-card {
+            background: var(--cream);
+            border: 1.5px solid var(--border);
+            min-width: 0;
+            max-width: 100%;
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+
+        /* Left sidebar */
+        .spp-side { position: sticky; top: 76px; }
+        .spp-photo-wrap { position: relative; aspect-ratio: 1/1; background: var(--cream3); border-bottom: 1.5px solid var(--border); }
+        .spp-photo { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+        .spp-photo-ph { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: var(--accent); font-size: 46px; }
+        .spp-side-body { padding: 13px 14px 16px; font-family: 'Source Code Pro', monospace; min-width: 0; }
+        .spp-name { font-family: 'Cinzel', serif; font-size: 17px; font-weight: 700; color: var(--navy); line-height: 1.25; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; word-break: break-word; }
+        .spp-tagline { font-size: 10px; font-style: italic; color: var(--muted); margin-top: 4px; line-height: 1.5; word-break: break-word; }
+        .spp-chiprow { margin-top: 9px; display: flex; flex-wrap: wrap; gap: 4px; }
+        .spp-chip {
+            display: inline-block; padding: 2px 8px;
+            background: rgba(201,185,122,.18); border: 1px solid rgba(201,185,122,.45);
+            font-size: 9px; letter-spacing: .05em; color: var(--navy);
+            max-width: 100%; white-space: normal; word-break: break-word; line-height: 1.35;
+            box-sizing: border-box;
+        }
+        .spp-chip-type { background: var(--navy); color: var(--cream); border-color: var(--navy); }
+        .spp-chip-verified { background: rgba(42,157,110,.14); border-color: var(--green); color: var(--green); }
+        .spp-rating { font-size: 12px; font-weight: 600; color: var(--navy); margin-top: 9px; }
+        .spp-star { color: var(--accent); }
+        .spp-muted { color: var(--muted); font-weight: 400; }
+        .spp-actionrow { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 12px; }
+        .spp-act-btn {
+            flex: 1 1 calc(50% - 4px); min-width: 0; display: inline-flex; align-items: center; justify-content: center; gap: 5px;
+            font-family: 'Source Code Pro', monospace; font-size: 10px; letter-spacing: .08em;
+            text-transform: uppercase; padding: 9px 4px; cursor: pointer;
+            border: 1.5px solid var(--border); background: transparent; color: var(--navy);
+            transition: background .12s, color .12s; white-space: nowrap;
+            text-decoration: none; box-sizing: border-box;
+        }
+        .spp-act-btn:hover { background: var(--navy); color: var(--cream); }
+        .spp-act-btn.primary { background: var(--accent); border-color: var(--accent); font-weight: 600; }
+        .spp-act-btn.primary:hover { background: #d4c884; color: var(--navy); }
+        .spp-act-btn.saved { background: var(--navy); color: var(--cream); }
+        .spp-act-btn.write-review {
+            flex: 1 1 100%;
+            background: var(--navy);
+            border-color: var(--navy);
+            color: var(--cream);
+            font-weight: 600;
+            margin-top: 2px;
+        }
+        .spp-act-btn.write-review:hover { background: var(--navy2); color: var(--cream); }
+        .spp-info { margin-top: 13px; border-top: 1.5px solid var(--cream3); }
+        .spp-info-row { display: flex; justify-content: space-between; gap: 10px; padding: 6px 0; border-bottom: 1px solid var(--cream3); font-size: 10px; min-width: 0; }
+        .spp-info-label { color: var(--muted); text-transform: uppercase; font-size: 8.5px; letter-spacing: .08em; flex-shrink: 0; padding-top: 1px; max-width: 45%; }
+        .spp-info-val { text-align: right; color: var(--navy); min-width: 0; overflow-wrap: anywhere; word-break: break-word; }
+        .spp-side-sec-title { font-size: 9px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin: 13px 0 6px; }
+        .spp-chip-wrap { display: flex; flex-wrap: wrap; gap: 4px; max-width: 100%; min-width: 0; }
+
+        /* Main column */
+        .spp-tabs { display: flex; border-bottom: 1.5px solid var(--border); overflow-x: auto; background: var(--cream); max-width: 100%; }
+        .spp-tab {
+            background: none; border: none; cursor: pointer; padding: 11px 15px;
+            font-family: 'Source Code Pro', monospace; font-size: 10px; letter-spacing: .08em;
+            text-transform: uppercase; color: var(--muted); border-bottom: 2.5px solid transparent;
+            white-space: nowrap; flex-shrink: 0;
+        }
+        .spp-tab.active { color: var(--navy); font-weight: 600; border-bottom-color: var(--accent); }
+        .spp-main-body { padding: 15px 16px 22px; font-family: 'Source Code Pro', monospace; font-size: 11.5px; line-height: 1.7; color: var(--text); min-width: 0; overflow-x: hidden; }
+        .spp-pane { display: none; min-width: 0; }
+        .spp-pane.active { display: block; }
+        .spp-quote {
+            border-left: 3px solid var(--accent); background: rgba(201,185,122,.10);
+            padding: 11px 14px; font-style: italic; font-size: 11.5px; color: var(--navy);
+            margin-bottom: 16px; line-height: 1.65; word-break: break-word;
+        }
+        .spp-sec-title { font-family: 'Cinzel', serif; font-size: 13.5px; font-weight: 700; color: var(--navy); margin: 4px 0 10px; display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+        .spp-svc-table-wrap { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        .spp-svc-table { width: 100%; border-collapse: collapse; font-size: 10.5px; }
+        .spp-svc-table th {
+            background: var(--navy); color: var(--cream); text-align: left; padding: 7px 9px;
+            font-size: 8.5px; letter-spacing: .1em; text-transform: uppercase; white-space: nowrap;
+        }
+        .spp-svc-table td { padding: 7px 9px; border-bottom: 1px solid var(--cream3); vertical-align: middle; word-break: break-word; }
+        .spp-svc-table tr:hover td { background: rgba(201,185,122,.08); }
+        .spp-req-btn {
+            font-family: 'Source Code Pro', monospace; font-size: 8.5px; letter-spacing: .08em;
+            text-transform: uppercase; padding: 4px 10px; cursor: pointer;
+            border: 1.5px solid var(--border); background: transparent; color: var(--navy); white-space: nowrap;
+        }
+        .spp-req-btn:hover { background: var(--navy); color: var(--cream); }
+        .spp-none { color: var(--muted); font-style: italic; font-size: 11px; }
+
+        /* Reviews */
+        .spp-overview-reviews { margin-top: 22px; padding-top: 18px; border-top: 1.5px solid var(--cream3); }
+        .spp-rev-summary { display: flex; gap: 18px; align-items: center; border: 1px solid var(--cream3); background: rgba(201,185,122,.08); padding: 13px 15px; margin-bottom: 14px; flex-wrap: wrap; }
+        .spp-rev-big { font-family: 'Cinzel', serif; font-size: 30px; font-weight: 700; color: var(--navy); line-height: 1; }
+        .spp-rev-sub { font-size: 9.5px; color: var(--muted); margin-top: 3px; }
+        .spp-rev-bars { flex: 1; min-width: 140px; }
+        .spp-rev-bar-row { display: flex; align-items: center; gap: 7px; font-size: 9px; color: var(--muted); margin: 2px 0; }
+        .spp-rev-bar-track { flex: 1; height: 7px; background: var(--cream3); }
+        .spp-rev-bar-fill { height: 100%; background: var(--accent); }
+        .spp-review-card { border: 1px solid var(--cream3); background: var(--cream2); padding: 11px 13px; margin-bottom: 10px; min-width: 0; }
+        .spp-review-head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+        .spp-review-avatar { width: 26px; height: 26px; border-radius: 50%; object-fit: cover; }
+        .spp-review-avatar-ph { width: 26px; height: 26px; border-radius: 50%; background: var(--navy); color: var(--cream); display: flex; align-items: center; justify-content: center; font-size: 11px; flex-shrink: 0; }
+        .spp-review-name { font-weight: 600; color: var(--navy); font-size: 11px; }
+        .spp-review-date { color: var(--muted); font-size: 9px; margin-left: auto; }
+        .spp-review-stars { color: var(--accent); font-size: 11px; letter-spacing: 1px; margin-top: 3px; }
+        .spp-review-svc { display: inline-block; padding: 1px 7px; background: rgba(201,185,122,.2); border: 1px solid rgba(201,185,122,.5); font-size: 8.5px; color: var(--navy); margin-left: 7px; max-width: 100%; white-space: normal; word-break: break-word; }
+        .spp-review-text { font-size: 11px; margin-top: 5px; word-break: break-word; }
+        .spp-review-update { margin-top: 7px; padding: 7px 10px; border-left: 3px solid var(--accent); background: rgba(201,185,122,.1); font-size: 10.5px; word-break: break-word; }
+        .spp-review-imgs { display: flex; gap: 6px; margin-top: 7px; flex-wrap: wrap; }
+        .spp-review-imgs img { width: 62px; height: 62px; object-fit: cover; border: 1px solid var(--cream3); cursor: pointer; }
+        .spp-write-btn {
+            display: inline-flex; align-items: center; gap: 6px; text-decoration: none;
+            font-family: 'Source Code Pro', monospace; font-size: 9.5px; letter-spacing: .08em;
+            text-transform: uppercase; padding: 8px 14px; cursor: pointer;
+            background: var(--navy); border: 1.5px solid var(--navy); color: var(--cream);
+            font-weight: 600;
+        }
+        .spp-write-btn:hover { background: var(--navy2); color: var(--cream); }
+        .spp-write-btn.accent {
+            background: var(--accent); border-color: var(--accent); color: var(--navy);
+        }
+        .spp-write-btn.accent:hover { background: #d4c884; color: var(--navy); }
+
+        /* Photos */
+        .spp-photos-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+        .spp-photos-grid img { width: 100%; aspect-ratio: 1/1; object-fit: cover; border: 1px solid var(--cream3); }
+
+        /* Social */
+        .spp-social-btn {
+            display: inline-flex; align-items: center; gap: 7px; margin: 0 8px 8px 0;
+            font-family: 'Source Code Pro', monospace; font-size: 10px; letter-spacing: .06em;
+            padding: 8px 14px; border: 1.5px solid var(--border); color: var(--navy);
+            text-decoration: none; transition: background .12s, color .12s;
+        }
+        .spp-social-btn:hover { background: var(--navy); color: var(--cream); }
+
+        /* Similar spellcasters — full-width below profile layout */
+        .spp-similar-section {
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
+            padding: 0 16px 40px;
+        }
+        .spp-similar-card {
+            background: var(--cream);
+            border: 1.5px solid var(--border);
+            padding: 16px 18px 20px;
+            min-width: 0;
+        }
+        .spp-similar-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-top: 10px; }
+        .spp-sim-card { border: 1px solid var(--cream3); background: var(--cream2); text-decoration: none; display: flex; flex-direction: column; transition: border-color .13s; min-width: 0; overflow: hidden; }
+        .spp-sim-card:hover { border-color: var(--accent); }
+        .spp-sim-img { width: 100%; aspect-ratio: 1/1; object-fit: cover; object-position: center top; }
+        .spp-sim-img-ph { width: 100%; aspect-ratio: 1/1; display: flex; align-items: center; justify-content: center; color: var(--accent); background: var(--cream3); font-size: 20px; }
+        .spp-sim-body { padding: 7px 8px 9px; font-family: 'Source Code Pro', monospace; min-width: 0; }
+        .spp-sim-name { font-family: 'Cinzel', serif; font-size: 10px; font-weight: 600; color: var(--navy); line-height: 1.3; word-break: break-word; }
+        .spp-sim-meta { font-size: 8.5px; color: var(--muted); margin-top: 3px; }
+
+        /* Right column — About only */
+        .spp-right { position: sticky; top: 76px; display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+        .spp-right-sec { padding: 13px 15px 16px; font-family: 'Source Code Pro', monospace; font-size: 11px; line-height: 1.7; color: var(--text); min-width: 0; }
+        .spp-right-title { font-family: 'Cinzel', serif; font-size: 13px; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+        .spp-about-txt { max-height: 420px; overflow: hidden; position: relative; word-break: break-word; }
+        .spp-about-txt.expanded { max-height: none; }
+        .spp-about-txt p { margin-bottom: 8px; }
+        .spp-readmore { background: none; border: none; cursor: pointer; color: var(--navy); font-family: 'Source Code Pro', monospace; font-size: 9.5px; letter-spacing: .08em; text-transform: uppercase; text-decoration: underline; padding: 4px 0 0; }
+
+        .spp-loading, .spp-error {
+            padding: 70px 20px; text-align: center; font-family: 'Source Code Pro', monospace;
+            font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted);
+        }
+
+        /* ============ INQUIRY MODAL ============ */
+        .spp-modal-overlay { display: none; position: fixed; inset: 0; z-index: 300; background: rgba(14,24,36,.65); align-items: center; justify-content: center; padding: 16px; }
+        .spp-modal-overlay.active { display: flex; }
+        .spp-modal { background: var(--cream2); border: 2px solid var(--border); width: 100%; max-width: 430px; max-height: 90vh; overflow-y: auto; padding: 20px 22px; position: relative; box-sizing: border-box; }
+        .spp-modal-title { font-family: 'Cinzel', serif; font-size: 15px; font-weight: 700; color: var(--navy); margin-bottom: 3px; }
+        .spp-modal-sub { font-family: 'Source Code Pro', monospace; font-size: 10px; color: var(--muted); margin-bottom: 14px; }
+        .spp-modal-close { position: absolute; top: 10px; right: 12px; background: none; border: none; font-size: 18px; cursor: pointer; color: var(--navy); }
+        .spp-form-field { margin-bottom: 11px; }
+        .spp-form-field label { display: block; font-family: 'Source Code Pro', monospace; font-size: 9.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+        .spp-form-field input, .spp-form-field textarea { width: 100%; box-sizing: border-box; background: var(--cream); border: 1.5px solid var(--border); padding: 8px 10px; font-family: 'Source Code Pro', monospace; font-size: 11px; color: var(--navy); }
+        .spp-form-submit { width: 100%; padding: 10px; background: var(--accent); border: 1.5px solid var(--accent); font-family: 'Source Code Pro', monospace; font-size: 10.5px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--navy); cursor: pointer; }
+        .spp-form-submit:hover { background: #d4c884; }
+        .spp-form-msg { font-family: 'Source Code Pro', monospace; font-size: 10.5px; margin-top: 9px; display: none; }
+        .spp-form-msg.success { display: block; color: #2f5540; }
+        .spp-form-msg.error { display: block; color: #a13f2f; }
+
+        /* ============ RESPONSIVE ============ */
+        @media (max-width: 1200px) {
+            .spp-layout { grid-template-columns: 250px minmax(0, 1fr); }
+            .spp-right { grid-column: 1 / -1; position: static; }
+            .spp-similar-row { grid-template-columns: repeat(4, 1fr); }
+        }
+        @media (max-width: 820px) {
+            .spp-layout { grid-template-columns: 1fr; padding: 10px 10px 16px; gap: 12px; }
+            .spp-side, .spp-right { position: static; }
+            .spp-photo-wrap { aspect-ratio: 16/10; }
+            .spp-similar-section { padding: 0 10px 30px; }
+            .spp-similar-row { grid-template-columns: repeat(3, 1fr); }
+            .spp-photos-grid { grid-template-columns: repeat(3, 1fr); }
+            .spp-svc-table .spp-svc-desc-col { display: none; }
+            .spp-topbar { padding: 8px 10px; }
+            .spp-main-body { padding: 12px; }
+            .spp-side-body { padding: 12px; }
+            .spp-act-btn { font-size: 9px; padding: 8px 3px; }
+        }
+        @media (max-width: 520px) {
+            .spp-similar-row { grid-template-columns: repeat(2, 1fr); }
+            .spp-photos-grid { grid-template-columns: repeat(2, 1fr); }
+            .spp-act-btn { flex: 1 1 100%; }
+        }
+    </style>
+</head>
+<body style="overflow-x:hidden;">
+
+    <!-- Header -->
+    <header class="site-header">
+        <a class="logo-wrap" href="index.html">
+            <div class="monogram">
+                <svg width="24" height="24" viewBox="0 0 26 26" fill="none">
+                    <polygon points="13,2 15,10 23,8 17,14 23,20 15,18 13,26 11,18 3,20 9,14 3,8 11,10" stroke="#c9b97a" stroke-width="1" fill="none"/>
+                    <circle cx="13" cy="13" r="3" fill="none" stroke="#c9b97a" stroke-width="1"/>
+                    <line x1="11.5" y1="13" x2="14.5" y2="13" stroke="#c9b97a" stroke-width="1"/>
+                    <line x1="13" y1="11.5" x2="13" y2="14.5" stroke="#c9b97a" stroke-width="1"/>
+                </svg>
+            </div>
+            <div class="logo-text">
+                <span class="logo-main">Witch Weekly</span>
+                <span class="logo-sub">Est. MMXXVI — Seeker's Guide</span>
+            </div>
+        </a>
+        <nav class="site-nav">
+            <a href="index.html">Browse</a>
+            <a href="about.html">About</a>
+            <a href="faq.html">FAQ</a>
+            <a href="saved.html">Saved</a>
+            <span id="navAuthArea" class="nav-auth-area"></span>
+        </nav>
+        <a class="nav-cta" href="submit-spellcaster.html" style="text-decoration:none;">Submit Spellcaster</a>
+        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </header>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav" id="mobileNav">
+        <a href="index.html" class="mobile-nav-item">Browse Directory</a>
+        <a href="about.html" class="mobile-nav-item">About</a>
+        <a href="faq.html" class="mobile-nav-item">FAQ</a>
+        <a href="contact.html" class="mobile-nav-item">Contact</a>
+        <a href="saved.html" class="mobile-nav-item">Saved Profiles</a>
+        <a href="submit-spellcaster.html" class="mobile-nav-item">Submit spellcaster</a>
+    </div>
+
+    <!-- Top breadcrumb bar -->
+    <div class="spp-topbar" id="sppTopbar" style="display:none;">
+        <div class="spp-crumbs">
+            <a href="index.html">← Back to Browse</a>
+            <span>/</span>
+            <span id="sppCrumbType"></span>
+            <span>/</span>
+            <span class="spp-crumb-name" id="sppCrumbName"></span>
+        </div>
+        <div class="spp-prevnext">
+            <button class="spp-pn-btn" id="sppPrevBtn" disabled>← Previous</button>
+            <button class="spp-pn-btn" id="sppNextBtn" disabled>Next →</button>
+        </div>
+    </div>
+
+    <div class="spp-loading" id="sppLoading">Loading profile…</div>
+
+    <div class="spp-page" id="sppPage" style="display:none;">
+    <div class="spp-layout" id="sppLayout">
+
+        <!-- LEFT SIDEBAR -->
+        <aside class="spp-col-card spp-side">
+            <div class="spp-photo-wrap" id="sppPhotoWrap"></div>
+            <div class="spp-side-body">
+                <div class="spp-name" id="sppName"></div>
+                <div class="spp-tagline" id="sppTagline"></div>
+                <div class="spp-chiprow" id="sppChips"></div>
+                <div class="spp-rating" id="sppRating"></div>
+                <div class="spp-actionrow">
+                    <button class="spp-act-btn primary" id="sppContactBtn">✉ Contact</button>
+                    <button class="spp-act-btn" id="sppSaveBtn">♡ Save</button>
+                    <button class="spp-act-btn" id="sppShareBtn">⇗ Share</button>
+                    <a class="spp-act-btn write-review" id="sppSideWriteReview" href="#">✎ Write a Review</a>
+                </div>
+                <div class="spp-info" id="sppInfoRows"></div>
+                <div id="sppSpecialtiesSec" style="display:none;">
+                    <div class="spp-side-sec-title">Specialties</div>
+                    <div class="spp-chip-wrap" id="sppSpecialties"></div>
+                </div>
+                <div id="sppServicesChipsSec" style="display:none;">
+                    <div class="spp-side-sec-title">Services</div>
+                    <div class="spp-chip-wrap" id="sppServicesChips"></div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- MAIN COLUMN -->
+        <section class="spp-col-card spp-main">
+            <div class="spp-tabs" id="sppTabs">
+                <button class="spp-tab active" data-tab="overview">Overview</button>
+                <button class="spp-tab" data-tab="services" id="sppTabServices">Services</button>
+                <button class="spp-tab" data-tab="reviews" id="sppTabReviews">Reviews</button>
+                <button class="spp-tab" data-tab="photos" id="sppTabPhotos">Photos</button>
+                <button class="spp-tab" data-tab="social">Social Links</button>
+            </div>
+            <div class="spp-main-body">
+                <div class="spp-pane active" data-pane="overview">
+                    <div class="spp-quote" id="sppQuote" style="display:none;"></div>
+                    <div class="spp-sec-title">
+                        Services Offered
+                        <span id="sppSvcCount" class="spp-muted" style="font-size:10px;font-family:'Source Code Pro',monospace;"></span>
+                    </div>
+                    <div id="sppOverviewServices"></div>
+
+                    <div class="spp-overview-reviews">
+                        <div class="spp-sec-title">
+                            Reviews <span id="sppOverviewRevCount" class="spp-muted" style="font-size:10px;font-family:'Source Code Pro',monospace;"></span>
+                            <a class="spp-write-btn accent" id="sppOverviewWriteReview" href="#">✎ Write a Review</a>
+                        </div>
+                        <div id="sppOverviewReviewSummary"></div>
+                        <div id="sppOverviewReviewsList"><div class="spp-none">Loading reviews…</div></div>
+                    </div>
+                </div>
+                <div class="spp-pane" data-pane="services">
+                    <div class="spp-sec-title">All Services</div>
+                    <div id="sppServicesFull"></div>
+                </div>
+                <div class="spp-pane" data-pane="reviews">
+                    <div class="spp-sec-title">
+                        Reviews
+                        <a class="spp-write-btn" id="sppWriteReview" href="#">✎ Write a Review</a>
+                    </div>
+                    <div id="sppReviewSummary"></div>
+                    <div id="sppReviewsList"><div class="spp-none">Loading reviews…</div></div>
+                </div>
+                <div class="spp-pane" data-pane="photos">
+                    <div class="spp-sec-title">Photos</div>
+                    <div id="sppPhotosGrid"><div class="spp-none">Loading photos…</div></div>
+                </div>
+                <div class="spp-pane" data-pane="social">
+                    <div class="spp-sec-title">Social Links</div>
+                    <div id="sppSocialLinks"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- RIGHT COLUMN — About only -->
+        <aside class="spp-right">
+            <div class="spp-col-card spp-right-sec">
+                <div class="spp-right-title">About</div>
+                <div class="spp-about-txt" id="sppAbout"></div>
+                <button class="spp-readmore" id="sppReadMore" style="display:none;">Read more ▾</button>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Similar spellcasters — below the profile layout -->
+    <section class="spp-similar-section" id="sppSimilarSection" style="display:none;">
+        <div class="spp-similar-card">
+            <div class="spp-sec-title">Similar Spellcasters</div>
+            <div id="sppSimilar" class="spp-none">Loading…</div>
+        </div>
+    </section>
+    </div><!-- /.spp-page -->
+
+    <div class="spp-error" id="sppError" style="display:none;">Profile not found. <a href="index.html" style="color:var(--navy);">Return to the directory</a>.</div>
+
+    <!-- Contact / Inquiry Modal -->
+    <div class="spp-modal-overlay" id="sppContactModal" role="dialog" aria-modal="true">
+        <div class="spp-modal">
+            <button class="spp-modal-close" id="sppContactClose" aria-label="Close">×</button>
+            <div class="spp-modal-title">Contact Spellcaster</div>
+            <div class="spp-modal-sub">Send your inquiry directly. The spellcaster will reach out to you.</div>
+            <form id="sppInquiryForm" autocomplete="off">
+                <div class="spp-form-field">
+                    <label for="sppInqName">Full Name *</label>
+                    <input type="text" id="sppInqName" required placeholder="Your full name">
+                </div>
+                <div class="spp-form-field">
+                    <label for="sppInqDob">Date of Birth</label>
+                    <input type="date" id="sppInqDob">
+                </div>
+                <div class="spp-form-field">
+                    <label for="sppInqEmail">Email *</label>
+                    <input type="email" id="sppInqEmail" required placeholder="you@example.com">
+                </div>
+                <div class="spp-form-field">
+                    <label for="sppInqBudget">Budget</label>
+                    <input type="text" id="sppInqBudget" placeholder="e.g. $100">
+                </div>
+                <div class="spp-form-field">
+                    <label for="sppInqDesc">What do you need help with? *</label>
+                    <textarea id="sppInqDesc" rows="4" required placeholder="Describe your situation…"></textarea>
+                </div>
+                <button type="submit" class="spp-form-submit" id="sppInqSubmit">Send Inquiry</button>
+                <div class="spp-form-msg" id="sppInqMsg"></div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer" id="siteFooter" role="contentinfo"></footer>
+    <script src="site-footer.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="auth.js"></script>
+
+    <script>
+    (function () {
+        var SUPABASE_URL = 'https://uapjfrxjjpotmvpuidsq.supabase.co';
+        var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVhcGpmcnhqanBvdG12cHVpZHNxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjAxMjcxMzAsImV4cCI6MjA3NTcwMzEzMH0.NAFy5Iqs6xm39R42yxBHpjxdBmT66cB7l9LcpULUGoI';
+
+        var sc = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        var profile = null;
+        var allReviews = [];
+
+        // ── Mobile menu ──
+        (function() {
+            var btn = document.getElementById('mobileMenuBtn');
+            var nav = document.getElementById('mobileNav');
+            if (!btn || !nav) return;
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                btn.classList.toggle('active');
+                nav.classList.toggle('active');
+            });
+            document.addEventListener('click', function(e) {
+                if (nav.classList.contains('active') && !nav.contains(e.target) && !btn.contains(e.target)) {
+                    btn.classList.remove('active');
+                    nav.classList.remove('active');
+                }
+            });
+        })();
+
+        function esc(s) {
+            return String(s == null ? '' : s)
+                .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        }
+
+        function starRow(rating, size) {
+            var r = Math.round(parseFloat(rating) || 0);
+            var out = '';
+            for (var i = 1; i <= 5; i++) out += '<span style="opacity:' + (i <= r ? 1 : 0.25) + '">★</span>';
+            return '<span class="spp-review-stars"' + (size ? ' style="font-size:' + size + 'px;"' : '') + '>' + out + '</span>';
+        }
+
+        function parseOfferings(p) {
+            var out = [];
+            String(p.offerings || '').split('\n').forEach(function(line) {
+                line = line.trim();
+                if (!line) return;
+                var parts = line.split('—');
+                out.push({ name: (parts[0] || '').trim(), price: (parts[1] || '').trim() });
+            });
+            if (!out.length) {
+                String(p.services_offered || '').split(',').forEach(function(s) {
+                    s = s.trim();
+                    if (s) out.push({ name: s, price: '' });
+                });
+            }
+            return out;
+        }
+
+        var verifiedSvg = '<span style="color:var(--green);display:inline-flex;" title="Verified"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" fill="currentColor"/><path d="M4.5 7l1.8 1.8L9.8 5.4" stroke="#fff" stroke-width="1.5" fill="none"/></svg></span>';
+
+        function resolveRoute() {
+            var params = new URLSearchParams(window.location.search);
+            var id = params.get('id');
+            var slug = params.get('slug');
+            if (id) return { col: 'id', val: id };
+            if (slug) return { col: 'slug', val: slug.trim().toLowerCase() };
+            return null;
+        }
+
+        function userCanView(user, p) {
+            if (p.status === 'approved' && p.is_active !== false) return true;
+            return !!user && (user.id === p.owner_user_id || user.id === p.caster_user_id);
+        }
+
+        async function load() {
+            var route = resolveRoute();
+            if (!route) { showError(); return; }
+
+            try {
+                var res = await sc.from('sc_profiles').select('*').eq(route.col, route.val).maybeSingle();
+                if (res.error || !res.data) { showError(); return; }
+                profile = res.data;
+
+                var userRes = await sc.auth.getUser().catch(function(){ return { data: { user: null } }; });
+                if (!userCanView(userRes.data.user, profile)) { showError(); return; }
+
+                render();
+                loadReviews();
+                loadSimilar();
+                loadPrevNext();
+                incrementViews();
+            } catch (e) {
+                showError();
+            }
+        }
+
+        function showError() {
+            document.getElementById('sppLoading').style.display = 'none';
+            document.getElementById('sppError').style.display = 'block';
+        }
+
+        function render() {
+            var p = profile;
+            document.getElementById('sppLoading').style.display = 'none';
+            document.getElementById('sppTopbar').style.display = 'flex';
+            document.getElementById('sppPage').style.display = 'block';
+
+            // SEO
+            document.title = (p.professional_name || 'Spell Caster') + ' — ' + (p.professional_identity || 'Spell Caster') + ' Reviews | Witch Weekly';
+
+            // Breadcrumb
+            document.getElementById('sppCrumbType').textContent = p.professional_identity || 'Spellcaster';
+            document.getElementById('sppCrumbName').textContent = p.professional_name || '—';
+
+            // Photo
+            document.getElementById('sppPhotoWrap').innerHTML = p.profile_picture_url
+                ? '<img class="spp-photo" src="' + esc(p.profile_picture_url) + '" alt="' + esc(p.professional_name || '') + '">'
+                : '<div class="spp-photo-ph">✦</div>';
+
+            // Name / tagline / chips
+            document.getElementById('sppName').innerHTML = esc(p.professional_name || '—') + (p.is_verified ? verifiedSvg : '');
+            document.getElementById('sppTagline').textContent = p.one_liner || '';
+            var chips = '';
+            if (p.professional_identity) chips += '<span class="spp-chip spp-chip-type">' + esc(p.professional_identity) + '</span>';
+            if (p.is_verified) chips += '<span class="spp-chip spp-chip-verified">Verified</span>';
+            document.getElementById('sppChips').innerHTML = chips;
+
+            // Rating
+            var hasRating = (p.review_count || 0) > 0 && p.average_rating;
+            document.getElementById('sppRating').innerHTML = hasRating
+                ? '<span class="spp-star">★</span> ' + parseFloat(p.average_rating).toFixed(1) + ' <span class="spp-muted">(' + p.review_count + ' review' + (p.review_count === 1 ? '' : 's') + ')</span>'
+                : '<span class="spp-muted">No reviews yet</span>';
+
+            // Info rows — only real DB fields, dash when empty
+            var rows = [
+                ['Location',           p.location],
+                ['Active since',       p.active_since],
+                ['Experience',         p.experience],
+                ['Response time',      p.response_time],
+                ['Languages',          p.languages],
+                ['Works online',       p.works_online === false ? 'No' : 'Yes'],
+                ['Price range',        p.minimum_price],
+                ['Provides proof',     p.provides_proof ? 'Yes' : 'No'],
+                ['Refund policy',      p.refund_policy ? 'Yes' : 'No'],
+                ['Delivery time',      p.delivery_time],
+                ['Emergency requests', p.accepts_emergency]
+            ];
+            document.getElementById('sppInfoRows').innerHTML = rows.map(function(r) {
+                return '<div class="spp-info-row"><span class="spp-info-label">' + r[0] + '</span><span class="spp-info-val">' + esc(r[1] || '—') + '</span></div>';
+            }).join('');
+
+            // Specialties chips
+            var specs = String(p.specialties || '').split(',').map(function(s){ return s.trim(); }).filter(Boolean);
+            if (specs.length) {
+                document.getElementById('sppSpecialtiesSec').style.display = '';
+                document.getElementById('sppSpecialties').innerHTML = specs.map(function(s) {
+                    return '<span class="spp-chip">' + esc(s) + '</span>';
+                }).join('');
+            }
+
+            // Services chips (sidebar) + tables
+            var offerings = parseOfferings(p);
+            if (p.service_type || offerings.length) {
+                document.getElementById('sppServicesChipsSec').style.display = '';
+                var svcChips = '';
+                if (p.service_type) svcChips += '<span class="spp-chip">' + esc(p.service_type) + '</span>';
+                offerings.slice(0, 6).forEach(function(o) {
+                    if (o.name) svcChips += '<span class="spp-chip">' + esc(o.name) + '</span>';
+                });
+                document.getElementById('sppServicesChips').innerHTML = svcChips;
+            }
+
+            var svcTable = buildServicesTable(offerings);
+            document.getElementById('sppOverviewServices').innerHTML = svcTable;
+            document.getElementById('sppServicesFull').innerHTML = svcTable;
+            document.getElementById('sppSvcCount').textContent = offerings.length ? '(' + offerings.length + ')' : '';
+            document.getElementById('sppTabServices').textContent = 'Services' + (offerings.length ? ' (' + offerings.length + ')' : '');
+            bindRequestBtns();
+
+            // Quote
+            if (p.one_liner) {
+                var q = document.getElementById('sppQuote');
+                q.style.display = '';
+                q.textContent = '"' + p.one_liner + '" — ' + (p.professional_name || '');
+            }
+
+            // About (right column)
+            var aboutEl = document.getElementById('sppAbout');
+            if (p.description && p.description.trim()) {
+                aboutEl.innerHTML = String(p.description).split(/\n{2,}/).map(function(par) {
+                    return '<p>' + esc(par).replace(/\n/g, '<br>') + '</p>';
+                }).join('');
+                if (aboutEl.scrollHeight > 320) {
+                    var rm = document.getElementById('sppReadMore');
+                    rm.style.display = '';
+                    rm.addEventListener('click', function() {
+                        var expanded = aboutEl.classList.toggle('expanded');
+                        rm.textContent = expanded ? 'Read less ▴' : 'Read more ▾';
+                    });
+                }
+            } else {
+                aboutEl.innerHTML = '<span class="spp-none">No description provided.</span>';
+            }
+
+            // Social links
+            var links = [];
+            if (p.website)        links.push(['Website', p.website]);
+            if (p.store_link)     links.push(['Store', p.store_link]);
+            if (p.instagram_link) links.push(['Instagram', p.instagram_link]);
+            if (p.reddit_link)    links.push(['Reddit', p.reddit_link]);
+            document.getElementById('sppSocialLinks').innerHTML = links.length
+                ? links.map(function(l) {
+                    return '<a class="spp-social-btn" href="' + esc(l[1]) + '" target="_blank" rel="noopener noreferrer">' + l[0] + ' ↗</a>';
+                }).join('')
+                : '<div class="spp-none">No social links added yet.</div>';
+
+            // Write review — existing full review flow lives on profile.html
+            var writeHref = p.slug
+                ? 'profile.html?slug=' + encodeURIComponent(p.slug) + '&writeReview=1'
+                : 'profile.html?id=' + encodeURIComponent(p.id) + '&writeReview=1';
+            ['sppWriteReview', 'sppSideWriteReview', 'sppOverviewWriteReview'].forEach(function(id) {
+                var el = document.getElementById(id);
+                if (el) el.href = writeHref;
+            });
+
+            // Save state + buttons
+            refreshSaveBtn();
+            document.getElementById('sppSaveBtn').addEventListener('click', async function() {
+                var result = await scAuth.toggleSave(profile.id);
+                if (result) refreshSaveBtn();
+            });
+            document.getElementById('sppShareBtn').addEventListener('click', share);
+            document.getElementById('sppContactBtn').addEventListener('click', openContactModal);
+
+            // Tabs
+            document.querySelectorAll('.spp-tab').forEach(function(t) {
+                t.addEventListener('click', function() { switchTab(t.dataset.tab); });
+            });
+        }
+
+        function buildServicesTable(offerings) {
+            if (!offerings.length) return '<div class="spp-none">No services listed yet.</div>';
+            return '<div class="spp-svc-table-wrap"><table class="spp-svc-table"><thead><tr>' +
+                '<th>#</th><th>Service Name</th><th>Price</th><th></th>' +
+                '</tr></thead><tbody>' +
+                offerings.map(function(o, i) {
+                    return '<tr>' +
+                        '<td class="spp-muted">' + (i + 1) + '</td>' +
+                        '<td style="color:var(--navy);">' + esc(o.name || '—') + '</td>' +
+                        '<td style="white-space:nowrap;">' + esc(o.price || '—') + '</td>' +
+                        '<td style="text-align:right;"><button class="spp-req-btn" data-request>Request</button></td>' +
+                    '</tr>';
+                }).join('') +
+                '</tbody></table></div>';
+        }
+
+        function bindRequestBtns() {
+            document.querySelectorAll('[data-request]').forEach(function(btn) {
+                btn.addEventListener('click', openContactModal);
+            });
+        }
+
+        function switchTab(name) {
+            document.querySelectorAll('.spp-tab').forEach(function(t) { t.classList.toggle('active', t.dataset.tab === name); });
+            document.querySelectorAll('.spp-pane').forEach(function(pn) { pn.classList.toggle('active', pn.dataset.pane === name); });
+        }
+
+        function refreshSaveBtn() {
+            var btn = document.getElementById('sppSaveBtn');
+            if (!btn || !profile) return;
+            var saved = (typeof scAuth !== 'undefined') && scAuth.userSaves.has(profile.id);
+            btn.classList.toggle('saved', saved);
+            btn.textContent = saved ? '♥ Saved' : '♡ Save';
+        }
+
+        // ── Reviews ──
+        async function loadReviews() {
+            var listEl = document.getElementById('sppReviewsList');
+            var overviewListEl = document.getElementById('sppOverviewReviewsList');
+            var overviewSumEl = document.getElementById('sppOverviewReviewSummary');
+            try {
+                var res = await sc.from('sc_reviews')
+                    .select('*')
+                    .eq('profile_id', profile.id)
+                    .order('created_at', { ascending: false });
+                if (res.error) throw res.error;
+                allReviews = res.data || [];
+
+                var n = allReviews.length;
+                document.getElementById('sppTabReviews').textContent = 'Reviews (' + n + ')';
+                document.getElementById('sppOverviewRevCount').textContent = n ? '(' + n + ')' : '';
+
+                // Summary + distribution bars
+                var sumEl = document.getElementById('sppReviewSummary');
+                var summaryHtml = '';
+                if (n) {
+                    var avg = allReviews.reduce(function(s, r){ return s + (r.rating || 0); }, 0) / n;
+                    var dist = [0,0,0,0,0];
+                    allReviews.forEach(function(r) { if (r.rating >= 1 && r.rating <= 5) dist[r.rating - 1]++; });
+                    var bars = '';
+                    for (var star = 5; star >= 1; star--) {
+                        var pct = Math.round((dist[star - 1] / n) * 100);
+                        bars += '<div class="spp-rev-bar-row"><span>' + star + '</span><div class="spp-rev-bar-track"><div class="spp-rev-bar-fill" style="width:' + pct + '%"></div></div><span>' + pct + '%</span></div>';
+                    }
+                    summaryHtml = '<div class="spp-rev-summary">' +
+                        '<div><div class="spp-rev-big">' + (Math.round(avg * 10) / 10).toFixed(1) + '</div>' +
+                        '<div>' + starRow(avg) + '</div>' +
+                        '<div class="spp-rev-sub">Based on ' + n + ' review' + (n === 1 ? '' : 's') + '</div></div>' +
+                        '<div class="spp-rev-bars">' + bars + '</div>' +
+                    '</div>';
+                }
+                if (sumEl) sumEl.innerHTML = summaryHtml;
+                if (overviewSumEl) overviewSumEl.innerHTML = summaryHtml;
+
+                // Full list (Reviews tab)
+                var emptyMsg = '<div class="spp-none">No reviews yet. Be the first to share your experience.</div>';
+                listEl.innerHTML = n ? allReviews.map(reviewCardHtml).join('') : emptyMsg;
+
+                // Overview: show up to 5 reviews + link to full tab if more
+                if (overviewListEl) {
+                    if (!n) {
+                        overviewListEl.innerHTML = emptyMsg;
+                    } else {
+                        overviewListEl.innerHTML = allReviews.slice(0, 5).map(reviewCardHtml).join('') +
+                            (n > 5
+                                ? '<button type="button" class="spp-write-btn" id="sppViewAllReviewsBtn" style="margin-top:8px;width:100%;justify-content:center;">View All ' + n + ' Reviews →</button>'
+                                : '');
+                        var viewAll = document.getElementById('sppViewAllReviewsBtn');
+                        if (viewAll) {
+                            viewAll.addEventListener('click', function() {
+                                switchTab('reviews');
+                                document.getElementById('sppTabs').scrollIntoView({ behavior: 'smooth' });
+                            });
+                        }
+                    }
+                }
+
+                // Photos tab: profile picture + all review images
+                var photos = [];
+                if (profile.profile_picture_url) photos.push(profile.profile_picture_url);
+                allReviews.forEach(function(r) {
+                    try {
+                        var arr = JSON.parse(r.image_urls || '[]');
+                        if (Array.isArray(arr)) photos = photos.concat(arr);
+                    } catch (_) {}
+                });
+                document.getElementById('sppTabPhotos').textContent = 'Photos' + (photos.length ? ' (' + photos.length + ')' : '');
+                document.getElementById('sppPhotosGrid').innerHTML = photos.length
+                    ? '<div class="spp-photos-grid">' + photos.map(function(u) {
+                        return '<a href="' + esc(u) + '" target="_blank" rel="noopener"><img src="' + esc(u) + '" alt="Photo" loading="lazy"></a>';
+                    }).join('') + '</div>'
+                    : '<div class="spp-none">No photos yet.</div>';
+            } catch (e) {
+                listEl.innerHTML = '<div class="spp-none">Could not load reviews.</div>';
+                if (overviewListEl) overviewListEl.innerHTML = '<div class="spp-none">Could not load reviews.</div>';
+                document.getElementById('sppPhotosGrid').innerHTML = '<div class="spp-none">Could not load photos.</div>';
+            }
+        }
+
+        function reviewCardHtml(r) {
+            var d = r.created_at ? new Date(r.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '';
+            var initial = (r.reviewer_name || 'A')[0].toUpperCase();
+            var imgs = [];
+            try {
+                var arr = JSON.parse(r.image_urls || '[]');
+                if (Array.isArray(arr)) imgs = arr;
+            } catch (_) {}
+            return '<div class="spp-review-card">' +
+                '<div class="spp-review-head">' +
+                    (r.reviewer_avatar
+                        ? '<img class="spp-review-avatar" src="' + esc(r.reviewer_avatar) + '" alt="">'
+                        : '<div class="spp-review-avatar-ph">' + esc(initial) + '</div>') +
+                    '<span class="spp-review-name">' + esc(r.reviewer_name || 'Anonymous') + '</span>' +
+                    '<span class="spp-review-date">' + esc(d) + '</span>' +
+                '</div>' +
+                '<div>' + starRow(r.rating) +
+                    (r.services_purchased ? '<span class="spp-review-svc">' + esc(r.services_purchased) + '</span>' : '') +
+                '</div>' +
+                '<div class="spp-review-text">' + esc(r.review_text || '') + '</div>' +
+                (r.review_update ? '<div class="spp-review-update"><strong>Update:</strong> ' + esc(r.review_update) + '</div>' : '') +
+                (imgs.length ? '<div class="spp-review-imgs">' + imgs.map(function(u) {
+                    return '<a href="' + esc(u) + '" target="_blank" rel="noopener"><img src="' + esc(u) + '" alt="Review photo" loading="lazy"></a>';
+                }).join('') + '</div>' : '') +
+            '</div>';
+        }
+
+        // ── Similar spellcasters ──
+        async function loadSimilar() {
+            var el = document.getElementById('sppSimilar');
+            var section = document.getElementById('sppSimilarSection');
+            var type = (profile.professional_identity || '').trim();
+            if (!type) {
+                if (section) section.style.display = 'none';
+                el.innerHTML = '<span class="spp-none">No similar spellcasters found.</span>';
+                return;
+            }
+            try {
+                var res = await sc.from('sc_profiles')
+                    .select('id, slug, professional_name, professional_identity, profile_picture_url, average_rating, review_count, minimum_price')
+                    .eq('status', 'approved')
+                    .eq('is_active', true)
+                    .ilike('professional_identity', type)
+                    .neq('id', profile.id)
+                    .order('upvotes', { ascending: false })
+                    .limit(5);
+                if (res.error) throw res.error;
+                var data = res.data || [];
+                if (!data.length) {
+                    if (section) section.style.display = 'none';
+                    el.innerHTML = '<span class="spp-none">No similar spellcasters found.</span>';
+                    return;
+                }
+                if (section) section.style.display = '';
+                el.innerHTML = '<div class="spp-similar-row">' + data.map(function(c) {
+                    var href = c.slug
+                        ? 'spellcaster-profile.html?slug=' + encodeURIComponent(c.slug)
+                        : 'spellcaster-profile.html?id=' + encodeURIComponent(c.id);
+                    var hasR = (c.review_count || 0) > 0 && c.average_rating;
+                    return '<a class="spp-sim-card" href="' + href + '">' +
+                        (c.profile_picture_url
+                            ? '<img class="spp-sim-img" src="' + esc(c.profile_picture_url) + '" alt="' + esc(c.professional_name) + '" loading="lazy">'
+                            : '<div class="spp-sim-img-ph">✦</div>') +
+                        '<div class="spp-sim-body">' +
+                            '<div class="spp-sim-name">' + esc(c.professional_name || '—') + '</div>' +
+                            '<div class="spp-sim-meta">' +
+                                (hasR ? '<span class="spp-star">★</span> ' + parseFloat(c.average_rating).toFixed(1) + ' (' + c.review_count + ')' : 'No reviews') +
+                            '</div>' +
+                            (c.minimum_price ? '<div class="spp-sim-meta">' + esc(c.minimum_price) + '</div>' : '') +
+                        '</div>' +
+                    '</a>';
+                }).join('') + '</div>';
+            } catch (e) {
+                if (section) section.style.display = 'none';
+                el.innerHTML = '<span class="spp-none">Could not load similar spellcasters.</span>';
+            }
+        }
+
+        // ── Prev / Next ──
+        async function loadPrevNext() {
+            try {
+                var res = await sc.from('sc_profiles')
+                    .select('id, slug')
+                    .eq('status', 'approved')
+                    .eq('is_active', true)
+                    .order('created_at', { ascending: false });
+                if (res.error || !res.data) return;
+                var list = res.data;
+                var idx = list.findIndex(function(x){ return x.id === profile.id; });
+                if (idx < 0) return;
+                var prev = list[idx - 1];
+                var next = list[idx + 1];
+                var prevBtn = document.getElementById('sppPrevBtn');
+                var nextBtn = document.getElementById('sppNextBtn');
+                function hrefOf(x) {
+                    return x.slug
+                        ? 'spellcaster-profile.html?slug=' + encodeURIComponent(x.slug)
+                        : 'spellcaster-profile.html?id=' + encodeURIComponent(x.id);
+                }
+                if (prev) {
+                    prevBtn.disabled = false;
+                    prevBtn.addEventListener('click', function(){ window.location.href = hrefOf(prev); });
+                }
+                if (next) {
+                    nextBtn.disabled = false;
+                    nextBtn.addEventListener('click', function(){ window.location.href = hrefOf(next); });
+                }
+            } catch (_) {}
+        }
+
+        // ── Views + share + contact ──
+        async function incrementViews() {
+            try {
+                await sc.from('sc_profiles').update({ views: (profile.views || 0) + 1 }).eq('id', profile.id);
+            } catch (_) {}
+        }
+
+        function share() {
+            var url = window.location.href;
+            try { sc.from('sc_analytics').insert({ profile_id: profile.id, event_type: 'share_click' }).then(function(){}); } catch (_) {}
+            if (navigator.share) {
+                navigator.share({ title: profile.professional_name, url: url }).catch(function(){});
+            } else {
+                navigator.clipboard.writeText(url).then(function() {
+                    var btn = document.getElementById('sppShareBtn');
+                    btn.textContent = '✓ Copied';
+                    setTimeout(function(){ btn.textContent = '⇗ Share'; }, 1500);
+                }).catch(function(){});
+            }
+        }
+
+        function openContactModal() {
+            try { sc.from('sc_analytics').insert({ profile_id: profile.id, event_type: 'contact_click' }).then(function(){}); } catch (_) {}
+            document.getElementById('sppInqMsg').className = 'spp-form-msg';
+            document.getElementById('sppInquiryForm').reset();
+            document.getElementById('sppContactModal').classList.add('active');
+        }
+        document.getElementById('sppContactClose').addEventListener('click', function() {
+            document.getElementById('sppContactModal').classList.remove('active');
+        });
+        document.getElementById('sppContactModal').addEventListener('click', function(e) {
+            if (e.target === this) this.classList.remove('active');
+        });
+        document.getElementById('sppInquiryForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            var btn = document.getElementById('sppInqSubmit');
+            var msg = document.getElementById('sppInqMsg');
+            btn.disabled = true; btn.textContent = 'Sending…';
+            try {
+                var res = await sc.from('sc_inquiries').insert({
+                    profile_id:    profile.id,
+                    full_name:     document.getElementById('sppInqName').value.trim(),
+                    date_of_birth: document.getElementById('sppInqDob').value || null,
+                    email:         document.getElementById('sppInqEmail').value.trim(),
+                    budget:        document.getElementById('sppInqBudget').value.trim() || null,
+                    description:   document.getElementById('sppInqDesc').value.trim()
+                });
+                if (res.error) throw res.error;
+                try { sc.from('sc_analytics').insert({ profile_id: profile.id, event_type: 'inquiry_submit' }).then(function(){}); } catch (_) {}
+                msg.className = 'spp-form-msg success';
+                msg.textContent = 'Your inquiry has been sent successfully!';
+                this.reset();
+                setTimeout(function() { document.getElementById('sppContactModal').classList.remove('active'); }, 1400);
+            } catch (err) {
+                msg.className = 'spp-form-msg error';
+                msg.textContent = 'Failed to send inquiry. Please try again.';
+            } finally {
+                btn.disabled = false; btn.textContent = 'Send Inquiry';
+            }
+        });
+
+        // ── Init ──
+        document.addEventListener('DOMContentLoaded', function() {
+            try {
+                if (typeof scAuth !== 'undefined') {
+                    scAuth.init(sc, { onSignIn: refreshSaveBtn, onSignOut: refreshSaveBtn }).catch(function(){});
+                }
+            } catch (_) {}
+            load();
+        });
+    })();
+    </script>
+</body>
+</html>

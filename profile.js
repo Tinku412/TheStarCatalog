@@ -1,4 +1,4 @@
-﻿// ============================================
+// ============================================
 // SUPABASE CONFIGURATION
 // ============================================
 const SUPABASE_URL = 'https://uapjfrxjjpotmvpuidsq.supabase.co';
@@ -270,9 +270,10 @@ function populateProfile(profile) {
     // Description — formatted for readability
     document.getElementById('profileDescription').innerHTML = formatDescription(profile.description);
 
-    // Services Offered — populate store-like listing cards
+    // Services Offered — compact table (# | name | price | request)
     const servicesListingsEl = document.getElementById('servicesListings');
     const noSvcMsg  = document.getElementById('noServicesMsg');
+    const svcCountEl = document.getElementById('servicesOfferedCount');
     if (servicesListingsEl) {
         const offeringsFromText = parseOfferingsText(profile.offerings);
         const fallbackServices = String(profile.services_offered || '')
@@ -283,18 +284,36 @@ function populateProfile(profile) {
         const offerings = offeringsFromText.length ? offeringsFromText : fallbackServices;
 
         if (offerings.length) {
-            servicesListingsEl.innerHTML = offerings.map((item, idx) => `
-                <article class="service-listing-card">
-                    <div class="service-listing-top">
-                        <span class="service-listing-badge">Service ${idx + 1}</span>
-                        <span class="service-listing-price">${escHtml(formatUsdPrice(item.price))}</span>
-                    </div>
-                    <h4 class="service-listing-name">${escHtml(item.name)}</h4>
-                </article>
-            `).join('');
+            if (svcCountEl) svcCountEl.textContent = `(${offerings.length})`;
+            servicesListingsEl.innerHTML = `
+                <table class="services-offered-table">
+                    <thead>
+                        <tr>
+                            <th class="svc-col-num">#</th>
+                            <th class="svc-col-name">Service Name</th>
+                            <th class="svc-col-price">Price</th>
+                            <th class="svc-col-action"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${offerings.map((item, idx) => `
+                            <tr>
+                                <td class="svc-col-num">${idx + 1}</td>
+                                <td class="svc-col-name">${escHtml(item.name)}</td>
+                                <td class="svc-col-price">${escHtml(formatUsdPrice(item.price) || '—')}</td>
+                                <td class="svc-col-action">
+                                    <button type="button" class="service-request-btn">Request</button>
+                                </td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            `;
             if (noSvcMsg) noSvcMsg.style.display = 'none';
-        } else if (noSvcMsg) {
-            noSvcMsg.style.display = '';
+        } else {
+            if (svcCountEl) svcCountEl.textContent = '';
+            servicesListingsEl.innerHTML = '';
+            if (noSvcMsg) noSvcMsg.style.display = '';
         }
     }
 
@@ -519,7 +538,7 @@ function showError(message) {
         container.innerHTML = `
             <div style="text-align: center; padding: 60px 20px;">
                 <h2 style="font-size: 24px; margin-bottom: 20px; color: #e14b22;">${message}</h2>
-                <a href="/spellcasters.html" class="back-button">← Back to Directory</a>
+                <a href="/index.html" class="back-button">← Back to Directory</a>
             </div>
         `;
     }
@@ -1248,6 +1267,9 @@ function initializeReviewInteractions() {
     }
     document.getElementById('contactBtn')?.addEventListener('click', openContact);
     document.getElementById('headerContactBtn')?.addEventListener('click', openContact);
+    document.getElementById('servicesListings')?.addEventListener('click', e => {
+        if (e.target.closest('.service-request-btn')) openContact();
+    });
     document.getElementById('closeContact')?.addEventListener('click', () => {
         document.getElementById('contactModal')?.classList.remove('active');
         document.body.style.overflow = '';

@@ -315,6 +315,61 @@
     background: var(--cream3);
 }
 
+/* ========== WRITE A REVIEW PAGE ========== */
+
+.seed-auth-banner,
+.review-page-auth-banner {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    padding: 12px 14px;
+    margin-bottom: 1.4rem;
+    border: 1.5px solid var(--border);
+    background: var(--cream);
+    color: var(--navy);
+    line-height: 1.5;
+}
+.seed-auth-banner.ok,
+.review-page-auth-banner.ok {
+    border-color: #2f5540;
+    background: rgba(47, 85, 64, 0.08);
+}
+.seed-auth-banner.warn,
+.review-page-auth-banner.warn {
+    border-color: rgba(161, 129, 6, 0.55);
+    background: rgba(201, 185, 122, 0.18);
+}
+.seed-auth-banner.error,
+.review-page-auth-banner.error {
+    border-color: #a13f2f;
+    background: rgba(161, 63, 47, 0.08);
+}
+.seed-signin-btn {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-left: 10px;
+    padding: 5px 10px;
+    border: 1.5px solid var(--navy);
+    background: var(--navy);
+    color: var(--cream);
+    cursor: pointer;
+}
+.seed-signin-btn:hover { background: var(--navy2); }
+
+.write-review-page-form .sub-ratings-group {
+    margin-top: 4px;
+}
+
+.write-review-page-form .image-upload-zone {
+    margin-top: 4px;
+}
+
+.write-review-page-form select {
+    width: 100%;
+}
+
 /* ========== RESPONSIVE ========== */
 
 @media (max-width: 768px) {

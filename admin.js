@@ -1,9 +1,12 @@
-// ============================================
+﻿// ============================================
 // SUPABASE CONFIGURATION
 // ============================================
 // Replace these with your actual Supabase credentials
 const SUPABASE_URL = 'https://uapjfrxjjpotmvpuidsq.supabase.co'; // e.g., https://xxxxx.supabase.co
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVhcGpmcnhqanBvdG12cHVpZHNxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjAxMjcxMzAsImV4cCI6MjA3NTcwMzEzMH0.NAFy5Iqs6xm39R42yxBHpjxdBmT66cB7l9LcpULUGoI';
+
+/** Default owner UID for newly submitted profiles */
+const DEFAULT_OWNER_USER_ID = 'a6316b86-f6dd-4fee-9449-b125eafd97e8';
 
 // Initialize Supabase client (include Supabase JS library in HTML first)
 // Add this to your HTML: <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -83,7 +86,7 @@ async function handleFormSubmit(e) {
             reddit_link:    formData.get('redditLink') || null,
             status:         'pending',
             is_active:      false,
-            owner_user_id:  'a6316b86-f6dd-4fee-9449-b125eafd97e8',
+            owner_user_id:  DEFAULT_OWNER_USER_ID,
             location:       formData.get('location') || null,
             active_since:   formData.get('activeSince') || null,
             response_time:  formData.get('responseTime') || null,
@@ -102,7 +105,7 @@ async function handleFormSubmit(e) {
         }
         
         // Success!
-        showNotification('Profile submitted successfully! 🎉', 'success');
+        showNotification('Profile submitted successfully! ðŸŽ‰', 'success');
         
         // Reset form after 2 seconds
         setTimeout(() => {
@@ -165,7 +168,7 @@ function showNotification(message, type = 'success') {
     notification.className = `notification notification-${type}`;
     notification.innerHTML = `
         <div class="notification-content">
-            <span class="notification-icon">${type === 'success' ? '✓' : '✗'}</span>
+            <span class="notification-icon">${type === 'success' ? 'âœ“' : 'âœ—'}</span>
             <span class="notification-message">${message}</span>
         </div>
     `;
@@ -238,4 +241,3 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
-

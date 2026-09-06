@@ -28,7 +28,7 @@ $specialtyNav = @'
                 <a href="obsession-spell-casters.html" class="sc-specialty-link">Obsession</a>
                 <a href="revenge-spell-casters.html" class="sc-specialty-link">Revenge &amp; Justice</a>
                 <a href="beauty-spell-casters.html" class="sc-specialty-link">Beauty &amp; Glamour</a>
-                <a href="spellcasters.html" class="sc-specialty-link">All Spell Casters</a>
+                <a href="index.html" class="sc-specialty-link">All Spell Casters</a>
             </nav>
 '@
 
@@ -68,7 +68,7 @@ $header = @'
             <div class="logo-text"><span class="logo-main">The Star Catalog</span><span class="logo-sub">Est. MMXXVI — Seeker's Guide</span></div>
         </a>
         <nav class="site-nav">
-            <a href="spellcasters.html" class="active">Browse</a>
+            <a href="index.html" class="active">Browse</a>
             <a href="about.html">About</a>
             <a href="faq.html">FAQ</a>
             <a href="saved.html">Saved</a>
@@ -78,7 +78,7 @@ $header = @'
         <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu"><span></span><span></span><span></span></button>
     </header>
     <div class="mobile-nav" id="mobileNav">
-        <a href="spellcasters.html" class="mobile-nav-item">Browse Directory</a>
+        <a href="index.html" class="mobile-nav-item">Browse Directory</a>
         <a href="about.html" class="mobile-nav-item">About</a>
         <a href="faq.html" class="mobile-nav-item">FAQ</a>
         <a href="contact.html" class="mobile-nav-item">Contact</a>
@@ -97,7 +97,7 @@ $header = @'
             <div class="content-section">
                 <div class="section-body">
                     <p>This specialty page is part of The Star Catalog — a community-driven spell caster directory with verified reviews from real seekers. Browse practitioners below or explore related specialties.</p>
-                    <p style="margin-top:1rem;"><a href="spellcasters.html" style="color:var(--accent);">Browse all spell casters</a> · <a href="love-spell-casters.html" style="color:var(--accent);">Love spell casters</a> · <a href="submit-practitioner.html" style="color:var(--accent);">Submit a practitioner</a></p>
+                    <p style="margin-top:1rem;"><a href="index.html" style="color:var(--accent);">Browse all spell casters</a> · <a href="love-spell-casters.html" style="color:var(--accent);">Love spell casters</a> · <a href="submit-practitioner.html" style="color:var(--accent);">Submit a practitioner</a></p>
                 </div>
                 <h2 class="section-heading" style="margin-top:2rem;">More Spell Casting Specialties</h2>
 {SPECIALTY_NAV}
