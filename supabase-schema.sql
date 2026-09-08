@@ -398,6 +398,21 @@ CREATE INDEX IF NOT EXISTS idx_sc_find_requests_created_at ON sc_find_requests(c
 CREATE INDEX IF NOT EXISTS idx_sc_find_requests_status ON sc_find_requests(status);
 
 -- ============================================
+-- LEAD SHARES (sc_lead_shares)
+-- Admin tracking of which casters a lead was sent to
+-- ============================================
+CREATE TABLE IF NOT EXISTS sc_lead_shares (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    lead_source TEXT NOT NULL CHECK (lead_source IN ('inquiry', 'find')),
+    lead_id UUID NOT NULL,
+    profile_id UUID NOT NULL REFERENCES sc_profiles(id) ON DELETE CASCADE,
+    shared_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    created_by UUID,
+    UNIQUE (lead_source, lead_id, profile_id)
+);
+ALTER TABLE sc_lead_shares ENABLE ROW LEVEL SECURITY;
+
+-- ============================================
 -- NOTES FOR SETUP:
 -- ============================================
 -- 1. Run this SQL in Supabase SQL Editor
