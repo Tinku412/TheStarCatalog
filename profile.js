@@ -6,10 +6,21 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 
 let supabaseClient;
 let currentUserId = null; // set after auth resolves; used to show update links on own reviews
+let currentProfile = null;
+
+const INQUIRIES_ADMIN_UID = 'a6316b86-f6dd-4fee-9449-b125eafd97e8';
+const INQUIRIES_ADMIN_EMAIL = 'rkbprashanth123@gmail.com';
 
 function userCanEditProfile(user, profile) {
     if (!user || !profile) return false;
     return user.id === profile.owner_user_id || user.id === profile.caster_user_id;
+}
+
+function userCanSeeInquiries(user, profile) {
+    if (!user || !profile) return false;
+    const email = String(user.email || '').trim().toLowerCase();
+    if (user.id === INQUIRIES_ADMIN_UID || email === INQUIRIES_ADMIN_EMAIL) return true;
+    return userCanEditProfile(user, profile);
 }
 
 function userCanViewProfile(user, profile) {
@@ -72,8 +83,8 @@ window.addEventListener('DOMContentLoaded', async function() {
     try {
         if (typeof scAuth !== 'undefined') {
             scAuth.init(supabaseClient, {
-                onSignIn:  () => { applyUserStateToBtns(); resolveCurrentUser(); },
-                onSignOut: () => { applyUserStateToBtns(); currentUserId = null; }
+                onSignIn:  () => { applyUserStateToBtns(); resolveCurrentUser(); refreshInquiriesAccess(); },
+                onSignOut: () => { applyUserStateToBtns(); currentUserId = null; refreshInquiriesAccess(); }
             }).catch(() => {});
         }
     } catch (_) { /* auth is optional */ }
@@ -122,6 +133,8 @@ async function loadProfile(identifier, bySlug = false) {
         }
 
         populateProfile(profile);
+        currentProfile = profile;
+        refreshInquiriesAccess();
 
         if (profile.slug) {
             try {
@@ -1286,19 +1299,136 @@ function initializeReviewInteractions() {
     document.getElementById('headerShareBtn')?.addEventListener('click', handleShareProfile);
     document.getElementById('headerShareBtnMobile')?.addEventListener('click', handleShareProfile);
 
-    // Profile section tabs
-    document.querySelectorAll('.profile-tab-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const tabKey = btn.dataset.tab;
-            // Update active button
-            document.querySelectorAll('.profile-tab-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            // Show matching panel
-            document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-            const panel = document.getElementById(`tab${tabKey.charAt(0).toUpperCase() + tabKey.slice(1)}`);
-            if (panel) panel.classList.add('active');
-        });
+    // Profile section tabs (delegation so the private Inquiries tab can be added later)
+    document.querySelector('.profile-tab-nav')?.addEventListener('click', (e) => {
+        const btn = e.target.closest('.profile-tab-btn');
+        if (!btn) return;
+        const tabKey = btn.dataset.tab;
+        document.querySelectorAll('.profile-tab-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+        const panel = document.getElementById(`tab${tabKey.charAt(0).toUpperCase() + tabKey.slice(1)}`);
+        if (panel) panel.classList.add('active');
+        if (tabKey === 'inquiries') loadProfileInquiries();
     });
+}
+
+// ============================================
+// PRIVATE INQUIRIES TAB
+// Visible only to the site admin and the profile's owner/caster.
+// ============================================
+function removeInquiriesTab() {
+    const wasActive = document.getElementById('profileInquiriesTab')?.classList.contains('active');
+    document.getElementById('profileInquiriesTab')?.remove();
+    document.getElementById('tabInquiries')?.remove();
+    if (wasActive) {
+        document.querySelector('.profile-tab-btn[data-tab="about"]')?.click();
+    }
+}
+
+async function refreshInquiriesAccess() {
+    const profile = currentProfile;
+    if (!profile) {
+        removeInquiriesTab();
+        return;
+    }
+    let user = null;
+    try {
+        const res = await supabaseClient.auth.getUser();
+        user = res?.data?.user || null;
+    } catch (_) {}
+    if (!userCanSeeInquiries(user, profile)) {
+        removeInquiriesTab();
+        return;
+    }
+    ensureInquiriesTab();
+}
+
+function ensureInquiriesTab() {
+    const nav = document.querySelector('.profile-tab-nav');
+    const block = document.querySelector('.profile-tabs-block');
+    if (!nav || !block) return;
+    if (!document.getElementById('profileInquiriesTab')) {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'profile-tab-btn';
+        btn.id = 'profileInquiriesTab';
+        btn.dataset.tab = 'inquiries';
+        btn.textContent = 'Inquiries';
+        nav.appendChild(btn);
+    }
+    if (!document.getElementById('tabInquiries')) {
+        const panel = document.createElement('div');
+        panel.className = 'tab-panel';
+        panel.id = 'tabInquiries';
+        panel.innerHTML = '<p class="no-tab-content">Loading inquiries…</p>';
+        block.appendChild(panel);
+    }
+}
+
+function fmtInquiryWhen(iso) {
+    if (!iso) return '';
+    try {
+        return new Date(iso).toLocaleString('en-IN', {
+            timeZone: 'Asia/Kolkata',
+            day: 'numeric', month: 'short', year: 'numeric',
+            hour: '2-digit', minute: '2-digit', hour12: true,
+        }) + ' IST';
+    } catch (_) {
+        return String(iso);
+    }
+}
+
+function escInquiry(s) {
+    return String(s == null ? '' : s)
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+async function loadProfileInquiries() {
+    const panel = document.getElementById('tabInquiries');
+    const profile = currentProfile;
+    if (!panel || !profile) return;
+
+    let user = null;
+    try {
+        const res = await supabaseClient.auth.getUser();
+        user = res?.data?.user || null;
+    } catch (_) {}
+    if (!userCanSeeInquiries(user, profile)) {
+        removeInquiriesTab();
+        return;
+    }
+
+    panel.innerHTML = '<p class="no-tab-content">Loading inquiries…</p>';
+    const { data, error } = await supabaseClient
+        .from('sc_inquiries')
+        .select('id, full_name, email, date_of_birth, budget, description, created_at')
+        .eq('profile_id', profile.id)
+        .order('created_at', { ascending: false });
+
+    if (error) {
+        panel.innerHTML = '<p class="no-tab-content">Could not load inquiries.</p>';
+        return;
+    }
+    const rows = data || [];
+    const countBtn = document.getElementById('profileInquiriesTab');
+    if (countBtn) countBtn.textContent = 'Inquiries (' + rows.length + ')';
+    if (!rows.length) {
+        panel.innerHTML = '<p class="no-tab-content">No inquiries for this profile yet.</p>';
+        return;
+    }
+    panel.innerHTML = '<div class="inquiry-list">' + rows.map(row => {
+        const bits = [];
+        if (row.email) bits.push('<a href="mailto:' + escInquiry(row.email) + '">' + escInquiry(row.email) + '</a>');
+        if (row.budget) bits.push('Budget ' + escInquiry(row.budget));
+        if (row.date_of_birth) bits.push('DOB ' + escInquiry(row.date_of_birth));
+        return '<article class="inquiry-card">' +
+            '<div class="inquiry-card-when">' + escInquiry(fmtInquiryWhen(row.created_at)) + '</div>' +
+            '<div class="inquiry-card-name">' + escInquiry(row.full_name || '—') + '</div>' +
+            (bits.length ? '<div class="inquiry-card-meta">' + bits.join(' · ') + '</div>' : '') +
+            (row.description ? '<div class="inquiry-card-body">' + escInquiry(row.description) + '</div>' : '') +
+            '</article>';
+    }).join('') + '</div>';
 }
 
 // ============================================

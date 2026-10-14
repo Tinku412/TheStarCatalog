@@ -182,13 +182,13 @@
             flex-direction: column;
         }
         .ast-panel-inner {
-            position: relative;
-            width: 400px;
+            width: 100%;
             height: 100%;
             max-height: 100%;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
+            overflow-x: hidden;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            overscroll-behavior: contain;
         }
         .ast-panel-close {
             position: absolute; top: 8px; right: 10px; z-index: 5;
@@ -196,18 +196,13 @@
             width: 24px; height: 24px; font-size: 13px; line-height: 1;
         }
         .ast-panel-img-wrap {
-            position: relative; aspect-ratio: 16/10; flex-shrink: 0;
+            position: relative; aspect-ratio: 16/10;
             background: var(--cream3); border-bottom: 1.5px solid var(--border);
         }
         .ast-panel-img { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
         .ast-panel-img-ph { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: var(--accent); font-size: 40px; }
         .ast-panel-body {
-            flex: 1;
-            min-height: 0;
-            display: flex;
-            flex-direction: column;
-            padding: 14px 16px 16px;
-            overflow: hidden;
+            padding: 14px 16px 24px;
         }
         .ast-panel-toprow { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; flex-shrink: 0; }
         .ast-panel-name {
@@ -240,28 +235,14 @@
             text-transform: uppercase; color: var(--muted); border-bottom: 2px solid transparent;
         }
         .ast-tab.active { color: var(--navy); font-weight: 600; border-bottom-color: var(--accent); }
-        /* Fixed tab area height so switching sections never shifts the panel */
         .ast-tabpanes {
-            flex: 1;
-            min-height: 0;
-            position: relative;
             margin-top: 12px;
             font-family: 'Source Code Pro', monospace;
             font-size: 11.5px;
             line-height: 1.65;
             color: var(--text);
-            overflow: hidden;
         }
-        .ast-tabpane {
-            display: none;
-            position: absolute;
-            inset: 0;
-            overflow-x: hidden;
-            overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
-            overscroll-behavior: contain;
-            padding-right: 2px;
-        }
+        .ast-tabpane { display: none; }
         .ast-tabpane.active { display: block; }
 
         /* About — match profile sidebar/info layout */
@@ -1000,17 +981,15 @@
             switchTab(tab || 'about');
             document.getElementById('astPanel').classList.add('open');
             document.querySelector('.ast-wrap')?.classList.add('panel-open');
-            var activePane = document.querySelector('.ast-tabpane.active');
-            if (activePane) activePane.scrollTop = 0;
+            var panelInner = document.getElementById('astPanelInner');
+            if (panelInner) panelInner.scrollTop = 0;
         }
 
         function switchTab(name) {
             var inner = document.getElementById('astPanelInner');
             inner.querySelectorAll('.ast-tab').forEach(function(t) { t.classList.toggle('active', t.dataset.tab === name); });
             inner.querySelectorAll('.ast-tabpane').forEach(function(pn) {
-                var on = pn.dataset.pane === name;
-                pn.classList.toggle('active', on);
-                if (on) pn.scrollTop = 0;
+                pn.classList.toggle('active', pn.dataset.pane === name);
             });
         }
 
