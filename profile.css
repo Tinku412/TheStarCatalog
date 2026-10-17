@@ -457,7 +457,23 @@
     font-family: 'Source Code Pro', monospace;
     /* display set by JS */
 }
-.header-rating-stars { font-size: 15px; letter-spacing: 1px; }
+.header-rating-stars { font-size: 15px; letter-spacing: 1px; color: var(--accent); }
+.header-rating-stars .star-full { color: var(--accent); }
+.header-rating-stars .star-empty,
+.header-rating-stars .star-partial { color: rgba(232, 224, 204, 0.32); }
+.header-rating-stars .star-partial {
+    position: relative;
+    display: inline-block;
+}
+.header-rating-stars .star-partial > span:first-child {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: var(--fill);
+    overflow: hidden;
+    color: var(--accent);
+    white-space: nowrap;
+}
 .header-rating-score {
     font-family: 'Cinzel', serif;
     font-size: 14px;
@@ -649,7 +665,7 @@
 }
 
 .services-offered-table {
-    width: auto;
+    width: 50%;
     max-width: 100%;
     border-collapse: collapse;
     font-family: 'Source Code Pro', monospace;
@@ -906,8 +922,8 @@
 
     /* Reviews */
     .review-card { padding: 0.9rem 1rem; }
-    .review-card-header { gap: 8px; }
-    .review-overall-rating { margin-left: auto; }
+    .review-card-header { gap: 8px; flex-wrap: wrap; }
+    .reviewer-name-row { flex-wrap: wrap; }
 }
 
 @media (max-width: 480px) {
@@ -1086,3 +1102,28 @@
     transition: border-color .18s;
 }
 .mr-signin-btn:hover { border-color: var(--accent, #c9b97a); }
+
+.review-card .review-card-header {
+    justify-content: flex-start;
+}
+.review-card .reviewer-name-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+}
+.review-card .reviewer-name-row .reviewer-name {
+    display: inline;
+}
+.review-card .review-score-stars {
+    font-size: 28px;
+    color: #142433;
+}
+.review-card .review-score-num {
+    font-size: 20px;
+    color: #142433;
+}
+.review-card .review-overall-rating {
+    display: none;
+}

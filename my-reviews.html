@@ -242,6 +242,36 @@
             return btn;
         }
 
+        function reviewExactScore(r) {
+            const subs = ['rating_communication', 'rating_accuracy', 'rating_value']
+                .map(k => r[k])
+                .filter(v => v != null && v !== '' && !Number.isNaN(Number(v)))
+                .map(Number);
+            if (subs.length) {
+                const avg = subs.reduce((a, b) => a + b, 0) / subs.length;
+                return Math.round(avg * 10) / 10;
+            }
+            const n = Number(r.rating);
+            return Number.isFinite(n) ? n : 0;
+        }
+
+        function formatReviewScore(n) {
+            return (Math.round(Number(n) * 10) / 10).toFixed(1);
+        }
+
+        function scoreStarsHtml(score) {
+            const full = Math.floor(score + 1e-9);
+            const frac = Math.min(1, Math.max(0, score - full));
+            let html = '';
+            for (let i = 1; i <= 5; i++) {
+                if (i <= full) html += '<span class="star-full">★</span>';
+                else if (i === full + 1 && frac > 0.01) {
+                    html += `<span class="star-partial" style="--fill:${Math.round(frac * 100)}%"><span>★</span><span>★</span></span>`;
+                } else html += '<span class="star-empty">★</span>';
+            }
+            return html;
+        }
+
         // ── Build review card ─────────────────────────────────────
         function buildReviewCard(r) {
             const div = document.createElement('div');
@@ -249,8 +279,8 @@
             div.dataset.reviewId   = r.id;
             div.dataset.reviewerId = r.reviewer_id || '';
 
-            const filled = '★'.repeat(r.rating);
-            const empty  = '☆'.repeat(5 - r.rating);
+            const score = reviewExactScore(r);
+            const scoreLabel = formatReviewScore(score);
             const date   = fmtDate(r.created_at);
 
             const avatarHtml = r.reviewer_avatar
@@ -289,12 +319,12 @@
                 <div class="review-card-header">
                     ${avatarHtml}
                     <div class="reviewer-meta">
-                        <span class="reviewer-name">${esc(r.reviewer_name)}</span>
+                        <div class="reviewer-name-row" style="display:flex;flex-direction:row;align-items:center;justify-content:flex-start;gap:10px;flex-wrap:nowrap;">
+                            <span class="reviewer-name" style="display:inline;white-space:nowrap;">${esc(r.reviewer_name)}</span>
+                            <span class="review-score-stars" title="${scoreLabel} out of 5" style="display:inline-flex;align-items:center;font-size:28px;line-height:1;letter-spacing:1px;color:#142433;">${scoreStarsHtml(score)}</span>
+                            <span class="review-score-num" style="font-family:Cinzel,serif;font-size:20px;font-weight:700;color:#142433;line-height:1;">${scoreLabel}</span>
+                        </div>
                         <span class="review-date">Reviewed on ${date}</span>
-                    </div>
-                    <div class="review-overall-rating">
-                        <div class="review-stars" title="${r.rating} out of 5">${filled}<span style="opacity:0.35;">${empty}</span></div>
-                        <span class="review-overall-label">Overall</span>
                     </div>
                 </div>
                 <p class="review-text">${esc(r.review_text)}</p>

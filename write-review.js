@@ -242,8 +242,8 @@ async function handleWriteReviewPageSubmit(e) {
         if (!reviewText) throw new Error('Please write your review before submitting');
 
         const rating = Math.round(
-            (wrSubRatings.communication + wrSubRatings.accuracy + wrSubRatings.value) / 3
-        );
+            ((wrSubRatings.communication + wrSubRatings.accuracy + wrSubRatings.value) / 3) * 10
+        ) / 10;
 
         const servicesPurchased = (document.getElementById('wrServicesPurchased')?.value || '').trim() || null;
         const hireAgain = document.querySelector('input[name="wrHireAgain"]:checked')?.value || null;

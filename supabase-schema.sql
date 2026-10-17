@@ -249,8 +249,8 @@ CREATE TABLE sc_reviews (
     reviewer_email TEXT,
     reviewer_avatar TEXT,
 
-    -- Overall rating (1–5, required)
-    rating INTEGER NOT NULL CHECK (rating >= 1 AND rating <= 5),
+    -- Overall rating: average of the category scores, one decimal (e.g. 3.7)
+    rating NUMERIC(2,1) NOT NULL CHECK (rating >= 1 AND rating <= 5),
 
     -- Optional sub-ratings (1–5 each)
     rating_response_time INTEGER CHECK (rating_response_time >= 1 AND rating_response_time <= 5),

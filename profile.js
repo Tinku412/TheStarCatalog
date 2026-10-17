@@ -646,8 +646,26 @@ let reviewCurrentPage  = 1;
 function renderReviews(reviews) {
     allReviews = reviews;
     updateRatingSummary();
+    syncStoredAverage();
     reviewCurrentPage = 1;
     renderReviewPage();
+}
+
+function syncStoredAverage() {
+    const profileId = document.body.dataset.profileId;
+    if (!profileId || !allReviews.length || !currentProfile) return;
+    const exact = Math.round((allReviews.reduce((s, r) => s + reviewExactScore(r), 0) / allReviews.length) * 10) / 10;
+    const stored = Math.round(Number(currentProfile.average_rating) * 10) / 10;
+    if (stored === exact && Number(currentProfile.review_count) === allReviews.length) return;
+    supabaseClient.from('sc_profiles')
+        .update({ average_rating: exact, review_count: allReviews.length })
+        .eq('id', profileId)
+        .then(res => {
+            if (!res.error) {
+                currentProfile.average_rating = exact;
+                currentProfile.review_count = allReviews.length;
+            }
+        });
 }
 
 function renderReviewPage() {
@@ -741,11 +759,11 @@ function updateRatingSummary() {
         return;
     }
 
-    const avg     = allReviews.reduce((s, r) => s + r.rating, 0) / allReviews.length;
-    const rounded = Math.round(avg * 10) / 10;
+    const avg     = allReviews.reduce((s, r) => s + reviewExactScore(r), 0) / allReviews.length;
+    const shown   = formatReviewScore(avg);
     const count   = allReviews.length;
 
-    const starsHtml = renderStaticStars(rounded);
+    const starsHtml = scoreStarsHtml(avg);
 
     if (el) {
         el.style.display    = 'flex';
@@ -753,7 +771,7 @@ function updateRatingSummary() {
         el.style.gap        = '5px';
         el.innerHTML = `
             <span style="color:#c9b97a;font-size:14px;line-height:1;">★</span>
-            <strong style="font-family:'Cinzel',serif;font-size:13px;color:var(--navy);">${rounded.toFixed(1)}</strong>
+            <strong style="font-family:'Cinzel',serif;font-size:13px;color:var(--navy);">${shown}</strong>
             <span style="font-family:'Source Code Pro',monospace;font-size:11px;color:var(--muted);letter-spacing:0.02em;">(${count} review${count !== 1 ? 's' : ''})</span>
         `;
     }
@@ -762,22 +780,38 @@ function updateRatingSummary() {
         headerEl.style.display = 'flex';
         headerEl.innerHTML = `
             <div class="header-rating-stars">${starsHtml}</div>
-            <span class="header-rating-score">${rounded.toFixed(1)}</span>
+            <span class="header-rating-score">${shown}</span>
             <span class="header-rating-count">${count} review${count !== 1 ? 's' : ''}</span>
         `;
     }
 }
 
-function renderStaticStars(avg) {
+function reviewExactScore(r) {
+    const subs = ['rating_communication', 'rating_accuracy', 'rating_value']
+        .map(k => r[k])
+        .filter(v => v != null && v !== '' && !Number.isNaN(Number(v)))
+        .map(Number);
+    if (subs.length) {
+        const avg = subs.reduce((a, b) => a + b, 0) / subs.length;
+        return Math.round(avg * 10) / 10;
+    }
+    const n = Number(r.rating);
+    return Number.isFinite(n) ? n : 0;
+}
+
+function formatReviewScore(n) {
+    return (Math.round(Number(n) * 10) / 10).toFixed(1);
+}
+
+function scoreStarsHtml(score) {
+    const full = Math.floor(score + 1e-9);
+    const frac = Math.min(1, Math.max(0, score - full));
     let html = '';
     for (let i = 1; i <= 5; i++) {
-        if (avg >= i) {
-            html += '<span style="color:#c9b97a;">★</span>';
-        } else if (avg >= i - 0.5) {
-            html += '<span style="color:#c9b97a;opacity:0.6;">★</span>';
-        } else {
-            html += '<span style="opacity:0.3;">★</span>';
-        }
+        if (i <= full) html += '<span class="star-full">★</span>';
+        else if (i === full + 1 && frac > 0.01) {
+            html += `<span class="star-partial" style="--fill:${Math.round(frac * 100)}%"><span>★</span><span>★</span></span>`;
+        } else html += '<span class="star-empty">★</span>';
     }
     return html;
 }
@@ -798,8 +832,8 @@ function buildReviewCard(r) {
     div.dataset.reviewId    = r.id;
     div.dataset.reviewerId  = r.reviewer_id || '';
 
-    const filledStars = '★'.repeat(r.rating);
-    const emptyStars  = '☆'.repeat(5 - r.rating);
+    const score = reviewExactScore(r);
+    const scoreLabel = formatReviewScore(score);
     const date = new Date(r.created_at).toLocaleDateString('en-GB', {
         day: 'numeric', month: 'short', year: 'numeric'
     });
@@ -850,12 +884,12 @@ function buildReviewCard(r) {
         <div class="review-card-header">
             ${avatarHtml}
             <div class="reviewer-meta">
-                <span class="reviewer-name">${escHtml(r.reviewer_name)}</span>
+                <div class="reviewer-name-row" style="display:flex;flex-direction:row;align-items:center;justify-content:flex-start;gap:10px;flex-wrap:nowrap;">
+                    <span class="reviewer-name" style="display:inline;white-space:nowrap;">${escHtml(r.reviewer_name)}</span>
+                    <span class="review-score-stars" title="${scoreLabel} out of 5" style="display:inline-flex;align-items:center;font-size:20px;line-height:1;letter-spacing:1px;color:#8a7010;">${scoreStarsHtml(score)}</span>
+                    <span class="review-score-num" style="font-family:Cinzel,serif;font-size:18px;font-weight:700;color:#142433;line-height:1;">${scoreLabel}</span>
+                </div>
                 <span class="review-date">Reviewed on ${date}</span>
-            </div>
-            <div class="review-overall-rating">
-                <div class="review-stars" title="${r.rating} out of 5">${filledStars}<span style="opacity:0.35;">${emptyStars}</span></div>
-                <span class="review-overall-label">Overall</span>
             </div>
         </div>
         <p class="review-text">${escHtml(r.review_text)}</p>
@@ -1042,7 +1076,7 @@ async function handleReviewSubmit(e) {
     }
     // Auto-compute overall from sub-ratings
     const subVals = Object.values(subRatings);
-    reviewRating  = Math.round(subVals.reduce((a, b) => a + b, 0) / subVals.length);
+    reviewRating  = Math.round((subVals.reduce((a, b) => a + b, 0) / subVals.length) * 10) / 10;
 
     const reviewText        = (document.getElementById('reviewText')?.value || '').trim();
     const servicesPurchased = (document.getElementById('reviewServicesPurchased')?.value || '').trim();
@@ -1123,10 +1157,10 @@ async function handleReviewSubmit(e) {
     // Update aggregate stats on the profile row (in case DB trigger isn't set up)
     const profileId = document.body.dataset.profileId;
     if (profileId) {
-        const newAvg   = allReviews.reduce((s, r) => s + r.rating, 0) / allReviews.length;
+        const newAvg   = allReviews.reduce((s, r) => s + reviewExactScore(r), 0) / allReviews.length;
         const newCount = allReviews.length;
         supabaseClient.from('sc_profiles')
-            .update({ average_rating: Math.round(newAvg * 100) / 100, review_count: newCount })
+            .update({ average_rating: Math.round(newAvg * 10) / 10, review_count: newCount })
             .eq('id', profileId)
             .then(() => {});
     }
