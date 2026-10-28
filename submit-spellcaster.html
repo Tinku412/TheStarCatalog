@@ -551,7 +551,7 @@
                                 </select>
                             </label>
                             <label class="form-label">
-                                <span class="label-text">Delivery Time <span style="color:var(--accent)">*</span></span>
+                                <span class="label-text">SpellCasting within <span style="color:var(--accent)">*</span></span>
                                 <select name="deliveryTime">
                                     <option value="">Select Timeframe</option>
                                     <option>Same day</option>
@@ -573,6 +573,14 @@
                             <label class="form-label">
                                 <span class="label-text">Refund Policy? <span style="color:var(--accent)">*</span></span>
                                 <select name="refund">
+                                    <option value="">Select Option</option>
+                                    <option>Yes</option>
+                                    <option>No</option>
+                                </select>
+                            </label>
+                            <label class="form-label">
+                                <span class="label-text">Provides Complimentary Recast? <span style="color:var(--accent)">*</span></span>
+                                <select name="complimentaryRecast">
                                     <option value="">Select Option</option>
                                     <option>Yes</option>
                                     <option>No</option>
@@ -850,9 +858,10 @@
                     validateSelect('professionalIdentity', 'Spellcaster Type'),
                     validateSelect('serviceType',          'Primary Offering'),
                     validateSelect('experience',           'Years of Experience'),
-                    validateSelect('deliveryTime',         'Delivery Time'),
+                    validateSelect('deliveryTime',         'SpellCasting within'),
                     validateSelect('providesProof',        'Provides Proof of Work'),
                     validateSelect('refund',               'Refund Policy'),
+                    validateSelect('complimentaryRecast',  'Provides Complimentary Recast'),
                     validateInput('activeSince', 'Active Since', function(v) {
                         var n = parseInt(v, 10);
                         return !isNaN(n) && n >= 1900 && n <= new Date().getFullYear() + 1;

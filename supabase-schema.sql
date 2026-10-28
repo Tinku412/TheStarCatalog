@@ -24,6 +24,7 @@ CREATE TABLE IF NOT EXISTS SC_profiles (
     provides_proof BOOLEAN NOT NULL DEFAULT false,
     refund_policy BOOLEAN NOT NULL DEFAULT false,
     delivery_time VARCHAR(50) NOT NULL,
+    provides_complimentary_recast TEXT DEFAULT NULL, -- 'Yes' or 'No'
     minimum_price VARCHAR(50) NOT NULL,
     
     -- Contact Information
@@ -70,6 +71,7 @@ CREATE INDEX IF NOT EXISTS idx_sc_profiles_slug ON SC_profiles(slug);
 -- ── New columns for existing databases ──────────────────────────────────────
 -- Run these if your sc_profiles table already exists:
 -- ALTER TABLE sc_profiles ADD COLUMN IF NOT EXISTS accepts_emergency TEXT DEFAULT NULL;
+-- ALTER TABLE sc_profiles ADD COLUMN IF NOT EXISTS provides_complimentary_recast TEXT DEFAULT NULL;
 -- ALTER TABLE sc_profiles ADD COLUMN IF NOT EXISTS average_rating NUMERIC(3,2) DEFAULT NULL;
 -- ALTER TABLE sc_profiles ADD COLUMN IF NOT EXISTS review_count INTEGER DEFAULT 0;
 -- ALTER TABLE sc_profiles ADD COLUMN IF NOT EXISTS owner_user_id UUID DEFAULT NULL;

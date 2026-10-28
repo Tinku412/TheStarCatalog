@@ -617,7 +617,8 @@
                 ['Price range',        p.minimum_price],
                 ['Provides proof',     p.provides_proof ? 'Yes' : 'No'],
                 ['Refund policy',      p.refund_policy ? 'Yes' : 'No'],
-                ['Delivery time',      p.delivery_time],
+                ['SpellCasting within', p.delivery_time],
+                ['Complimentary recast', p.provides_complimentary_recast],
                 ['Emergency requests', p.accepts_emergency]
             ];
             document.getElementById('sppInfoRows').innerHTML = rows.map(function(r) {

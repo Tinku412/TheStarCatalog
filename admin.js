@@ -77,6 +77,7 @@ async function handleFormSubmit(e) {
             experience: formData.get('experience'),
             provides_proof: formData.get('providesProof') === 'Yes',
             refund_policy: formData.get('refund') === 'Yes',
+            provides_complimentary_recast: formData.get('complimentaryRecast') || null,
             delivery_time: formData.get('deliveryTime'),
             minimum_price: formData.get('priceRange'),
             email:          formData.get('email') || null,

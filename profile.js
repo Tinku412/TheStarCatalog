@@ -250,6 +250,8 @@ function populateProfile(profile) {
     document.getElementById('detailProof').textContent     = profile.provides_proof ? 'Yes' : 'No';
     document.getElementById('detailRefund').textContent    = profile.refund_policy ? 'Yes' : 'No';
     document.getElementById('detailDelivery').textContent  = profile.delivery_time || '—';
+    const recastEl = document.getElementById('detailRecast');
+    if (recastEl) recastEl.textContent = profile.provides_complimentary_recast || '—';
 
     const emergencyEl = document.getElementById('detailEmergency');
     if (emergencyEl) emergencyEl.textContent = profile.accepts_emergency || '—';

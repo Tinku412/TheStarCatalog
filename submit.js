@@ -253,6 +253,7 @@ async function loadEditMode(profileId) {
     setField('deliveryTime',     p.delivery_time);
     setField('providesProof',    p.provides_proof ? 'Yes' : (p.provides_proof === false ? 'No' : ''));
     setField('refund',           p.refund_policy  ? 'Yes' : (p.refund_policy  === false ? 'No' : ''));
+    setField('complimentaryRecast', p.provides_complimentary_recast || '');
     setField('acceptsEmergency', p.accepts_emergency);
     setField('location',         p.location);
     setField('activeSince',      p.active_since);
@@ -439,6 +440,7 @@ async function handleFormSubmit(e) {
             experience:            formData.get('experience')       || null,
             provides_proof:        formData.get('providesProof')    === 'Yes',
             refund_policy:         formData.get('refund')           === 'Yes',
+            provides_complimentary_recast: formData.get('complimentaryRecast') || null,
             delivery_time:         formData.get('deliveryTime')     || null,
             minimum_price:         formData.get('priceRange')       || null,
             email:                 formData.get('email')            || null,

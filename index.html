@@ -12,8 +12,8 @@
 </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Spell Casters Directory | Witch Weekly</title>
-    <meta name="description" content="Browse every spell caster on Witch Weekly in one compact view — type, specialties, pricing, delivery time, ratings and reviews, all in a single table.">
+    <title>Find a Spell Caster You Can Trust | Witch Weekly</title>
+    <meta name="description" content="Browse every spell caster on Witch Weekly in one compact view — type, specialties, pricing, spellcasting time, ratings and reviews, all in a single table.">
     <link rel="canonical" href="https://WitchWeekly.com/">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -838,7 +838,7 @@
         async function loadProfiles() {
             try {
                 var res = await sc.from('sc_profiles')
-                    .select('id, slug, professional_name, personal_name, one_liner, professional_identity, specialties, service_type, services_offered, offerings, location, delivery_time, response_time, minimum_price, average_rating, review_count, upvotes, profile_picture_url, is_verified, works_online, experience, active_since, languages, provides_proof, refund_policy, accepts_emergency, description, email, website, store_link, instagram_link, reddit_link')
+                    .select('id, slug, professional_name, personal_name, one_liner, professional_identity, specialties, service_type, services_offered, offerings, location, delivery_time, response_time, minimum_price, average_rating, review_count, upvotes, profile_picture_url, is_verified, works_online, experience, active_since, languages, provides_proof, refund_policy, provides_complimentary_recast, accepts_emergency, description, email, website, store_link, instagram_link, reddit_link')
                     .eq('status', 'approved')
                     .eq('is_active', true)
                     .order('created_at', { ascending: false });
@@ -1199,10 +1199,11 @@
                 ['Languages', p.languages || 'English'],
                 ['Works Online', p.works_online === false ? 'No' : 'Yes'],
                 ['Response Time', p.response_time || '—'],
-                ['Delivery', p.delivery_time || '—'],
+                ['SpellCasting within', p.delivery_time || '—'],
                 ['Price Range', p.minimum_price || '—'],
                 ['Provides Proof', p.provides_proof ? 'Yes' : 'No'],
                 ['Refund Policy', p.refund_policy ? 'Yes' : 'No'],
+                ['Complimentary Recast', p.provides_complimentary_recast || '—'],
                 ['Emergency', p.accepts_emergency || '—']
             ];
             html += '<div class="ast-info-rows">' + kvs.map(function(kv) {
