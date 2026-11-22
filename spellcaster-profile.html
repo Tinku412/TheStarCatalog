@@ -552,7 +552,7 @@
             if (!route) { showError(); return; }
 
             try {
-                var res = await sc.from('sc_profiles').select('*').eq(route.col, route.val).maybeSingle();
+                var res = await sc.from('sc_profiles').select('id, slug, professional_name, personal_name, one_liner, description, professional_identity, specialties, service_type, services_offered, offerings, location, delivery_time, response_time, minimum_price, average_rating, review_count, upvotes, profile_picture_url, is_verified, works_online, experience, active_since, languages, provides_proof, refund_policy, provides_complimentary_recast, accepts_emergency, website, store_link, instagram_link, reddit_link, status, is_active').eq(route.col, route.val).maybeSingle();
                 if (res.error || !res.data) { showError(); return; }
                 profile = res.data;
 
@@ -756,7 +756,7 @@
             var overviewSumEl = document.getElementById('sppOverviewReviewSummary');
             try {
                 var res = await sc.from('sc_reviews')
-                    .select('*')
+                    .select('id, reviewer_name, reviewer_avatar, rating, rating_communication, rating_accuracy, rating_value, review_text, services_purchased, hire_again, result_time, purchase_date, image_urls, created_at')
                     .eq('profile_id', profile.id)
                     .order('created_at', { ascending: false });
                 if (res.error) throw res.error;

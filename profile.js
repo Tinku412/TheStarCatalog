@@ -9,7 +9,23 @@ let currentUserId = null; // set after auth resolves; used to show update links 
 let currentProfile = null;
 
 const INQUIRIES_ADMIN_UID = 'a6316b86-f6dd-4fee-9449-b125eafd97e8';
-const INQUIRIES_ADMIN_EMAIL = 'rkbprashanth123@gmail.com';
+
+const PUBLIC_PROFILE_COLUMNS = [
+    'id', 'slug', 'professional_name', 'personal_name', 'one_liner', 'description',
+    'professional_identity', 'specialties', 'service_type', 'services_offered', 'offerings',
+    'location', 'delivery_time', 'response_time', 'minimum_price', 'average_rating',
+    'review_count', 'upvotes', 'views', 'profile_picture_url', 'is_verified', 'works_online',
+    'experience', 'active_since', 'languages', 'provides_proof', 'refund_policy',
+    'provides_complimentary_recast', 'accepts_emergency', 'website', 'store_link',
+    'instagram_link', 'reddit_link', 'status', 'is_active'
+].join(',');
+
+const PUBLIC_REVIEW_COLUMNS = [
+    'id', 'profile_id', 'reviewer_id', 'reviewer_name', 'reviewer_avatar', 'rating',
+    'rating_communication', 'rating_accuracy', 'rating_value', 'review_text',
+    'services_purchased', 'hire_again', 'result_time', 'purchase_date', 'image_urls',
+    'review_update', 'review_updated_at', 'created_at'
+].join(',');
 
 function userCanEditProfile(user, profile) {
     if (!user || !profile) return false;
@@ -18,8 +34,7 @@ function userCanEditProfile(user, profile) {
 
 function userCanSeeInquiries(user, profile) {
     if (!user || !profile) return false;
-    const email = String(user.email || '').trim().toLowerCase();
-    if (user.id === INQUIRIES_ADMIN_UID || email === INQUIRIES_ADMIN_EMAIL) return true;
+    if (user.id === INQUIRIES_ADMIN_UID) return true;
     return userCanEditProfile(user, profile);
 }
 
@@ -99,15 +114,27 @@ window.addEventListener('DOMContentLoaded', async function() {
 async function fetchProfileRow(column, value) {
     const { data, error } = await supabaseClient
         .from('sc_profiles')
-        .select('*')
+        .select(PUBLIC_PROFILE_COLUMNS)
         .eq(column, value)
         .limit(1);
 
     if (error) {
-        console.error(`Profile fetch error (${column}):`, error);
+        console.error('Profile could not be loaded');
         return null;
     }
     return data?.[0] || null;
+}
+
+async function attachOwnerIds(profile) {
+    if (!profile?.id) return;
+    const { data } = await supabaseClient
+        .from('sc_profiles')
+        .select('owner_user_id, caster_user_id')
+        .eq('id', profile.id)
+        .maybeSingle();
+    if (!data) return;
+    profile.owner_user_id = data.owner_user_id;
+    profile.caster_user_id = data.caster_user_id;
 }
 
 async function loadProfile(identifier, bySlug = false) {
@@ -126,14 +153,19 @@ async function loadProfile(identifier, bySlug = false) {
             return false;
         }
 
-        const { data: { user } } = await supabaseClient.auth.getUser().catch(() => ({ data: { user: null } }));
-        if (!userCanViewProfile(user, profile)) {
-            showError('Profile not found. It may still be pending approval, or the link may be incorrect.');
-            return false;
+        const isPublic = profile.status === 'approved' && profile.is_active !== false;
+        if (!isPublic) {
+            const { data: { user } } = await supabaseClient.auth.getUser().catch(() => ({ data: { user: null } }));
+            if (user) await attachOwnerIds(profile);
+            if (!userCanViewProfile(user, profile)) {
+                showError('Profile not found. It may still be pending approval, or the link may be incorrect.');
+                return false;
+            }
         }
 
         populateProfile(profile);
         currentProfile = profile;
+        if (container) container.style.opacity = '1';
         refreshInquiriesAccess();
 
         if (profile.slug) {
@@ -142,27 +174,22 @@ async function loadProfile(identifier, bySlug = false) {
             } catch (_) { /* safe to ignore on local file:// */ }
         }
 
-        // Show Edit button for owner_user_id or caster_user_id
-        if (profile.owner_user_id || profile.caster_user_id) {
-            supabaseClient.auth.getUser().then(({ data: { user } }) => {
-                if (userCanEditProfile(user, profile)) {
-                    const editBtn = document.getElementById('editProfileBtn');
-                    if (editBtn) {
-                        editBtn.style.display = 'inline-flex';
-                        editBtn.addEventListener('click', () => {
-                            window.location.href = '/submit-spellcaster.html?edit=' + encodeURIComponent(profile.id);
-                        });
-                    }
-                }
-            }).catch(() => {});
-        }
+        // Edit access is checked after the public page is visible.
+        supabaseClient.auth.getUser().then(async ({ data: { user } }) => {
+            if (!user) return;
+            if (isPublic) await attachOwnerIds(profile);
+            if (!userCanEditProfile(user, profile)) return;
+            const editBtn = document.getElementById('editProfileBtn');
+            if (!editBtn) return;
+            editBtn.style.display = 'inline-flex';
+            editBtn.addEventListener('click', () => {
+                window.location.href = '/submit-spellcaster.html?edit=' + encodeURIComponent(profile.id);
+            });
+        }).catch(() => {});
 
-        await incrementViews(profile.id, profile.views || 0);
-
-        // Load similar casters asynchronously (non-blocking)
         loadSimilarCasters(profile).catch(() => {});
+        incrementViews(profile.id, profile.views || 0);
 
-        if (container) container.style.opacity = '1';
         return true;
 
     } catch (error) {
@@ -562,27 +589,6 @@ function showError(message) {
 // ============================================
 // AUTH — Google Sign-In via Supabase OAuth
 // ============================================
-/*  Supabase SQL setup required before reviews work:
-    ─────────────────────────────────────────────────
-    CREATE TABLE IF NOT EXISTS sc_reviews (
-      id           UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
-      profile_id   UUID NOT NULL,
-      reviewer_id  UUID,
-      reviewer_name TEXT NOT NULL,
-      reviewer_email TEXT,
-      reviewer_avatar TEXT,
-      rating       INTEGER NOT NULL CHECK (rating >= 1 AND rating <= 5),
-      review_text  TEXT NOT NULL,
-      image_urls   TEXT DEFAULT '[]',
-      created_at   TIMESTAMPTZ DEFAULT NOW()
-    );
-    ALTER TABLE sc_reviews ENABLE ROW LEVEL SECURITY;
-    CREATE POLICY "public_read"  ON sc_reviews FOR SELECT USING (true);
-    CREATE POLICY "auth_insert"  ON sc_reviews FOR INSERT WITH CHECK (auth.uid() IS NOT NULL);
-
-    -- Storage bucket (create via Supabase Dashboard → Storage → New Bucket → "review-images", set Public)
-    -- Enable Google OAuth via Dashboard → Authentication → Providers → Google
-*/
 
 // ============================================
 // RESOLVE CURRENT USER — adds update links to own review cards
@@ -630,7 +636,7 @@ async function loadReviews(profileId) {
     try {
         const { data: reviews, error } = await supabaseClient
             .from('sc_reviews')
-            .select('*')
+            .select(PUBLIC_REVIEW_COLUMNS)
             .eq('profile_id', profileId)
             .order('created_at', { ascending: false });
 

@@ -556,7 +556,7 @@
                         <tr><td colspan="10"><div class="ast-loading">Loading profiles…</div></td></tr>
                     </tbody>
                 </table>
-            </div>
+                </div>
 
             <!-- Mobile card list -->
             <div class="ast-mobile-list" id="astMobileList"></div>
@@ -566,7 +566,7 @@
         <aside class="ast-panel" id="astPanel" aria-label="Spellcaster details">
             <div class="ast-panel-inner" id="astPanelInner"></div>
         </aside>
-    </div>
+                </div>
 
     <!-- Contact / Inquiry Modal -->
     <div class="ast-modal-overlay" id="astContactModal" role="dialog" aria-modal="true">
@@ -586,7 +586,7 @@
                 <div class="ast-form-field">
                     <label for="astInqEmail">Email *</label>
                     <input type="email" id="astInqEmail" required placeholder="you@example.com">
-                </div>
+        </div>
                 <div class="ast-form-field">
                     <label for="astInqBudget">Budget</label>
                     <input type="text" id="astInqBudget" placeholder="e.g. $100">
@@ -608,7 +608,7 @@
                 <div class="modal-title" id="astReviewTitle">Write a Review</div>
                 <div class="modal-subtitle" id="astReviewSubtitle">Share your experience — this helps others in the community.</div>
                 <button class="modal-close" id="astCloseReview" aria-label="Close">×</button>
-            </div>
+        </div>
             <div class="modal-body">
                 <form class="review-form" id="astReviewForm" autocomplete="off">
                     <div>
@@ -649,13 +649,13 @@
                             Overall: <span id="astOverallRatingValue" style="color:#c9b97a;font-weight:700;"></span> / 5
                         </div>
                         <div class="star-hint" id="astStarHint" style="margin-top:6px;"></div>
-                    </div>
+    </div>
 
                     <div>
                         <label class="review-label" for="astReviewServicesPurchased">Services Purchased</label>
                         <input type="text" class="review-input" id="astReviewServicesPurchased" placeholder="e.g. Love Binding Spell, Protection Ritual, Tarot Reading" autocomplete="off">
                         <span class="review-field-hint">Comma-separated list of services you purchased</span>
-                    </div>
+        </div>
 
                     <div>
                         <label class="review-label">Date purchased? <span style="color:var(--muted);font-weight:400;">(optional)</span></label>
@@ -665,8 +665,8 @@
                             <label class="review-radio-option"><input type="radio" name="astPurchaseDate" value="2–3 months ago"> 2–3 months ago</label>
                             <label class="review-radio-option"><input type="radio" name="astPurchaseDate" value="3–6 months ago"> 3–6 months ago</label>
                             <label class="review-radio-option"><input type="radio" name="astPurchaseDate" value="> 6 months ago"> &gt; 6 months ago</label>
-                        </div>
                     </div>
+                </div>
 
                     <div>
                         <label class="review-label">Would you hire again?</label>
@@ -674,8 +674,8 @@
                             <label class="review-radio-option"><input type="radio" name="astHireAgain" value="Yes"> Yes</label>
                             <label class="review-radio-option"><input type="radio" name="astHireAgain" value="No"> No</label>
                             <label class="review-radio-option"><input type="radio" name="astHireAgain" value="Maybe"> Maybe</label>
-                        </div>
-                    </div>
+            </div>
+            </div>
 
                     <div>
                         <label class="review-label">How long did results take?</label>
@@ -685,13 +685,13 @@
                             <label class="review-radio-option"><input type="radio" name="astResultTime" value="3–6 months"> 3–6 months</label>
                             <label class="review-radio-option"><input type="radio" name="astResultTime" value="Still waiting"> Still waiting</label>
                             <label class="review-radio-option"><input type="radio" name="astResultTime" value="N/A - I only got a reading"> N/A - I only got a reading</label>
-                        </div>
-                    </div>
+            </div>
+            </div>
 
                     <div>
                         <label class="review-label" for="astReviewText">Your Review <span style="color:#c9b97a;">*</span></label>
                         <textarea class="review-textarea" id="astReviewText" placeholder="Describe your experience with this spellcaster — what service did you use, how was the communication, did the results meet your expectations?" rows="5"></textarea>
-                    </div>
+            </div>
 
                     <div>
                         <label class="review-label">Proof / Screenshots <span style="color:var(--muted);font-weight:400;">(optional · max 2 images)</span></label>
@@ -699,8 +699,8 @@
                             <input type="file" id="astReviewImages" accept="image/*" multiple>
                             <label for="astReviewImages" class="image-upload-label">Click to upload images</label>
                             <div class="image-previews" id="astImagePreviews"></div>
-                        </div>
-                    </div>
+            </div>
+        </div>
 
                     <button type="submit" class="modal-submit" id="astReviewSubmitBtn">Submit Review</button>
                 </form>
@@ -838,7 +838,7 @@
         async function loadProfiles() {
             try {
                 var res = await sc.from('sc_profiles')
-                    .select('id, slug, professional_name, personal_name, one_liner, professional_identity, specialties, service_type, services_offered, offerings, location, delivery_time, response_time, minimum_price, average_rating, review_count, upvotes, profile_picture_url, is_verified, works_online, experience, active_since, languages, provides_proof, refund_policy, provides_complimentary_recast, accepts_emergency, description, email, website, store_link, instagram_link, reddit_link')
+                    .select('id, slug, professional_name, personal_name, one_liner, professional_identity, specialties, service_type, services_offered, offerings, location, delivery_time, response_time, minimum_price, average_rating, review_count, upvotes, profile_picture_url, is_verified, works_online, experience, active_since, languages, provides_proof, refund_policy, provides_complimentary_recast, accepts_emergency, description, website, store_link, instagram_link, reddit_link')
                     .eq('status', 'approved')
                     .eq('is_active', true)
                     .order('created_at', { ascending: false });

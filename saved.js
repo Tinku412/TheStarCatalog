@@ -118,7 +118,7 @@ async function loadSavedProfiles({ silent = false } = {}) {
         const profileIds = saves.map(s => s.profile_id);
         const { data: profiles, error: profilesError } = await supabaseClient
             .from('sc_profiles')
-            .select('*')
+            .select('id, slug, professional_name, personal_name, one_liner, professional_identity, specialties, profile_picture_url, average_rating, review_count, upvotes, minimum_price, is_verified')
             .in('id', profileIds)
             .eq('status', 'approved');
 

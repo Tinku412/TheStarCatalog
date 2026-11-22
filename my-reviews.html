@@ -428,7 +428,7 @@
             // Fetch all reviews by this user, newest first
             const { data: reviews, error } = await sc
                 .from('sc_reviews')
-                .select('*')
+                .select('id, profile_id, reviewer_name, reviewer_avatar, rating, rating_communication, rating_accuracy, rating_value, review_text, services_purchased, hire_again, result_time, purchase_date, image_urls, review_update, review_updated_at, created_at')
                 .eq('reviewer_id', user.id)
                 .order('created_at', { ascending: false });
 

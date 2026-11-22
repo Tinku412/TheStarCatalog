@@ -45,7 +45,7 @@ async function loadProfiles() {
     try {
         const { data: profiles, error } = await supabaseClient
             .from('sc_profiles')
-            .select('*')
+            .select('id, slug, professional_name, personal_name, one_liner, professional_identity, specialties, service_type, services_offered, offerings, location, delivery_time, response_time, minimum_price, average_rating, review_count, upvotes, profile_picture_url, is_verified, works_online, experience, active_since, languages, provides_proof, refund_policy, provides_complimentary_recast, accepts_emergency, description, website, store_link, instagram_link, reddit_link, status, is_active')
             .eq('status', 'approved')
             .eq('is_active', true)
             .order('created_at', { ascending: false });
