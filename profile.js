@@ -98,15 +98,33 @@ window.addEventListener('DOMContentLoaded', async function() {
     try {
         if (typeof scAuth !== 'undefined') {
             scAuth.init(supabaseClient, {
-                onSignIn:  () => { applyUserStateToBtns(); resolveCurrentUser(); refreshInquiriesAccess(); },
-                onSignOut: () => { applyUserStateToBtns(); currentUserId = null; refreshInquiriesAccess(); }
+                onSignIn:  () => { applyUserStateToBtns(); resolveCurrentUser(); refreshInquiriesAccess(); refreshTestimonialButton(); },
+                onSignOut: () => { applyUserStateToBtns(); currentUserId = null; refreshInquiriesAccess(); refreshTestimonialButton(); }
             }).catch(() => {});
         }
     } catch (_) { /* auth is optional */ }
 
     // Resolve current user for update-link injection (non-blocking)
     resolveCurrentUser();
+    refreshTestimonialButton();
 });
+
+function refreshTestimonialButton() {
+    const buttons = document.querySelectorAll('[data-add-testimonial]');
+    if (!buttons.length || !window.scTestimonials || !supabaseClient) return;
+    supabaseClient.auth.getUser().then(({ data: { user } }) => {
+        buttons.forEach(btn => scTestimonials.syncButton(btn, user));
+        if (!document.body.dataset.testimonialBound) {
+            document.body.dataset.testimonialBound = '1';
+            scTestimonials.bindForm(supabaseClient, () => loadReviews(document.body.dataset.profileId));
+            buttons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    scTestimonials.open(supabaseClient, document.body.dataset.profileId);
+                });
+            });
+        }
+    }).catch(() => { buttons.forEach(btn => { btn.hidden = true; }); });
+}
 
 // ============================================
 // FETCH AND DISPLAY PROFILE
@@ -631,20 +649,25 @@ async function initializeAuth() {
 // REVIEWS — Load + Render
 // ============================================
 let allReviews = []; // kept in sync so the rating summary can always be recomputed
+let allTestimonials = [];
 
 async function loadReviews(profileId) {
     try {
-        const { data: reviews, error } = await supabaseClient
+        const reviewReq = supabaseClient
             .from('sc_reviews')
             .select(PUBLIC_REVIEW_COLUMNS)
             .eq('profile_id', profileId)
             .order('created_at', { ascending: false });
-
-        if (error) throw error;
-        renderReviews(reviews || []);
+        const testimonialReq = window.scTestimonials
+            ? scTestimonials.fetchForProfile(supabaseClient, profileId)
+            : Promise.resolve({ data: [], error: null });
+        const [rev, tes] = await Promise.all([reviewReq, testimonialReq]);
+        allTestimonials = tes.error ? [] : (tes.data || []);
+        if (tes.error) console.warn('Testimonials could not be loaded');
+        renderReviews(rev.error ? [] : (rev.data || []));
     } catch (e) {
         console.warn('Reviews not available:', e.message);
-        renderReviews([]);
+        renderReviews(allReviews || []);
     }
 }
 
@@ -681,19 +704,32 @@ function renderReviewPage() {
     const pagDiv  = document.getElementById('reviewPagination');
     if (!list) return;
 
-    if (!allReviews.length) {
+    if (!allReviews.length && !allTestimonials.length) {
         list.innerHTML = '<p class="no-reviews">No reviews yet. Be the first to share your experience.</p>';
         if (pagDiv) pagDiv.innerHTML = '';
         return;
     }
 
-    const total      = allReviews.length;
+    const items = []
+        .concat(allReviews.map(r => ({ kind: 'review', at: r.created_at || '', data: r })))
+        .concat(allTestimonials.map(t => ({ kind: 'testimonial', at: t.created_at || '', data: t })))
+        .sort((a, b) => String(b.at).localeCompare(String(a.at)));
+
+    const total      = items.length;
     const totalPages = Math.ceil(total / REVIEWS_PER_PAGE);
     const start      = (reviewCurrentPage - 1) * REVIEWS_PER_PAGE;
-    const pageItems  = allReviews.slice(start, start + REVIEWS_PER_PAGE);
+    const pageItems  = items.slice(start, start + REVIEWS_PER_PAGE);
 
     list.innerHTML = '';
-    pageItems.forEach(r => list.appendChild(buildReviewCard(r)));
+    pageItems.forEach(item => {
+        if (item.kind === 'testimonial' && window.scTestimonials) {
+            const holder = document.createElement('div');
+            holder.innerHTML = scTestimonials.cardHtml(item.data);
+            if (holder.firstElementChild) list.appendChild(holder.firstElementChild);
+            return;
+        }
+        if (item.kind === 'review') list.appendChild(buildReviewCard(item.data));
+    });
 
     if (pagDiv) {
         pagDiv.innerHTML = '';
@@ -761,35 +797,37 @@ function makePageBtn(n, current) {
 function updateRatingSummary() {
     const el       = document.getElementById('reviewRatingSummary');
     const headerEl = document.getElementById('headerRating');
-    if (!allReviews.length) {
+    const count = allReviews.length + allTestimonials.length;
+    if (!count) {
         if (el) el.style.display = 'none';
         if (headerEl) headerEl.style.display = 'none';
         return;
     }
 
-    const avg     = allReviews.reduce((s, r) => s + reviewExactScore(r), 0) / allReviews.length;
-    const shown   = formatReviewScore(avg);
-    const count   = allReviews.length;
-
-    const starsHtml = scoreStarsHtml(avg);
+    const avg     = allReviews.length
+        ? allReviews.reduce((s, r) => s + reviewExactScore(r), 0) / allReviews.length
+        : 0;
+    const shown   = allReviews.length ? formatReviewScore(avg) : '';
+    const starsHtml = allReviews.length ? scoreStarsHtml(avg) : '';
+    const countLabel = count + ' review' + (count !== 1 ? 's' : '');
 
     if (el) {
         el.style.display    = 'flex';
         el.style.alignItems = 'center';
         el.style.gap        = '5px';
         el.innerHTML = `
-            <span style="color:#c9b97a;font-size:14px;line-height:1;">★</span>
-            <strong style="font-family:'Cinzel',serif;font-size:13px;color:var(--navy);">${shown}</strong>
-            <span style="font-family:'Source Code Pro',monospace;font-size:11px;color:var(--muted);letter-spacing:0.02em;">(${count} review${count !== 1 ? 's' : ''})</span>
+            ${shown ? '<span style="color:#c9b97a;font-size:14px;line-height:1;">★</span>' : ''}
+            ${shown ? `<strong style="font-family:'Cinzel',serif;font-size:13px;color:var(--navy);">${shown}</strong>` : ''}
+            <span style="font-family:'Source Code Pro',monospace;font-size:11px;color:var(--muted);letter-spacing:0.02em;">(${countLabel})</span>
         `;
     }
 
     if (headerEl) {
         headerEl.style.display = 'flex';
         headerEl.innerHTML = `
-            <div class="header-rating-stars">${starsHtml}</div>
-            <span class="header-rating-score">${shown}</span>
-            <span class="header-rating-count">${count} review${count !== 1 ? 's' : ''}</span>
+            ${starsHtml ? `<div class="header-rating-stars">${starsHtml}</div>` : ''}
+            ${shown ? `<span class="header-rating-score">${shown}</span>` : ''}
+            <span class="header-rating-count">${countLabel}</span>
         `;
     }
 }
@@ -948,7 +986,16 @@ function escHtml(str) {
 // ============================================
 // REVIEWS — Modals
 // ============================================
+function casterDisplayName() {
+    return (currentProfile && currentProfile.professional_name) || 'this spellcaster';
+}
+
 function openReviewModal() {
+    const name = casterDisplayName();
+    const title = document.getElementById('reviewTitle');
+    const sub = document.getElementById('reviewSubtitle');
+    if (title) title.textContent = 'Write a Review — ' + name;
+    if (sub) sub.textContent = 'Share your experience with ' + name + '. This helps others in the community.';
     document.getElementById('reviewModal')?.classList.add('active');
     document.body.style.overflow = 'hidden';
 }
@@ -1315,6 +1362,11 @@ function initializeReviewInteractions() {
 
     // Contact / Inquiry modal — with analytics tracking
     function openContact() {
+        const name = casterDisplayName();
+        const title = document.getElementById('contactModalTitle');
+        const sub = document.getElementById('contactModalSub');
+        if (title) title.textContent = 'Contact ' + name;
+        if (sub) sub.textContent = 'Send your inquiry to ' + name + '. They will reach out to you.';
         document.getElementById('contactModal')?.classList.add('active');
         document.body.style.overflow = 'hidden';
         const profileId = document.body.dataset.profileId;

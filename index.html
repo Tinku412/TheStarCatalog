@@ -154,6 +154,13 @@
             text-decoration: none; display: inline-block; margin-left: 4px;
         }
         .ast-review-btn:hover { background: var(--navy2); color: var(--cream); }
+        .ast-write-cell-btn {
+            font-family: 'Source Code Pro', monospace; font-size: 9.5px; letter-spacing: .06em;
+            text-transform: uppercase; padding: 5px 8px; cursor: pointer;
+            border: 1.5px solid var(--navy); background: transparent; color: var(--navy);
+            white-space: nowrap; transition: background .12s, color .12s;
+        }
+        .ast-write-cell-btn:hover { background: var(--navy); color: var(--cream); }
         .ast-actions-cell { white-space: nowrap; }
         .ast-loading, .ast-empty {
             padding: 50px 20px; text-align: center;
@@ -401,12 +408,27 @@
         }
         .ast-mcard-img { width: 74px; height: 74px; object-fit: cover; object-position: center top; flex-shrink: 0; border: 1px solid var(--border); }
         .ast-mcard-img-ph { width: 74px; height: 74px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; border: 1px solid var(--border); background: var(--cream2); color: var(--accent); font-size: 24px; }
-        .ast-mcard-body { min-width: 0; flex: 1; font-family: 'Source Code Pro', monospace; }
+        .ast-mcard-body { min-width: 0; flex: 1; display: flex; flex-direction: column; font-family: 'Source Code Pro', monospace; }
         .ast-mcard-name { font-family: 'Cinzel', serif; font-size: 14px; font-weight: 600; color: var(--navy); display: flex; align-items: center; gap: 5px; min-width: 0; flex: 1; overflow: hidden; }
         .ast-mcard-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
         .ast-mcard-sub { font-size: 10.5px; color: var(--muted); margin-top: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .ast-mcard-rating { font-size: 11.5px; margin-top: 3px; color: var(--navy); }
-        .ast-mcard-chips { margin-top: 5px; }
+        .ast-mcard-chips { margin-top: 5px; padding-right: 4px; }
+        .ast-mcard-foot {
+            display: flex; align-items: flex-end; justify-content: space-between; gap: 12px;
+            margin-top: auto; padding-top: 8px;
+        }
+        .ast-mcard-price {
+            font-size: 11px; color: var(--muted); min-width: 0;
+            overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+        }
+        .ast-mcard-rating {
+            margin-left: auto; flex: 0 0 auto; max-width: 58%;
+            text-align: right; color: #142433; font-weight: 700;
+            font-size: 12px; line-height: 1.15; white-space: nowrap;
+        }
+        .ast-mcard-rating .ast-star { color: #142433; font-size: 16px; font-weight: 700; }
+        .ast-mcard-score { font-family: 'Cinzel', serif; font-size: 16px; font-weight: 700; }
+        .ast-mcard-count { font-weight: 700; letter-spacing: .01em; }
         .ast-mcard-actions { display: flex; align-items: center; gap: 14px; flex-shrink: 0; margin: 0; }
         .ast-mcard-contact {
             font-family: 'Source Code Pro', monospace; font-size: 10px; letter-spacing: .08em;
@@ -488,6 +510,7 @@
             <a href="saved.html">Saved</a>
             <span id="navAuthArea" class="nav-auth-area"></span>
         </nav>
+        <button type="button" class="header-add-testimonial" id="astAddTestimonialBtn" data-add-testimonial hidden>Add testimonials</button>
         <a class="nav-cta" href="submit-spellcaster.html" style="text-decoration:none;">Submit Spellcaster</a>
         <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
             <span></span>
@@ -504,6 +527,7 @@
         <a href="contact.html" class="mobile-nav-item">Contact</a>
         <a href="saved.html" class="mobile-nav-item">Saved Profiles</a>
         <a href="submit-spellcaster.html" class="mobile-nav-item">Submit spellcaster</a>
+        <button type="button" class="mobile-nav-item" data-add-testimonial hidden>Add testimonials</button>
     </div>
 
     <div class="ast-wrap">
@@ -547,13 +571,12 @@
                             <th>Specialties</th>
                             <th>Response</th>
                             <th>Price</th>
-                            <th>Rating</th>
-                            <th>Reviews</th>
+                            <th>Reviews / Testimonials</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody id="astTbody">
-                        <tr><td colspan="10"><div class="ast-loading">Loading profiles…</div></td></tr>
+                        <tr><td colspan="9"><div class="ast-loading">Loading profiles…</div></td></tr>
                     </tbody>
                 </table>
                 </div>
@@ -572,8 +595,8 @@
     <div class="ast-modal-overlay" id="astContactModal" role="dialog" aria-modal="true">
         <div class="ast-modal">
             <button class="ast-modal-close" id="astContactClose" aria-label="Close">×</button>
-            <div class="ast-modal-title">Contact Spellcaster</div>
-            <div class="ast-modal-sub">Send your inquiry directly. The spellcaster will reach out to you.</div>
+            <div class="ast-modal-title" id="astContactTitle">Contact Spellcaster</div>
+            <div class="ast-modal-sub" id="astContactSub">Send your inquiry directly. The spellcaster will reach out to you.</div>
             <form id="astInquiryForm" autocomplete="off">
                 <div class="ast-form-field">
                     <label for="astInqName">Full Name *</label>
@@ -715,6 +738,7 @@
     <script src="r2-upload.js"></script>
     <script src="auth.js"></script>
 
+    <script src="testimonials.js?v=20261124c"></script>
     <script>
     (function () {
         var SUPABASE_URL = 'https://uapjfrxjjpotmvpuidsq.supabase.co';
@@ -722,6 +746,10 @@
 
         var sc = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
         var profiles = [];
+        var testimonialCounts = {};
+        function feedbackCount(p) {
+            return (p.review_count || 0) + (testimonialCounts[p.id] || 0);
+        }
         var activeProfile = null;
 
         // ── Mobile menu ──
@@ -845,10 +873,11 @@
 
                 if (res.error) throw res.error;
                 profiles = res.data || [];
+                if (window.scTestimonials) testimonialCounts = await scTestimonials.loadCounts(sc);
                 fillFilterOptions();
                 applyDirectoryView();
             } catch (e) {
-                document.getElementById('astTbody').innerHTML = '<tr><td colspan="10"><div class="ast-empty">Could not load profiles. Please try again.</div></td></tr>';
+                document.getElementById('astTbody').innerHTML = '<tr><td colspan="9"><div class="ast-empty">Could not load profiles. Please try again.</div></td></tr>';
                 document.getElementById('astMobileList').innerHTML = '<div class="ast-empty">Could not load profiles. Please try again.</div>';
                 document.getElementById('astCount').textContent = '';
             }
@@ -911,7 +940,7 @@
             if (sort === 'name') list.sort(function(a, b){ return String(a.professional_name || '').localeCompare(String(b.professional_name || '')); });
             else if (sort === 'name-desc') list.sort(function(a, b){ return String(b.professional_name || '').localeCompare(String(a.professional_name || '')); });
             else if (sort === 'rating') list.sort(function(a, b){ return (parseFloat(b.average_rating) || 0) - (parseFloat(a.average_rating) || 0); });
-            else if (sort === 'reviews') list.sort(function(a, b){ return (b.review_count || 0) - (a.review_count || 0); });
+            else if (sort === 'reviews') list.sort(function(a, b){ return feedbackCount(b) - feedbackCount(a); });
             else if (sort === 'price-asc' || sort === 'price-desc') {
                 list.sort(function(a, b) {
                     var av = priceValue(a), bv = priceValue(b);
@@ -936,19 +965,18 @@
         function renderTable() {
             var tbody = document.getElementById('astTbody');
             if (!profiles.length) {
-                tbody.innerHTML = '<tr><td colspan="10"><div class="ast-empty">No spellcasters found.</div></td></tr>';
+                tbody.innerHTML = '<tr><td colspan="9"><div class="ast-empty">No spellcasters found.</div></td></tr>';
                 return;
             }
             if (!viewProfiles.length) {
-                tbody.innerHTML = '<tr><td colspan="10"><div class="ast-empty">No spellcasters match these filters.</div></td></tr>';
+                tbody.innerHTML = '<tr><td colspan="9"><div class="ast-empty">No spellcasters match these filters.</div></td></tr>';
                 return;
             }
             tbody.innerHTML = viewProfiles.map(function(p, i) {
-                var hasRating = (p.review_count || 0) > 0 && p.average_rating;
-                var rating = hasRating
-                    ? '<span class="ast-star">★</span> <span class="ast-rating-val">' + parseFloat(p.average_rating).toFixed(1) + '</span>'
-                    : '<span class="ast-td-muted">—</span>';
                 var saved = (typeof scAuth !== 'undefined') && scAuth.userSaves.has(p.id);
+                var reviewCell = feedbackCount(p) > 0
+                    ? '<span class="ast-td-muted">' + feedbackCount(p) + '</span>'
+                    : '<button type="button" class="ast-write-cell-btn" data-write-review="' + p.id + '">Write a Review</button>';
                 return '<tr data-pid="' + p.id + '">' +
                     '<td class="ast-td-num">' + (i + 1) + '</td>' +
                     '<td><button class="ast-save-btn' + (saved ? ' saved' : '') + '" data-save="' + p.id + '" title="Save" aria-label="Save">' + ICON_SAVE + '</button></td>' +
@@ -965,8 +993,7 @@
                     '<td class="ast-td-clip" style="max-width:200px;">' + chips(p.specialties, 2) + '</td>' +
                     '<td class="ast-td-muted">' + esc(p.response_time || '—') + '</td>' +
                     '<td class="ast-td-muted">' + esc(p.minimum_price || '—') + '</td>' +
-                    '<td class="ast-td-rating">' + rating + '</td>' +
-                    '<td class="ast-td-muted" style="text-align:center;">' + (p.review_count || 0) + '</td>' +
+                    '<td style="text-align:center;">' + reviewCell + '</td>' +
                     '<td class="ast-actions-cell">' +
                         '<button type="button" class="ast-review-btn" data-contact="' + p.id + '">Contact</button>' +
                     '</td>' +
@@ -975,7 +1002,7 @@
 
             tbody.querySelectorAll('tr[data-pid]').forEach(function(tr) {
                 tr.addEventListener('click', function(e) {
-                    if (e.target.closest('.ast-save-btn') || e.target.closest('[data-contact]')) return;
+                    if (e.target.closest('.ast-save-btn') || e.target.closest('[data-contact]') || e.target.closest('[data-write-review]')) return;
                     openPanel(tr.dataset.pid, e.target.closest('.ast-view-btn') ? 'reviews' : 'about');
                 });
             });
@@ -985,6 +1012,13 @@
                     e.stopPropagation();
                     var p = profiles.find(function(x){ return x.id === btn.dataset.contact; });
                     if (p) openContactModal(p);
+                });
+            });
+            tbody.querySelectorAll('[data-write-review]').forEach(function(btn) {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    var p = profiles.find(function(x){ return x.id === btn.dataset.writeReview; });
+                    if (p) openReviewModalForProfile(p);
                 });
             });
         }
@@ -1001,9 +1035,16 @@
                 return;
             }
             list.innerHTML = viewProfiles.map(function(p) {
+                var shownCount = feedbackCount(p);
                 var hasRating = (p.review_count || 0) > 0 && p.average_rating;
                 var sub = [p.professional_identity, p.location].filter(Boolean).join(' · ');
                 var saved = (typeof scAuth !== 'undefined') && scAuth.userSaves.has(p.id);
+                var countLabel = shownCount + ' review' + (shownCount === 1 ? '' : 's');
+                var ratingHtml = hasRating
+                    ? '<span class="ast-star">★</span> <span class="ast-mcard-score">' + parseFloat(p.average_rating).toFixed(1) + '</span> <span class="ast-mcard-count">' + countLabel + '</span>'
+                    : (shownCount
+                        ? '<span class="ast-mcard-count">' + countLabel + '</span>'
+                        : '<button type="button" class="ast-write-cell-btn" data-write-review="' + p.id + '">Write a Review</button>');
                 return '<div class="ast-mcard" data-pid="' + p.id + '" data-href="' + profileHref(p) + '">' +
                     (p.profile_picture_url
                         ? '<img class="ast-mcard-img" src="' + esc(p.profile_picture_url) + '" alt="' + esc(p.professional_name) + '" loading="lazy">'
@@ -1017,20 +1058,18 @@
                             '</div>' +
                         '</div>' +
                         (sub ? '<div class="ast-mcard-sub">' + esc(sub) + '</div>' : '') +
-                        '<div class="ast-mcard-rating">' +
-                            (hasRating
-                                ? '<span class="ast-star">★</span> <strong>' + parseFloat(p.average_rating).toFixed(1) + '</strong> <span class="ast-td-muted">(' + p.review_count + ')</span>'
-                                : '<span class="ast-td-muted">No reviews yet</span>') +
-                            (p.minimum_price ? ' <span class="ast-td-muted" style="margin-left:8px;">' + esc(p.minimum_price) + '</span>' : '') +
-                        '</div>' +
                         '<div class="ast-mcard-chips">' + chips(p.specialties, 2) + '</div>' +
+                        '<div class="ast-mcard-foot">' +
+                            '<div class="ast-mcard-price">' + esc(p.minimum_price || '') + '</div>' +
+                            '<div class="ast-mcard-rating">' + ratingHtml + '</div>' +
+                        '</div>' +
                     '</div>' +
                 '</div>';
             }).join('');
 
             list.querySelectorAll('.ast-mcard').forEach(function(card) {
                 card.addEventListener('click', function(e) {
-                    if (e.target.closest('[data-save]') || e.target.closest('[data-contact]')) return;
+                    if (e.target.closest('[data-save]') || e.target.closest('[data-contact]') || e.target.closest('[data-write-review]')) return;
                     trackProfileCardClick(card.dataset.pid);
                     window.location.href = card.dataset.href;
                 });
@@ -1041,6 +1080,13 @@
                     e.stopPropagation();
                     var p = profiles.find(function(x){ return x.id === btn.dataset.contact; });
                     if (p) openContactModal(p);
+                });
+            });
+            list.querySelectorAll('[data-write-review]').forEach(function(btn) {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    var p = profiles.find(function(x){ return x.id === btn.dataset.writeReview; });
+                    if (p) openReviewModalForProfile(p);
                 });
             });
         }
@@ -1112,8 +1158,10 @@
                         (p.professional_identity ? '<span class="ast-chip ast-chip-type">' + esc(p.professional_identity) + '</span>' : '') +
                     '</div>' +
                     (hasRating
-                        ? '<div class="ast-panel-rating"><span class="ast-star">★</span> ' + parseFloat(p.average_rating).toFixed(1) + ' <span class="ast-td-muted" style="font-weight:400;">(' + p.review_count + ' review' + (p.review_count === 1 ? '' : 's') + ')</span></div>'
-                        : '<div class="ast-panel-rating ast-td-muted" style="font-weight:400;">No reviews yet</div>') +
+                        ? '<div class="ast-panel-rating"><span class="ast-star">★</span> ' + parseFloat(p.average_rating).toFixed(1) + ' <span class="ast-td-muted" style="font-weight:400;">(' + feedbackCount(p) + ' review' + (feedbackCount(p) === 1 ? '' : 's') + ')</span></div>'
+                        : (feedbackCount(p)
+                            ? '<div class="ast-panel-rating ast-td-muted" style="font-weight:400;">' + feedbackCount(p) + ' review' + (feedbackCount(p) === 1 ? '' : 's') + '</div>'
+                            : '<div class="ast-panel-rating ast-td-muted" style="font-weight:400;">No reviews yet</div>')) +
                     (metaBits.length ? '<div class="ast-panel-meta">' + metaBits.join('<span>·</span>') + '</div>' : '') +
                     '<div class="ast-panel-actions">' +
                         '<button class="ast-pa-btn primary" id="astPanelContact" type="button">' + ICON_CONTACT + '<span>Contact</span></button>' +
@@ -1123,7 +1171,7 @@
                     '<div class="ast-tabs">' +
                         '<button class="ast-tab" data-tab="about">About</button>' +
                         '<button class="ast-tab" data-tab="services">Services</button>' +
-                        '<button class="ast-tab" data-tab="reviews">Reviews (' + (p.review_count || 0) + ')</button>' +
+                        '<button class="ast-tab" data-tab="reviews">Reviews (' + feedbackCount(p) + ')</button>' +
                         '<button class="ast-tab" data-tab="photos">Photos</button>' +
                     '</div>' +
                     '<div class="ast-tabpanes">' +
@@ -1265,21 +1313,22 @@
                 if (res.error) throw res.error;
                 var reviews = res.data || [];
 
-                if (activeProfile && activeProfile.id !== p.id) return; // panel switched meanwhile
+                var tesRes = window.scTestimonials
+                    ? await scTestimonials.fetchForProfile(sc, p.id, 5)
+                    : { data: [], error: null };
+                var testimonials = tesRes.error ? [] : (tesRes.data || []);
+                if (activeProfile && activeProfile.id !== p.id) return;
 
-                if (!reviews.length) {
+                var totalShown = feedbackCount(p);
+                var headBtn = '<button type="button" class="ast-write-review-btn" id="astPanelWriteReview">' + ICON_REVIEW + ' Write a Review</button>';
+                if (!reviews.length && !testimonials.length) {
                     revPane.innerHTML =
                         '<div class="ast-review-section-head">' +
                             '<span class="ast-none-msg" style="margin:0;">No reviews yet.</span>' +
-                            '<button type="button" class="ast-write-review-btn" id="astPanelWriteReview">' + ICON_REVIEW + ' Write a Review</button>' +
+                            headBtn +
                         '</div>';
                 } else {
-                    revPane.innerHTML =
-                        '<div class="ast-review-section-head">' +
-                            '<span style="font-family:\'Source Code Pro\',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);">Reviews</span>' +
-                            '<button type="button" class="ast-write-review-btn" id="astPanelWriteReview">' + ICON_REVIEW + ' Write a Review</button>' +
-                        '</div>' +
-                        reviews.map(function(r) {
+                    var reviewHtml = reviews.map(function(r) {
                         var d = r.created_at ? new Date(r.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '';
                         var initial = (r.reviewer_name || 'A')[0].toUpperCase();
                         return '<div class="ast-review-card">' +
@@ -1293,8 +1342,17 @@
                             starsHtml(exactScore(r)) +
                             '<div class="ast-review-text">' + esc(r.review_text || '') + '</div>' +
                         '</div>';
-                    }).join('') +
-                    ((p.review_count || 0) > 5 ? '<a class="ast-panel-fulllink" href="' + profileHref(p) + '#reviews">View All ' + p.review_count + ' Reviews →</a>' : '');
+                    }).join('');
+                    var testimonialHtml = window.scTestimonials
+                        ? testimonials.map(function(t) { return scTestimonials.cardHtml(t); }).join('')
+                        : '';
+                    revPane.innerHTML =
+                        '<div class="ast-review-section-head">' +
+                            '<span style="font-family:\'Source Code Pro\',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);">Reviews</span>' +
+                            headBtn +
+                        '</div>' +
+                        reviewHtml + testimonialHtml +
+                        (totalShown > 5 ? '<a class="ast-panel-fulllink" href="' + profileHref(p) + '#reviews">View All ' + totalShown + ' Reviews →</a>' : '');
                 }
                 document.getElementById('astPanelWriteReview')?.addEventListener('click', function() {
                     openReviewModalForProfile(p);
@@ -1341,6 +1399,11 @@
         var contactProfileId = null;
         function openContactModal(p) {
             contactProfileId = p.id;
+            var name = p.professional_name || 'this spellcaster';
+            var title = document.getElementById('astContactTitle');
+            var sub = document.getElementById('astContactSub');
+            if (title) title.textContent = 'Contact ' + name;
+            if (sub) sub.textContent = 'Send your inquiry to ' + name + '. They will reach out to you.';
             try { sc.from('sc_analytics').insert({ profile_id: p.id, event_type: 'contact_click' }).then(function(){}); } catch (_) {}
             var msg = document.getElementById('astInqMsg');
             msg.className = 'ast-form-msg';
@@ -1431,6 +1494,11 @@
         }
         async function openReviewModalForProfile(p) {
             reviewTargetProfile = p;
+            var name = p.professional_name || 'this spellcaster';
+            var title = document.getElementById('astReviewTitle');
+            var sub = document.getElementById('astReviewSubtitle');
+            if (title) title.textContent = 'Write a Review — ' + name;
+            if (sub) sub.textContent = 'Share your experience with ' + name + '. This helps others in the community.';
             var user = null;
             try {
                 var res = await sc.auth.getUser();
@@ -1441,8 +1509,6 @@
                 return;
             }
             resetAstReviewForm();
-            var sub = document.getElementById('astReviewSubtitle');
-            if (sub) sub.textContent = 'Reviewing ' + (p.professional_name || 'this spellcaster') + ' — share your experience.';
             document.getElementById('astReviewModal')?.classList.add('active');
             document.body.style.overflow = 'hidden';
         }
@@ -1570,7 +1636,10 @@
         document.addEventListener('DOMContentLoaded', function() {
             try {
                 if (typeof scAuth !== 'undefined') {
-                    scAuth.init(sc, { onSignIn: refreshSaveStates, onSignOut: refreshSaveStates }).catch(function(){});
+                    scAuth.init(sc, {
+                        onSignIn: function() { refreshSaveStates(); refreshTestimonialAdmin(); },
+                        onSignOut: function() { refreshSaveStates(); refreshTestimonialAdmin(); }
+                    }).catch(function(){});
                 }
             } catch (_) {}
             ['astFilterType', 'astFilterSpec', 'astFilterResp', 'astSort'].forEach(function(id) {
@@ -1581,7 +1650,35 @@
                 window.__astFilterT = setTimeout(applyDirectoryView, 160);
             });
             loadProfiles();
+            refreshTestimonialAdmin();
         });
+
+        function refreshTestimonialAdmin() {
+            var buttons = document.querySelectorAll('[data-add-testimonial]');
+            if (!buttons.length || !window.scTestimonials) return;
+            sc.auth.getUser().then(function(res) {
+                var user = res.data && res.data.user;
+                buttons.forEach(function(btn) { scTestimonials.syncButton(btn, user); });
+                if (!document.body.dataset.testimonialBound) {
+                    document.body.dataset.testimonialBound = '1';
+                    scTestimonials.bindForm(sc, function() {
+                        scTestimonials.loadCounts(sc).then(function(map) {
+                            testimonialCounts = map || {};
+                            renderTable();
+                            renderMobileList();
+                            if (activeProfile) loadPanelReviews(activeProfile);
+                        });
+                    });
+                    buttons.forEach(function(btn) {
+                        btn.addEventListener('click', function() {
+                            scTestimonials.open(sc, activeProfile && activeProfile.id);
+                        });
+                    });
+                }
+            }).catch(function() {
+                buttons.forEach(function(btn) { btn.hidden = true; });
+            });
+        }
     })();
     </script>
 </body>
