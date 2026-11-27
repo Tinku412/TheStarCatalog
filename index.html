@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://WitchWeekly.com/">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Source+Code+Pro:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Cinzel:wght@400;600;700&family=Source+Code+Pro:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" href="svgviewer-png-output.png" type="image/png" />
     <style>
@@ -48,23 +48,36 @@
         }
         .ast-wrap.panel-open .ast-main,
         .ast-wrap.panel-open ~ .site-footer {
-            margin-right: 400px;
+            margin-right: 420px;
             transition: margin-right .2s;
         }
+        .ast-title {
+            font-family: var(--font-display);
+            font-size: var(--fs-display);
+            font-weight: var(--fw-display);
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            text-align: center;
+            color: var(--navy);
+            line-height: 1.15;
+            margin: 0 0 14px;
+        }
         .ast-count {
-            font-family: 'Source Code Pro', monospace;
-            font-size: 11px;
-            letter-spacing: .1em;
+            font-family: var(--font-text);
+            font-size: var(--fs-ui);
+            font-weight: 500;
+            letter-spacing: var(--ls-ui);
             text-transform: uppercase;
             color: var(--muted);
             padding: 4px 2px 10px;
         }
-        .ast-table-scroll { overflow-x: auto; border: 1.5px solid var(--border); background: var(--cream); }
+        .ast-table-scroll { overflow: auto; background: var(--cream); border-radius: 3px; display: flex; justify-content: center; align-items: center; }
         table.ast-table {
-            width: 100%;
+            width: 90%;
             border-collapse: collapse;
-            font-family: 'Source Code Pro', monospace;
-            font-size: 11.5px;
+            font-family: var(--font-text);
+            font-size: var(--fs-body);
+            font-weight: var(--fw-body);
             color: var(--text);
         }
         .ast-table thead th {
@@ -73,9 +86,9 @@
             z-index: 2;
             background: var(--navy);
             color: var(--cream);
-            font-size: 10px;
-            font-weight: 600;
-            letter-spacing: .12em;
+            font-size: var(--fs-ui);
+            font-weight: var(--fw-section);
+            letter-spacing: var(--ls-ui);
             text-transform: uppercase;
             text-align: left;
             padding: 8px 8px;
@@ -118,27 +131,28 @@
         }
         .ast-verified { color: var(--green); flex-shrink: 0; display: inline-flex; }
         .ast-tagline {
-            font-size: 12px; font-style: italic; color: var(--muted);
+            font-family: var(--font-tagline); font-size: var(--fs-tagline); font-style: italic; font-weight: 400; color: var(--muted);
             white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 180px;
         }
         .ast-chip {
             display: inline-block; padding: 2px 7px; margin: 1px 3px 1px 0;
             background: rgba(201,185,122,.18); border: 1px solid rgba(201,185,122,.45);
-            font-size: 10px; letter-spacing: .04em; color: var(--navy); white-space: nowrap;
+            font-family: var(--font-text); font-size: var(--fs-ui); font-weight: 500; letter-spacing: var(--ls-ui); color: var(--navy); white-space: nowrap;
         }
         table, th, td {
   border: 1px solid #c9b97a66;
 }
         .ast-td-clip { overflow: hidden; }
         .ast-td-clip .ast-chip {
-            max-width: 100%; overflow: hidden; text-overflow: ellipsis; vertical-align: middle;
+            max-width: 100%; overflow: hidden; text-overflow: ellipsis; vertical-align: middle; border-radius: 3px;
         }
-        .ast-chip-type { background: var(--navy); color: var(--cream); border-color: var(--navy); }
+        .ast-chip-type { background: var(--navy); color: var(--cream); border-color: var(--navy); border-radius: 3px; }
         .ast-td-rating { white-space: nowrap; }
         .ast-star { color: var(--accent); }
         .ast-rating-val { font-weight: 600; color: var(--navy); }
         .ast-td-muted { color: #000000; white-space: nowrap; }
         .ast-view-btn {
+            border-radius: 3px;
             font-family: 'Source Code Pro', monospace; font-size: 10px; letter-spacing: .08em;
             text-transform: uppercase; padding: 5px 10px; cursor: pointer;
             border: 1.5px solid var(--border); background: transparent; color: var(--navy);
@@ -147,6 +161,7 @@
         }
         .ast-view-btn:hover { background: var(--navy); color: var(--cream); }
         .ast-review-btn {
+            border-radius: 3px;
             font-family: 'Source Code Pro', monospace; font-size: 10px; letter-spacing: .08em;
             text-transform: uppercase; padding: 5px 10px; cursor: pointer;
             border: 1.5px solid var(--navy); background: #057056; color: var(--cream);
@@ -155,6 +170,7 @@
         }
         .ast-review-btn:hover { background: var(--navy2); color: var(--cream); }
         .ast-write-cell-btn {
+            border-radius: 3px;
             font-family: 'Source Code Pro', monospace; font-size: 9.5px; letter-spacing: .06em;
             text-transform: uppercase; padding: 5px 8px; cursor: pointer;
             border: 1.5px solid var(--navy); background: transparent; color: var(--navy);
@@ -185,7 +201,7 @@
             top: 62px;
             right: 0;
             bottom: 0;
-            width: 400px;
+            width: 420px;
             height: calc(100vh - 62px);
             max-height: calc(100vh - 62px);
             z-index: 40;
@@ -199,14 +215,16 @@
             height: 100%;
             max-height: 100%;
             overflow-x: hidden;
-            overflow-y: auto;
+            overflow-y: scroll;
+            scrollbar-gutter: stable;
+            overflow-anchor: none;
             -webkit-overflow-scrolling: touch;
             overscroll-behavior: contain;
         }
         .ast-panel-close {
             position: absolute; top: 8px; right: 10px; z-index: 5;
             background: var(--navy); color: var(--cream); border: none; cursor: pointer;
-            width: 24px; height: 24px; font-size: 13px; line-height: 1;
+            width: 24px; height: 24px; font-size: 13px; line-height: 1; border-radius: 3px;
         }
         .ast-panel-img-wrap {
             position: relative; aspect-ratio: 16/10;
@@ -215,19 +233,56 @@
         .ast-panel-img { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
         .ast-panel-img-ph { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: var(--accent); font-size: 40px; }
         .ast-panel-body {
-            padding: 14px 16px 24px;
+            padding: 16px 18px 28px;
         }
         .ast-panel-toprow { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; flex-shrink: 0; }
         .ast-panel-name {
-            font-family: 'Cinzel', serif; font-size: 17px; font-weight: 700; color: var(--navy);
-            display: flex; align-items: center; gap: 6px; line-height: 1.25;
+            font-family: var(--font-display); font-size: var(--fs-panel-name); font-weight: var(--fw-display); color: var(--navy);
+            display: flex; align-items: center; gap: 6px; line-height: 1.2;
+            text-transform: uppercase; letter-spacing: .02em; min-width: 0;
         }
-        .ast-panel-meta { margin-top: 6px; font-family: 'Source Code Pro', monospace; font-size: 10.5px; color: var(--muted); display: flex; flex-wrap: wrap; gap: 5px 14px; flex-shrink: 0; }
-        .ast-panel-rating { font-size: 12px; color: var(--navy); font-weight: 600; margin-top: 7px; font-family: 'Source Code Pro', monospace; flex-shrink: 0; }
-        .ast-panel-actions { display: flex; gap: 6px; margin: 13px 0 4px; flex-wrap: wrap; flex-shrink: 0; }
+        .ast-panel-tagline {
+            margin-top: 4px; font-family: var(--font-tagline); font-style: italic; font-weight: 400;
+            font-size: var(--fs-tagline); color: var(--navy); line-height: 1.4;
+        }
+        .ast-panel-meta { margin-top: 6px; font-family: var(--font-text); font-size: var(--fs-ui); font-weight: 500; color: var(--navy); display: flex; flex-wrap: wrap; gap: 4px 8px; flex-shrink: 0; }
+        .ast-panel-rating {
+            display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
+            margin-top: 8px; color: var(--navy); font-weight: 700;
+            font-family: 'Source Code Pro', monospace; font-size: 13px;
+        }
+        .ast-panel-score { font-family: 'Cinzel', serif; font-size: 16px; font-weight: 700; }
+        .ast-panel-count { font-weight: 600; font-size: 12px; }
+        .ast-panel-norating { color: var(--muted); font-weight: 500; font-style: italic; font-size: 12px; }
+        .ast-gold-stars { color: #c4a035; font-size: 14px; letter-spacing: 1px; line-height: 1; }
+        .ast-gold-stars .ast-star-empty { color: rgba(27, 45, 62, .28); }
+        .ast-panel-actions { display: flex; gap: 6px; margin: 12px 0 2px; flex-wrap: wrap; flex-shrink: 0; }
+        .ast-pa-btn.visit { flex: 1.3; text-decoration: none; background: #057056; border-color: #057056; color: var(--cream); font-weight: 600; }
+        .ast-pa-btn.visit:hover { background: var(--navy); border-color: var(--navy); color: var(--cream); }
+        .ast-highlight {
+            background: #f4ecd4; border: 1px solid rgba(201,185,122,.6);
+            padding: 10px 12px; margin-bottom: 8px;
+        }
+        .ast-highlight-title { font-family: 'Cinzel', serif; font-size: 13px; font-weight: 700; color: var(--navy); line-height: 1.35; }
+        .ast-highlight-sub { margin-top: 3px; font-size: 11px; color: var(--text); }
+        .ast-rating-box { display: flex; align-items: center; gap: 10px; padding: 4px 0 8px; }
+        .ast-rating-big { font-family: var(--font-display); font-size: 32px; font-weight: var(--fw-display); color: var(--navy); line-height: 1; }
+        .ast-rating-side { display: flex; flex-direction: column; gap: 2px; }
+        .ast-section-title {
+            display: flex; align-items: baseline; justify-content: space-between; gap: 8px;
+            margin: 14px 0 6px; font-family: var(--font-text); font-size: var(--fs-section);
+            font-weight: var(--fw-section); letter-spacing: var(--ls-section); text-transform: uppercase; color: var(--navy);
+        }
+        .ast-section-link {
+            font-family: var(--font-text); font-size: var(--fs-ui); font-weight: var(--fw-section); letter-spacing: var(--ls-ui);
+            text-transform: uppercase; color: var(--navy); background: none; border: none;
+            cursor: pointer; text-decoration: underline; padding: 0;
+        }
+        .ast-overview-chips { line-height: 1.8; }
         .ast-pa-btn {
             flex: 1; min-width: 0; display: inline-flex; align-items: center; justify-content: center; gap: 6px;
-            font-family: 'Source Code Pro', monospace; font-size: 9.5px; letter-spacing: .08em;
+            border-radius: 3px;
+            font-family: var(--font-text); font-size: var(--fs-ui); font-weight: 500; letter-spacing: var(--ls-ui);
             text-transform: uppercase; padding: 8px 6px; cursor: pointer;
             border: 1.5px solid var(--border); background: transparent; color: var(--navy);
             transition: background .12s, color .12s, border-color .12s;
@@ -244,23 +299,33 @@
         }
         .ast-tab {
             flex: 1; background: none; border: none; cursor: pointer; padding: 9px 2px;
-            font-family: 'Source Code Pro', monospace; font-size: 9.5px; letter-spacing: .08em;
+            font-family: var(--font-text); font-size: var(--fs-ui); font-weight: 500; letter-spacing: var(--ls-ui);
             text-transform: uppercase; color: var(--muted); border-bottom: 2px solid transparent;
         }
         .ast-tab.active { color: var(--navy); font-weight: 600; border-bottom-color: var(--accent); }
         .ast-tabpanes {
             margin-top: 12px;
-            font-family: 'Source Code Pro', monospace;
-            font-size: 11.5px;
-            line-height: 1.65;
+            min-height: 360px;
+            max-width: 100%;
+            min-width: 0;
+            overflow-x: hidden;
+            font-family: var(--font-text);
+            font-size: var(--fs-body);
+            font-weight: var(--fw-body);
+            line-height: 1.6;
             color: var(--text);
         }
-        .ast-tabpane { display: none; }
+        .ast-tabpane { display: none; max-width: 100%; min-width: 0; }
         .ast-tabpane.active { display: block; }
+        .ast-tabpane img,
+        .ast-tabpane .review-card,
+        .ast-tabpane .testimonial-card { max-width: 100%; }
 
         /* About — match profile sidebar/info layout */
         .ast-about-text {
-            font-size: 0.78rem;
+            font-family: var(--font-text);
+            font-size: var(--fs-body);
+            font-weight: var(--fw-body);
             line-height: 1.6;
             color: var(--text);
             margin-bottom: 8px;
@@ -293,11 +358,12 @@
         }
         .ast-info-row:last-child { border-bottom: none; }
         .ast-info-label {
-            font-size: 9px; letter-spacing: .1em; text-transform: uppercase;
+            font-family: var(--font-text); font-size: var(--fs-ui); font-weight: var(--fw-section);
+            letter-spacing: var(--ls-ui); text-transform: uppercase;
             color: var(--muted); flex-shrink: 0;
         }
         .ast-info-val {
-            font-size: 11px; color: var(--navy); font-weight: 500; text-align: right;
+            font-family: var(--font-text); font-size: var(--fs-body); color: var(--navy); font-weight: 500; text-align: right;
             flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
         }
 
@@ -306,33 +372,46 @@
             display: flex; flex-direction: column; align-items: flex-start; gap: 2px; margin-bottom: 10px;
         }
         .ast-svc-title {
-            font-family: 'Source Code Pro', monospace; font-size: 11px; font-weight: 600;
-            letter-spacing: .18em; text-transform: uppercase; color: var(--navy);
+            font-family: var(--font-text); font-size: var(--fs-section); font-weight: var(--fw-section);
+            letter-spacing: var(--ls-section); text-transform: uppercase; color: var(--navy);
             display: flex; align-items: center; gap: 8px;
         }
         .ast-svc-title::before {
             content: ''; display: block; width: 8px; height: 8px; background: var(--accent); flex-shrink: 0;
         }
         .ast-svc-count {
-            font-family: 'Source Code Pro', monospace; font-size: 11px; color: var(--muted);
+            font-family: var(--font-text); font-size: var(--fs-ui); color: var(--muted);
             padding-left: 16px;
         }
-        .ast-svc-table {
-            width: 100%; border-collapse: collapse;
-            font-family: 'Source Code Pro', monospace; font-size: 11.5px; color: var(--navy); line-height: 1.35;
+        .ast-svc-list {
+            width: 100%;
+            border: 1px solid rgba(27,45,62,.22);
+            border-radius: 3px;
+            overflow: hidden;
         }
-        .ast-svc-table thead th {
-            background: transparent; color: var(--muted); font-size: 9.5px; font-weight: 600;
-            letter-spacing: .1em; text-transform: uppercase; text-align: left;
-            padding: 4px 8px 6px 0; border-bottom: 1px solid rgba(27,45,62,.18); white-space: nowrap;
+        .ast-svc-head, .ast-svc-row {
+            display: grid;
+            grid-template-columns: 28px minmax(0, 1fr) auto auto;
+            gap: 8px;
+            align-items: center;
+            padding: 8px 10px;
         }
-        .ast-svc-table td { padding: 6px 10px 6px 0; vertical-align: middle; }
-        .ast-svc-table .svc-col-num { width: 22px; color: var(--muted); }
-        .ast-svc-table .svc-col-name { text-transform: uppercase; font-weight: 600; letter-spacing: .02em; }
-        .ast-svc-table .svc-col-price { white-space: nowrap; font-weight: 500; }
-        .ast-svc-table .svc-col-action { width: 1%; white-space: nowrap; padding-right: 0; }
+        .ast-svc-head {
+            font-family: var(--font-text); font-size: var(--fs-ui); font-weight: var(--fw-section);
+            letter-spacing: var(--ls-ui); text-transform: uppercase; color: var(--muted);
+            border-bottom: 1px solid rgba(27,45,62,.22);
+        }
+        .ast-svc-row {
+            font-family: var(--font-text); font-size: var(--fs-body); font-weight: var(--fw-body);
+            color: var(--navy); border-bottom: 1px solid rgba(27,45,62,.14);
+        }
+        .ast-svc-row:last-child { border-bottom: none; }
+        .ast-svc-num { color: var(--muted); }
+        .ast-svc-name { font-weight: var(--fw-section); text-transform: uppercase; min-width: 0; overflow-wrap: anywhere; }
+        .ast-svc-price { white-space: nowrap; font-weight: 500; }
         .ast-svc-request {
-            font-family: 'Source Code Pro', monospace; font-size: 10px; padding: 2px 7px;
+            border-radius: 3px;
+            font-family: var(--font-text); font-size: var(--fs-ui); font-weight: 500; padding: 4px 8px;
             border: 1px solid var(--navy); background: #e8e4d8; color: var(--navy); cursor: pointer;
         }
         .ast-svc-request:hover { background: var(--navy); color: var(--cream); }
@@ -342,8 +421,9 @@
             margin-bottom: 10px; flex-wrap: wrap;
         }
         .ast-write-review-btn {
+            border-radius: 3px;
             display: inline-flex; align-items: center; gap: 5px;
-            font-family: 'Source Code Pro', monospace; font-size: 9.5px; letter-spacing: .1em;
+            font-family: var(--font-text); font-size: var(--fs-ui); font-weight: 500; letter-spacing: var(--ls-ui);
             text-transform: uppercase; padding: 6px 10px; cursor: pointer;
             border: 1px solid var(--navy); background: var(--navy); color: var(--cream);
             white-space: nowrap;
@@ -354,11 +434,11 @@
         .ast-review-head { display: flex; align-items: center; gap: 7px; margin-bottom: 4px; }
         .ast-review-avatar { width: 22px; height: 22px; border-radius: 50%; object-fit: cover; }
         .ast-review-avatar-ph { width: 22px; height: 22px; border-radius: 50%; background: var(--navy); color: var(--cream); display: flex; align-items: center; justify-content: center; font-size: 10px; }
-        .ast-review-name { font-weight: 600; color: var(--navy); font-size: 10.5px; }
-        .ast-review-date { color: var(--muted); font-size: 9px; margin-left: auto; white-space: nowrap; }
+        .ast-review-name { font-family: var(--font-text); font-weight: var(--fw-section); color: var(--navy); font-size: var(--fs-body); }
+        .ast-review-date { font-family: var(--font-text); color: var(--muted); font-size: var(--fs-ui); margin-left: auto; white-space: nowrap; }
         .ast-review-stars { color: #142433; font-size: 14px; letter-spacing: 1px; }
-        .ast-review-score { font-family: 'Cinzel', serif; font-size: 13px; font-weight: 700; color: #142433; margin-left: 4px; }
-        .ast-review-text { font-size: 10.5px; margin-top: 3px; }
+        .ast-review-score { font-family: var(--font-display); font-size: var(--fs-body); font-weight: var(--fw-display); color: #142433; margin-left: 4px; }
+        .ast-review-text { font-family: var(--font-text); font-size: var(--fs-body); font-weight: var(--fw-body); margin-top: 3px; }
         .ast-photos-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
         .ast-photos-grid img { width: 100%; aspect-ratio: 1/1; object-fit: cover; border: 1px solid var(--cream3); cursor: pointer; }
         .ast-panel-fulllink {
@@ -385,12 +465,13 @@
         .ast-modal-sub { font-family: 'Source Code Pro', monospace; font-size: 10px; color: var(--muted); margin-bottom: 14px; }
         .ast-modal-close { position: absolute; top: 10px; right: 12px; background: none; border: none; font-size: 18px; cursor: pointer; color: var(--navy); }
         .ast-form-field { margin-bottom: 11px; }
-        .ast-form-field label { display: block; font-family: 'Source Code Pro', monospace; font-size: 9.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+        .ast-form-field label { display: block; font-family: var(--font-text); font-size: var(--fs-ui); font-weight: var(--fw-section); letter-spacing: var(--ls-ui); text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
         .ast-form-field input, .ast-form-field textarea {
             width: 100%; box-sizing: border-box; background: var(--cream); border: 1.5px solid var(--border);
             padding: 8px 10px; font-family: 'Source Code Pro', monospace; font-size: 11px; color: var(--navy);
         }
         .ast-form-submit {
+            border-radius: 3px;
             width: 100%; padding: 10px; background: var(--accent); border: 1.5px solid var(--accent);
             font-family: 'Source Code Pro', monospace; font-size: 10.5px; font-weight: 600;
             letter-spacing: .1em; text-transform: uppercase; color: var(--navy); cursor: pointer;
@@ -403,46 +484,46 @@
         /* ============ MOBILE CARD LIST ============ */
         .ast-mobile-list { display: none; }
         .ast-mcard {
-            display: flex; gap: 11px; padding: 11px; background: var(--cream);
-            border: 1.5px solid var(--border); margin-bottom: 10px; cursor: pointer; position: relative;
+            display: flex; align-items: flex-start; gap: 8px; padding: 12px 2px;
+            background: transparent; border: none; border-bottom: 1px solid rgba(201,185,122,.55);
+            margin: 0; cursor: pointer;
         }
-        .ast-mcard-img { width: 74px; height: 74px; object-fit: cover; object-position: center top; flex-shrink: 0; border: 1px solid var(--border); }
-        .ast-mcard-img-ph { width: 74px; height: 74px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; border: 1px solid var(--border); background: var(--cream2); color: var(--accent); font-size: 24px; }
-        .ast-mcard-body { min-width: 0; flex: 1; display: flex; flex-direction: column; font-family: 'Source Code Pro', monospace; }
-        .ast-mcard-name { font-family: 'Cinzel', serif; font-size: 14px; font-weight: 600; color: var(--navy); display: flex; align-items: center; gap: 5px; min-width: 0; flex: 1; overflow: hidden; }
-        .ast-mcard-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-        .ast-mcard-sub { font-size: 10.5px; color: var(--muted); margin-top: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .ast-mcard-chips { margin-top: 5px; padding-right: 4px; }
-        .ast-mcard-foot {
-            display: flex; align-items: flex-end; justify-content: space-between; gap: 12px;
-            margin-top: auto; padding-top: 8px;
+        .ast-mcard-img, .ast-mcard-img-ph {
+            width: 52px; height: 52px; flex-shrink: 0; border-radius: 8px;
+            object-fit: cover; object-position: center top; border: 1px solid var(--border);
         }
-        .ast-mcard-price {
-            font-size: 11px; color: var(--muted); min-width: 0;
-            overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+        .ast-mcard-img-ph { display: flex; align-items: center; justify-content: center; background: var(--cream2); color: var(--accent); font-size: 18px; }
+        .ast-mcard-body { min-width: 0; flex: 1; font-family: var(--font-text); font-size: var(--fs-body); }
+        .ast-mcard-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+        .ast-mcard-copy { min-width: 0; flex: 1; }
+        .ast-mcard-name {
+            font-family: var(--font-display); font-size: var(--fs-panel-name); font-weight: var(--fw-display); color: var(--navy);
+            text-transform: uppercase; letter-spacing: .03em; line-height: 1.25;
+            display: flex; align-items: center; gap: 4px;
         }
-        .ast-mcard-rating {
-            margin-left: auto; flex: 0 0 auto; max-width: 58%;
-            text-align: right; color: #142433; font-weight: 700;
-            font-size: 12px; line-height: 1.15; white-space: nowrap;
+        .ast-mcard-sub {
+            margin-top: 2px; font-size: 11.5px; color: var(--text); line-height: 1.35;
+            display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
         }
-        .ast-mcard-rating .ast-star { color: #142433; font-size: 16px; font-weight: 700; }
-        .ast-mcard-score { font-family: 'Cinzel', serif; font-size: 16px; font-weight: 700; }
-        .ast-mcard-count { font-weight: 700; letter-spacing: .01em; }
-        .ast-mcard-actions { display: flex; align-items: center; gap: 14px; flex-shrink: 0; margin: 0; }
+        .ast-mcard-side { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; flex-shrink: 0; }
+        .ast-mcard-price { font-size: 12px; color: var(--navy); font-weight: 500; white-space: nowrap; }
+        .ast-mcard-rating { margin-top: 4px; font-size: 12px; font-weight: 700; color: var(--navy); line-height: 1.2; }
+        .ast-mcard-rating .ast-star { color: #c4a035; font-size: 13px; margin-right: 2px; }
+        .ast-mcard-rating.norating { color: var(--muted); font-weight: 500; font-style: italic; font-size: 11px; }
+        .ast-mcard-save {
+            background: none; border: none; cursor: pointer; padding: 2px 0 0; line-height: 0;
+            color: var(--navy); display: inline-flex; flex-shrink: 0;
+        }
+        .ast-mcard-save svg { display: block; width: 16px; height: 18px; }
+        .ast-mcard-save.saved { color: #957600; }
+        .ast-mcard-save.saved svg path { fill: currentColor; }
         .ast-mcard-contact {
+            border-radius: 3px;
             font-family: 'Source Code Pro', monospace; font-size: 10px; letter-spacing: .08em;
             text-transform: uppercase; padding: 6px 12px; cursor: pointer;
             border: 1.5px solid var(--navy); background: #057056; color: var(--cream);
         }
         .ast-mcard-contact:hover { background: var(--navy2); }
-        .ast-mcard-save {
-            background: none; border: none; cursor: pointer; padding: 6px; line-height: 0;
-            color: var(--navy); display: inline-flex;
-        }
-        .ast-mcard-save svg { display: block; width: 16px; height: 18px; }
-        .ast-mcard-save.saved { color: #957600; }
-        .ast-mcard-save.saved svg path { fill: currentColor; }
 
         .ast-toolbar {
             display: flex; flex-wrap: nowrap; align-items: flex-end; gap: 8px;
@@ -456,7 +537,7 @@
         .ast-field input, .ast-field select {
             font-family: 'Source Code Pro', monospace; font-size: 12px; color: var(--navy);
             text-transform: none; letter-spacing: 0;
-            border: 1px solid var(--border); background: #fff; padding: 7px 8px; min-width: 128px;
+            border: 1px solid var(--border); border-radius: 3px; background: var(--cream); padding: 7px 8px; min-width: 128px;
         }
         .ast-field.search input { min-width: 190px; }
 
@@ -531,9 +612,9 @@
     </div>
 
     <div class="ast-wrap">
-        <main class="ast-main" id="astMain" style="width:fit-content;">
+        <main class="ast-main" id="astMain">
             <div class="ast-count" id="astCount">Loading…</div>
-            <h1 class="ast-title" style="text-align:center; text-transform:uppercase;">Spell Casters & Reviews</h1>
+            <h1 class="ast-title">Spell Casters & Reviews</h1>
             <div class="ast-toolbar" id="astToolbar">
                 <label class="ast-field search">
                     <input type="search" id="astSearch" placeholder="Name or specialty" aria-label="Search">
@@ -786,6 +867,20 @@
             return isFinite(n) ? n : 0;
         }
 
+        function goldStars(rating) {
+            var score = Math.round(Number(rating) * 10) / 10;
+            if (!isFinite(score)) score = 0;
+            var full = Math.floor(score + 1e-9);
+            var frac = Math.min(1, Math.max(0, score - full));
+            var out = '';
+            for (var i = 1; i <= 5; i++) {
+                if (i <= full) out += '<span>★</span>';
+                else if (i === full + 1 && frac > 0.01) out += '<span style="opacity:' + (0.35 + frac * 0.65).toFixed(2) + '">★</span>';
+                else out += '<span class="ast-star-empty">★</span>';
+            }
+            return '<span class="ast-gold-stars" aria-hidden="true">' + out + '</span>';
+        }
+
         function starsHtml(rating) {
             var score = Math.round(Number(rating) * 10) / 10;
             if (!isFinite(score)) score = 0;
@@ -1035,33 +1130,29 @@
                 return;
             }
             list.innerHTML = viewProfiles.map(function(p) {
-                var shownCount = feedbackCount(p);
-                var hasRating = (p.review_count || 0) > 0 && p.average_rating;
-                var sub = [p.professional_identity, p.location].filter(Boolean).join(' · ');
+                var starCount = Number(p.review_count) || 0;
+                var hasRating = starCount > 0 && p.average_rating;
                 var saved = (typeof scAuth !== 'undefined') && scAuth.userSaves.has(p.id);
-                var countLabel = shownCount + ' review' + (shownCount === 1 ? '' : 's');
+                var blurb = p.one_liner || [p.professional_identity, p.location].filter(Boolean).join(' · ');
                 var ratingHtml = hasRating
-                    ? '<span class="ast-star">★</span> <span class="ast-mcard-score">' + parseFloat(p.average_rating).toFixed(1) + '</span> <span class="ast-mcard-count">' + countLabel + '</span>'
-                    : (shownCount
-                        ? '<span class="ast-mcard-count">' + countLabel + '</span>'
-                        : '<button type="button" class="ast-write-cell-btn" data-write-review="' + p.id + '">Write a Review</button>');
+                    ? '<div class="ast-mcard-rating"><span class="ast-star">★</span>' + parseFloat(p.average_rating).toFixed(1) + ' (' + starCount + ' review' + (starCount === 1 ? '' : 's') + ')</div>'
+                    : '<div class="ast-mcard-rating norating">No ratings yet</div>';
                 return '<div class="ast-mcard" data-pid="' + p.id + '" data-href="' + profileHref(p) + '">' +
+                    '<button class="ast-mcard-save' + (saved ? ' saved' : '') + '" data-save="' + p.id + '" title="Save" aria-label="Save">' + ICON_SAVE + '</button>' +
                     (p.profile_picture_url
                         ? '<img class="ast-mcard-img" src="' + esc(p.profile_picture_url) + '" alt="' + esc(p.professional_name) + '" loading="lazy">'
                         : '<div class="ast-mcard-img-ph">✦</div>') +
                     '<div class="ast-mcard-body">' +
-                        '<div class="ast-mcard-head">' +
-                            '<div class="ast-mcard-name">' + esc(p.professional_name || '—') + (p.is_verified ? verifiedSvg : '') + '</div>' +
-                            '<div class="ast-mcard-actions">' +
-                                '<button type="button" class="ast-mcard-contact" data-contact="' + p.id + '">Contact</button>' +
-                                '<button class="ast-mcard-save' + (saved ? ' saved' : '') + '" data-save="' + p.id + '" title="Save" aria-label="Save">' + ICON_SAVE + '</button>' +
+                        '<div class="ast-mcard-top">' +
+                            '<div class="ast-mcard-copy">' +
+                                '<div class="ast-mcard-name">' + esc(p.professional_name || '—') + (p.is_verified ? verifiedSvg : '') + '</div>' +
+                                (blurb ? '<div class="ast-mcard-sub">' + esc(blurb) + '</div>' : '') +
+                                ratingHtml +
                             '</div>' +
-                        '</div>' +
-                        (sub ? '<div class="ast-mcard-sub">' + esc(sub) + '</div>' : '') +
-                        '<div class="ast-mcard-chips">' + chips(p.specialties, 2) + '</div>' +
-                        '<div class="ast-mcard-foot">' +
-                            '<div class="ast-mcard-price">' + esc(p.minimum_price || '') + '</div>' +
-                            '<div class="ast-mcard-rating">' + ratingHtml + '</div>' +
+                            '<div class="ast-mcard-side">' +
+                                (p.minimum_price ? '<div class="ast-mcard-price">' + esc(p.minimum_price) + '</div>' : '') +
+                                '<button type="button" class="ast-mcard-contact" data-contact="' + p.id + '">Contact</button>' +
+                            '</div>' +
                         '</div>' +
                     '</div>' +
                 '</div>';
@@ -1136,13 +1227,17 @@
                 tr.classList.toggle('ast-row-active', tr.dataset.pid === pid);
             });
 
-            var hasRating = (p.review_count || 0) > 0 && p.average_rating;
+            var starCount = Number(p.review_count) || 0;
+            var hasRating = starCount > 0 && p.average_rating;
             var saved = (typeof scAuth !== 'undefined') && scAuth.userSaves.has(p.id);
-
-            var metaBits = [];
-            if (p.location) metaBits.push('◈ ' + esc(p.location));
-            if (p.works_online !== false) metaBits.push('◎ Online');
-            if (p.minimum_price) metaBits.push(esc(p.minimum_price));
+            var score = hasRating ? parseFloat(p.average_rating).toFixed(1) : '';
+            var ratingLine = hasRating
+                ? '<div class="ast-panel-rating"><span class="ast-panel-score">' + score + '</span>' + goldStars(p.average_rating) + '<span class="ast-panel-count">(' + starCount + ' review' + (starCount === 1 ? '' : 's') + ')</span></div>'
+                : '<div class="ast-panel-rating ast-panel-norating">No ratings yet</div>';
+            var placeBits = [];
+            if (p.location) placeBits.push(esc(p.location));
+            if (p.works_online !== false) placeBits.push('Online');
+            if (p.response_time) placeBits.push('Responds ' + esc(p.response_time));
 
             var inner = document.getElementById('astPanelInner');
             inner.innerHTML =
@@ -1157,38 +1252,42 @@
                         '<div class="ast-panel-name">' + esc(p.professional_name || '—') + (p.is_verified ? verifiedSvg : '') + '</div>' +
                         (p.professional_identity ? '<span class="ast-chip ast-chip-type">' + esc(p.professional_identity) + '</span>' : '') +
                     '</div>' +
-                    (hasRating
-                        ? '<div class="ast-panel-rating"><span class="ast-star">★</span> ' + parseFloat(p.average_rating).toFixed(1) + ' <span class="ast-td-muted" style="font-weight:400;">(' + feedbackCount(p) + ' review' + (feedbackCount(p) === 1 ? '' : 's') + ')</span></div>'
-                        : (feedbackCount(p)
-                            ? '<div class="ast-panel-rating ast-td-muted" style="font-weight:400;">' + feedbackCount(p) + ' review' + (feedbackCount(p) === 1 ? '' : 's') + '</div>'
-                            : '<div class="ast-panel-rating ast-td-muted" style="font-weight:400;">No reviews yet</div>')) +
-                    (metaBits.length ? '<div class="ast-panel-meta">' + metaBits.join('<span>·</span>') + '</div>' : '') +
+                    (p.one_liner ? '<div class="ast-panel-tagline">' + esc(p.one_liner) + '</div>' : '') +
+                    ratingLine +
+                    (placeBits.length ? '<div class="ast-panel-meta">' + placeBits.join('<span>·</span>') + '</div>' : '') +
                     '<div class="ast-panel-actions">' +
-                        '<button class="ast-pa-btn primary" id="astPanelContact" type="button">' + ICON_CONTACT + '<span>Contact</span></button>' +
+                        '<a class="ast-pa-btn visit" href="' + profileHref(p) + '">Visit Profile</a>' +
+                        '<button class="ast-pa-btn" id="astPanelContact" type="button">' + ICON_CONTACT + '<span>Contact</span></button>' +
                         '<button class="ast-pa-btn' + (saved ? ' saved' : '') + '" id="astPanelSave" type="button">' + ICON_SAVE + '<span>' + (saved ? 'Saved' : 'Save') + '</span></button>' +
                         '<button class="ast-pa-btn" id="astPanelShare" type="button">' + ICON_SHARE + '<span>Share</span></button>' +
                     '</div>' +
                     '<div class="ast-tabs">' +
+                        '<button class="ast-tab" data-tab="overview">Overview</button>' +
+                        '<button class="ast-tab" data-tab="reviews">Reviews</button>' +
                         '<button class="ast-tab" data-tab="about">About</button>' +
                         '<button class="ast-tab" data-tab="services">Services</button>' +
-                        '<button class="ast-tab" data-tab="reviews">Reviews (' + feedbackCount(p) + ')</button>' +
                         '<button class="ast-tab" data-tab="photos">Photos</button>' +
                     '</div>' +
                     '<div class="ast-tabpanes">' +
+                        '<div class="ast-tabpane" data-pane="overview" id="astPaneOverview"></div>' +
+                        '<div class="ast-tabpane" data-pane="reviews" id="astPaneReviews"><div class="ast-none-msg">Loading reviews…</div></div>' +
                         '<div class="ast-tabpane" data-pane="about" id="astPaneAbout"></div>' +
                         '<div class="ast-tabpane" data-pane="services" id="astPaneServices"></div>' +
-                        '<div class="ast-tabpane" data-pane="reviews" id="astPaneReviews"><div class="ast-none-msg">Loading reviews…</div></div>' +
                         '<div class="ast-tabpane" data-pane="photos" id="astPanePhotos"><div class="ast-none-msg">Loading photos…</div></div>' +
                     '</div>' +
-                    '<a class="ast-panel-fulllink" href="' + profileHref(p) + '">View Full Profile →</a>' +
                 '</div>';
 
+            fillOverviewPane(p);
             fillAboutPane(p);
             fillServicesPane(p);
             loadPanelReviews(p);
 
             inner.querySelectorAll('.ast-tab').forEach(function(t) {
-                t.addEventListener('click', function() { switchTab(t.dataset.tab); });
+                t.addEventListener('click', function() {
+                    var y = inner.scrollTop;
+                    switchTab(t.dataset.tab);
+                    inner.scrollTop = y;
+                });
             });
             document.getElementById('astPanelClose').addEventListener('click', closePanel);
             document.getElementById('astPanelSave').addEventListener('click', async function() {
@@ -1202,7 +1301,7 @@
                 openContactModal(p);
             });
 
-            switchTab(tab || 'about');
+            switchTab(tab === 'about' ? 'overview' : (tab || 'overview'));
             document.getElementById('astPanel').classList.add('open');
             document.querySelector('.ast-wrap')?.classList.add('panel-open');
             var panelInner = document.getElementById('astPanelInner');
@@ -1222,6 +1321,44 @@
             document.querySelector('.ast-wrap')?.classList.remove('panel-open');
             activeProfile = null;
             document.querySelectorAll('#astTbody tr').forEach(function(tr) { tr.classList.remove('ast-row-active'); });
+        }
+
+        function fillOverviewPane(p) {
+            var pane = document.getElementById('astPaneOverview');
+            if (!pane) return;
+            var starCount = Number(p.review_count) || 0;
+            var hasRating = starCount > 0 && p.average_rating;
+            var html = '';
+            if (hasRating) {
+                html += '<div class="ast-rating-box"><div class="ast-rating-big">' + parseFloat(p.average_rating).toFixed(1) + '</div><div class="ast-rating-side">' +
+                    goldStars(p.average_rating) +
+                    '<div class="ast-panel-count">(' + starCount + ' review' + (starCount === 1 ? '' : 's') + ')</div></div></div>';
+            } else {
+                html += '<div class="ast-rating-box"><div class="ast-panel-norating">No ratings yet</div></div>';
+            }
+            if (p.description) {
+                var full = String(p.description).trim();
+                var short = full.length > 220 ? full.slice(0, 220).replace(/\s+\S*$/, '') + '…' : full;
+                html += '<div class="ast-section-title">About</div><div class="ast-about-text"><p>' + esc(short).replace(/\n/g, '<br>') + '</p></div>' +
+                    (full.length > 220 ? '<button type="button" class="ast-section-link" data-goto="about">Read more</button>' : '');
+            }
+            html += '<div id="astOverviewTestimonials"></div>';
+            html += '<div class="ast-section-title">Services <button type="button" class="ast-section-link" data-goto="services">See all</button></div>' +
+                '<div class="ast-overview-chips">' + chips(p.specialties, 8) + '</div>';
+            var facts = [
+                ['Location', p.location || (p.works_online === false ? '—' : 'Online')],
+                ['Response', p.response_time || '—'],
+                ['SpellCasting within', p.delivery_time || '—'],
+                ['Price', p.minimum_price || '—'],
+                ['Experience', p.experience || '—']
+            ];
+            html += '<div class="ast-section-title">Business info</div><div class="ast-info-rows">' + facts.map(function(kv) {
+                return '<div class="ast-info-row"><span class="ast-info-label">' + kv[0] + '</span><span class="ast-info-val">' + esc(kv[1]) + '</span></div>';
+            }).join('') + '</div>';
+            pane.innerHTML = html;
+            pane.querySelectorAll('[data-goto]').forEach(function(btn) {
+                btn.addEventListener('click', function() { switchTab(btn.dataset.goto); });
+            });
         }
 
         function fillAboutPane(p) {
@@ -1278,22 +1415,17 @@
                         '<div class="ast-svc-title">Services Offered</div>' +
                         '<span class="ast-svc-count">(' + offerings.length + ')</span>' +
                     '</div>' +
-                    '<table class="ast-svc-table">' +
-                        '<thead><tr>' +
-                            '<th class="svc-col-num">#</th>' +
-                            '<th class="svc-col-name">Service Name</th>' +
-                            '<th class="svc-col-price">Price</th>' +
-                            '<th class="svc-col-action"></th>' +
-                        '</tr></thead><tbody>' +
+                    '<div class="ast-svc-list">' +
+                        '<div class="ast-svc-head"><span>#</span><span>Service</span><span>Price</span><span></span></div>' +
                         offerings.map(function(o, idx) {
-                            return '<tr>' +
-                                '<td class="svc-col-num">' + (idx + 1) + '</td>' +
-                                '<td class="svc-col-name">' + esc(o.name || '—') + '</td>' +
-                                '<td class="svc-col-price">' + esc(formatPrice(o.price)) + '</td>' +
-                                '<td class="svc-col-action"><button type="button" class="ast-svc-request" data-svc-request>Request</button></td>' +
-                            '</tr>';
+                            return '<div class="ast-svc-row">' +
+                                '<span class="ast-svc-num">' + (idx + 1) + '</span>' +
+                                '<span class="ast-svc-name">' + esc(o.name || '—') + '</span>' +
+                                '<span class="ast-svc-price">' + esc(formatPrice(o.price)) + '</span>' +
+                                '<button type="button" class="ast-svc-request" data-svc-request>Request</button>' +
+                            '</div>';
                         }).join('') +
-                    '</tbody></table>';
+                    '</div>';
             }
             pane.innerHTML = html;
             pane.querySelectorAll('[data-svc-request]').forEach(function(btn) {
@@ -1321,14 +1453,7 @@
 
                 var totalShown = feedbackCount(p);
                 var headBtn = '<button type="button" class="ast-write-review-btn" id="astPanelWriteReview">' + ICON_REVIEW + ' Write a Review</button>';
-                if (!reviews.length && !testimonials.length) {
-                    revPane.innerHTML =
-                        '<div class="ast-review-section-head">' +
-                            '<span class="ast-none-msg" style="margin:0;">No reviews yet.</span>' +
-                            headBtn +
-                        '</div>';
-                } else {
-                    var reviewHtml = reviews.map(function(r) {
+                var reviewHtml = reviews.map(function(r) {
                         var d = r.created_at ? new Date(r.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '';
                         var initial = (r.reviewer_name || 'A')[0].toUpperCase();
                         return '<div class="ast-review-card">' +
@@ -1343,16 +1468,29 @@
                             '<div class="ast-review-text">' + esc(r.review_text || '') + '</div>' +
                         '</div>';
                     }).join('');
-                    var testimonialHtml = window.scTestimonials
-                        ? testimonials.map(function(t) { return scTestimonials.cardHtml(t); }).join('')
+                var testimonialHtml = window.scTestimonials
+                    ? testimonials.map(function(t) { return scTestimonials.cardHtml(t); }).join('')
+                    : '';
+                var emptyNote = !reviews.length
+                    ? '<div class="ast-panel-norating" style="margin-bottom:10px;">No ratings yet</div>'
+                    : '';
+                revPane.innerHTML =
+                    '<div class="ast-review-section-head">' +
+                        '<span style="font-family:\'Source Code Pro\',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);">Reviews</span>' +
+                        headBtn +
+                    '</div>' +
+                    emptyNote +
+                    reviewHtml +
+                    (testimonials.length ? '<div class="ast-section-title">Testimonials</div>' + testimonialHtml : '') +
+                    (totalShown > 5 ? '<a class="ast-panel-fulllink" href="' + profileHref(p) + '#reviews">View all on profile</a>' : '');
+                var overviewSlot = document.getElementById('astOverviewTestimonials');
+                if (overviewSlot) {
+                    overviewSlot.innerHTML = testimonials.length
+                        ? '<div class="ast-section-title">Testimonials <button type="button" class="ast-section-link" data-goto="reviews">See all</button></div>' +
+                            testimonials.slice(0, 1).map(function(t) { return window.scTestimonials ? scTestimonials.cardHtml(t) : ''; }).join('')
                         : '';
-                    revPane.innerHTML =
-                        '<div class="ast-review-section-head">' +
-                            '<span style="font-family:\'Source Code Pro\',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);">Reviews</span>' +
-                            headBtn +
-                        '</div>' +
-                        reviewHtml + testimonialHtml +
-                        (totalShown > 5 ? '<a class="ast-panel-fulllink" href="' + profileHref(p) + '#reviews">View All ' + totalShown + ' Reviews →</a>' : '');
+                    var goto = overviewSlot.querySelector('[data-goto]');
+                    if (goto) goto.addEventListener('click', function() { switchTab('reviews'); });
                 }
                 document.getElementById('astPanelWriteReview')?.addEventListener('click', function() {
                     openReviewModalForProfile(p);
